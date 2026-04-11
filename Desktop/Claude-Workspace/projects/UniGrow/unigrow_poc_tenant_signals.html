@@ -256,6 +256,42 @@ body {
 }
 .sg-header-title { font-size: 12px; font-weight: 700; color: var(--uc-secondary); text-transform: uppercase; letter-spacing: .5px; }
 .sg-header-line { flex: 1; height: 1px; background: var(--uc-border); }
+
+/* ── PRIORITY GRID ──────────────────── */
+.signal-grid { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.sg-row { display: flex; gap: 16px; }
+.sg-row.primary { }
+.sg-row.primary .sig-card { flex: 1; }
+.sg-row.secondary .sig-card { flex: 1; }
+.sg-row.tertiary { flex-wrap: wrap; }
+.sg-row.tertiary .sig-card { flex: 1; min-width: 300px; }
+
+/* Collapsed card — tertiary row */
+.sig-card.collapsed .sig-detail-table { display: none; }
+.sig-card.collapsed .sig-meta { display: none; }
+.sig-card.collapsed .sig-body { padding: 10px 14px; }
+.sig-card.collapsed .sig-title { margin-bottom: 0; font-size: 13px; }
+.sig-card.collapsed .sig-info > div:nth-child(2) { display: none; } /* subtitle */
+.sig-card .expand-btn {
+  font-size: 10px; color: var(--uc-primary); cursor: pointer;
+  font-weight: 600; margin-top: 4px; display: none;
+}
+.sig-card.collapsed .expand-btn { display: inline-block; }
+
+/* Risk tier badges */
+.tier-badge { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; text-transform: uppercase; }
+.tier-badge.STOCKOUT { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.CRITICAL { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.WARNING { background: var(--uc-amber-bg); color: var(--uc-amber); }
+.tier-badge.WATCH { background: #E3F4FD; color: var(--uc-primary); }
+.tier-badge.HEALTHY { background: #EDF7F0; color: var(--uc-success); }
+
+/* Signal grid header */
+.sg-header {
+  display: flex; align-items: center; gap: 10px; padding-bottom: 4px;
+}
+.sg-header-title { font-size: 12px; font-weight: 700; color: var(--uc-secondary); text-transform: uppercase; letter-spacing: .5px; }
+.sg-header-line { flex: 1; height: 1px; background: var(--uc-border); }
 </style>
 </head>
 <body>
