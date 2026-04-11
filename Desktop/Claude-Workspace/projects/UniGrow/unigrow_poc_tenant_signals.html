@@ -646,6 +646,124 @@ body {
 .sig-tooltip-icon:hover + .sig-tooltip,
 .sig-tooltip:hover { display: block; }
 .sig-tooltip strong { font-weight: 600; color: var(--uc-primary); }
+
+/* ── PRIORITY GRID ──────────────────── */
+.signal-grid { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.sg-row { display: flex; gap: 16px; }
+.sg-row.primary { }
+.sg-row.primary .sig-card { flex: 1; }
+.sg-row.secondary .sig-card { flex: 1; }
+.sg-row.tertiary { flex-wrap: wrap; }
+.sg-row.tertiary .sig-card { flex: 1; min-width: 300px; }
+
+/* Collapsed card — tertiary row */
+.sig-card.collapsed .sig-detail-table { display: none; }
+.sig-card.collapsed .sig-meta { display: none; }
+.sig-card.collapsed .sig-body { padding: 10px 14px; }
+.sig-card.collapsed .sig-title { margin-bottom: 0; font-size: 13px; }
+.sig-card.collapsed .sig-info > div:nth-child(2) { display: none; } /* subtitle */
+.sig-card .expand-btn {
+  font-size: 10px; color: var(--uc-primary); cursor: pointer;
+  font-weight: 600; margin-top: 4px; display: none;
+}
+.sig-card.collapsed .expand-btn { display: inline-block; }
+
+/* Risk tier badges */
+.tier-badge { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; text-transform: uppercase; }
+.tier-badge.STOCKOUT { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.CRITICAL { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.WARNING { background: var(--uc-amber-bg); color: var(--uc-amber); }
+.tier-badge.WATCH { background: #E3F4FD; color: var(--uc-primary); }
+.tier-badge.HEALTHY { background: #EDF7F0; color: var(--uc-success); }
+
+/* Signal grid header */
+.sg-header {
+  display: flex; align-items: center; gap: 10px; padding-bottom: 4px;
+}
+.sg-header-title { font-size: 12px; font-weight: 700; color: var(--uc-secondary); text-transform: uppercase; letter-spacing: .5px; }
+.sg-header-line { flex: 1; height: 1px; background: var(--uc-border); }
+
+/* ── SIGNAL TOOLTIP ────────────────── */
+.sig-title-wrap { position: relative; display: inline-block; }
+.sig-title-wrap .sig-tooltip-icon {
+  display: inline-block; width: 14px; height: 14px; line-height: 14px;
+  text-align: center; font-size: 10px; font-weight: 700;
+  background: var(--uc-surface); color: var(--uc-secondary);
+  border: 1px solid var(--uc-border); border-radius: 50%;
+  cursor: help; margin-left: 5px; vertical-align: middle;
+  position: relative; top: -1px;
+}
+.sig-tooltip {
+  display: none; position: absolute; left: 0; top: calc(100% + 6px);
+  z-index: 200; width: 380px; max-width: 90vw;
+  background: #fff; border: 1px solid var(--uc-border);
+  border-radius: 8px; padding: 12px 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  font-size: 11px; font-weight: 400; line-height: 1.5;
+  color: var(--uc-body-text);
+}
+.sig-tooltip-icon:hover + .sig-tooltip,
+.sig-tooltip:hover { display: block; }
+.sig-tooltip strong { font-weight: 600; color: var(--uc-primary); }
+
+/* ── PRIORITY GRID ──────────────────── */
+.signal-grid { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.sg-row { display: flex; gap: 16px; }
+.sg-row.primary { }
+.sg-row.primary .sig-card { flex: 1; }
+.sg-row.secondary .sig-card { flex: 1; }
+.sg-row.tertiary { flex-wrap: wrap; }
+.sg-row.tertiary .sig-card { flex: 1; min-width: 300px; }
+
+/* Collapsed card — tertiary row */
+.sig-card.collapsed .sig-detail-table { display: none; }
+.sig-card.collapsed .sig-meta { display: none; }
+.sig-card.collapsed .sig-body { padding: 10px 14px; }
+.sig-card.collapsed .sig-title { margin-bottom: 0; font-size: 13px; }
+.sig-card.collapsed .sig-info > div:nth-child(2) { display: none; } /* subtitle */
+.sig-card .expand-btn {
+  font-size: 10px; color: var(--uc-primary); cursor: pointer;
+  font-weight: 600; margin-top: 4px; display: none;
+}
+.sig-card.collapsed .expand-btn { display: inline-block; }
+
+/* Risk tier badges */
+.tier-badge { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; text-transform: uppercase; }
+.tier-badge.STOCKOUT { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.CRITICAL { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.WARNING { background: var(--uc-amber-bg); color: var(--uc-amber); }
+.tier-badge.WATCH { background: #E3F4FD; color: var(--uc-primary); }
+.tier-badge.HEALTHY { background: #EDF7F0; color: var(--uc-success); }
+
+/* Signal grid header */
+.sg-header {
+  display: flex; align-items: center; gap: 10px; padding-bottom: 4px;
+}
+.sg-header-title { font-size: 12px; font-weight: 700; color: var(--uc-secondary); text-transform: uppercase; letter-spacing: .5px; }
+.sg-header-line { flex: 1; height: 1px; background: var(--uc-border); }
+
+/* ── SIGNAL TOOLTIP ────────────────── */
+.sig-title-wrap { position: relative; display: inline-block; }
+.sig-title-wrap .sig-tooltip-icon {
+  display: inline-block; width: 14px; height: 14px; line-height: 14px;
+  text-align: center; font-size: 10px; font-weight: 700;
+  background: var(--uc-surface); color: var(--uc-secondary);
+  border: 1px solid var(--uc-border); border-radius: 50%;
+  cursor: help; margin-left: 5px; vertical-align: middle;
+  position: relative; top: -1px;
+}
+.sig-tooltip {
+  display: none; position: absolute; left: 0; top: calc(100% + 6px);
+  z-index: 200; width: 380px; max-width: 90vw;
+  background: #fff; border: 1px solid var(--uc-border);
+  border-radius: 8px; padding: 12px 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  font-size: 11px; font-weight: 400; line-height: 1.5;
+  color: var(--uc-body-text);
+}
+.sig-tooltip-icon:hover + .sig-tooltip,
+.sig-tooltip:hover { display: block; }
+.sig-tooltip strong { font-weight: 600; color: var(--uc-primary); }
 </style>
 </head>
 <body>
@@ -698,7 +816,21 @@ body {
     <div class="kpi-sub" id="kpi-aov-sub"></div>
   </div>
   <div class="kpi-tile">
-    <div class="kpi-label">Active SKUs</div>
+    <div class="kpi-label">Net Sales</div>
+    <div class="kpi-primary-row">
+      <div class="kpi-primary" id="kpi-net"></div>
+    </div>
+    <div class="kpi-sub" id="kpi-net-sub"></div>
+  </div>
+  <div class="kpi-tile">
+    <div class="kpi-label">Leakage</div>
+    <div class="kpi-primary-row">
+      <div class="kpi-primary" id="kpi-leakage"></div>
+    </div>
+    <div class="kpi-sub" id="kpi-leakage-sub"></div>
+  </div>
+  <div class="kpi-tile">
+    <div class="kpi-label">Active SKUs <span id="skus-tooltip-icon" style="cursor:help; color:#999; font-size:11px;" title="">ℹ</span></div>
     <div class="kpi-primary-row">
       <div class="kpi-primary" id="kpi-skus"></div>
     </div>
@@ -758,8 +890,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹218',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹27.2 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '2,263',
       skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '2',
       channels_sub: 'Meesho · Myntra'
     },
@@ -809,8 +946,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹235',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹69.0 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '11,219',
       skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '9',
       channels_sub: 'Meesho · Flipkart · Myntra + 6 more'
     },
@@ -860,8 +1002,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹274',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹29.8 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '2,696',
       skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '8',
       channels_sub: 'Meesho · HYPD · Myntra + 5 more'
     },
@@ -902,8 +1049,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹357',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹22.2 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '358',
       skus_sub: 'Listed on Cloudtail (Amazon) (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Cloudtail (Amazon)). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '9',
       channels_sub: 'Meesho · Myntra · DonoShop + 6 more'
     },
@@ -935,8 +1087,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹371',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹56.0 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '38,016',
       skus_sub: 'Listed on Amazon FBA (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Amazon FBA). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '12',
       channels_sub: 'Amazon FBA · Meesho · Flipkart FA + 9 more'
     },
@@ -986,8 +1143,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹126',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹1.6 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '478',
       skus_sub: 'Listed on Meesho (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Meesho). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '11',
       channels_sub: 'Meesho · Myntra · Smytten + 8 more'
     },
@@ -1046,8 +1208,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹298',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹52.4 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '2,930',
       skus_sub: 'Listed on Meesho (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Meesho). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '15',
       channels_sub: 'Meesho · Nykaa · Flipkart + 12 more'
     },
@@ -1097,8 +1264,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹780',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹3.7 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '400',
       skus_sub: 'Listed on Amazon FBA (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Amazon FBA). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '7',
       channels_sub: 'DonoShop · KindLife · Flipkart + 4 more'
     },
@@ -1140,7 +1312,7 @@ const TENANTS = {
       type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
       pills: ["Top: Karnataka at 100%", "9 SKUs above 30% threshold"],
-      table: [{"sku": "SNK-WFB-ASS-080-20-K", "state": "Karnataka", "share": "100.0%", "orders": "9/9", "revenue": "\u20b92K"}, {"sku": "SNK-CHP-CTM-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "10/10", "revenue": "\u20b956"}, {"sku": "SNK-WFB-STB-040-01", "state": "Karnataka", "share": "100.0%", "orders": "4/4", "revenue": "\u20b942"}, {"sku": "SNK-WFB-ORN-040-01", "state": "Karnataka", "share": "100.0%", "orders": "5/5", "revenue": "\u20b942"}, {"sku": "SNK-WFB-CHS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "6/6", "revenue": "\u20b942"}, {"sku": "SNK-CHP-SMS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "9/9", "revenue": "\u20b928"}, {"sku": "SNK-CHP-SCO-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "7/7", "revenue": "\u20b928"}, {"sku": "SNK-CHP-PDN-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "2/2", "revenue": "\u20b928"}]
+      table: [{"sku": "SNK-WFB-ASS-080-20-K", "state": "Karnataka", "share": "100.0%", "orders": "9/9", "revenue": "\u20b92K"}, {"sku": "SNK-CHP-CTM-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "10/10", "revenue": "\u20b956"}, {"sku": "SNK-WFB-CHS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "6/6", "revenue": "\u20b942"}, {"sku": "SNK-WFB-STB-040-01", "state": "Karnataka", "share": "100.0%", "orders": "4/4", "revenue": "\u20b942"}, {"sku": "SNK-WFB-ORN-040-01", "state": "Karnataka", "share": "100.0%", "orders": "5/5", "revenue": "\u20b942"}, {"sku": "SNK-CHP-SCO-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "7/7", "revenue": "\u20b928"}, {"sku": "SNK-CHP-PDN-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "2/2", "revenue": "\u20b928"}, {"sku": "SNK-CHP-SMS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "9/9", "revenue": "\u20b928"}]
     }
   },
 
@@ -1157,8 +1329,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹344',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹50.4 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '28',
       skus_sub: 'Listed on Flipkart (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Flipkart). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '2',
       channels_sub: 'Flipkart · Amazon IN'
     },
@@ -1182,7 +1359,7 @@ const TENANTS = {
       type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
       pills: ["Top: ML at 100%", "8 SKUs above 30% threshold"],
-      table: [{"sku": "8908016247056_2", "state": "ML", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9734"}, {"sku": "8908016247858", "state": "TL", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9535"}, {"sku": "8908016247230", "state": "Uttar Pradesh", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9469"}, {"sku": "8908016247506", "state": "Maharashtra", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9425"}, {"sku": "8908016247841", "state": "Maharashtra", "share": "50.0%", "orders": "2/4", "revenue": "\u20b92K"}, {"sku": "8908016247308", "state": "Uttar Pradesh", "share": "50.0%", "orders": "1/2", "revenue": "\u20b92K"}, {"sku": "8908016247865", "state": "Odisha", "share": "33.3%", "orders": "3/9", "revenue": "\u20b95K"}, {"sku": "8908016247421", "state": "Maharashtra", "share": "30.4%", "orders": "1525/5014", "revenue": "\u20b922.1L"}]
+      table: [{"sku": "8908016247056_2", "state": "ML", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9734"}, {"sku": "8908016247858", "state": "TL", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9535"}, {"sku": "8908016247230", "state": "Uttar Pradesh", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9469"}, {"sku": "8908016247506", "state": "Maharashtra", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9425"}, {"sku": "8908016247841", "state": "Maharashtra", "share": "50.0%", "orders": "2/4", "revenue": "\u20b92K"}, {"sku": "8908016247308", "state": "Tamil Nadu", "share": "50.0%", "orders": "1/2", "revenue": "\u20b92K"}, {"sku": "8908016247865", "state": "Odisha", "share": "33.3%", "orders": "3/9", "revenue": "\u20b95K"}, {"sku": "8908016247421", "state": "Maharashtra", "share": "30.4%", "orders": "1525/5014", "revenue": "\u20b922.1L"}]
     }
   },
 
@@ -1199,8 +1376,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹1,788',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹2.0 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '30,507',
       skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '7',
       channels_sub: 'Myntra · Amazon Flex · Nykaa Fashion + 4 more'
     },
@@ -1250,8 +1432,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹414',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹10.0 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '223',
       skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '6',
       channels_sub: 'Flipkart · Amazon Flex · Meesho + 3 more'
     },
@@ -1293,7 +1480,7 @@ const TENANTS = {
       type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
       pills: ["Top: Odisha at 100%", "8 SKUs above 30% threshold"],
-      table: [{"sku": "617571048685", "state": "Odisha", "share": "100.0%", "orders": "2/2", "revenue": "\u20b9748"}, {"sku": "617571077876", "state": "Delhi", "share": "50.0%", "orders": "1/2", "revenue": "\u20b92K"}, {"sku": "test", "state": "Rajasthan", "share": "50.0%", "orders": "1/2", "revenue": "\u20b91K"}, {"sku": "617571077708", "state": "Odisha", "share": "50.0%", "orders": "1/2", "revenue": "\u20b9309"}, {"sku": "617571077692", "state": "Gujarat", "share": "40.0%", "orders": "2/5", "revenue": "\u20b9856"}, {"sku": "617571077050", "state": "Uttar Pradesh", "share": "33.3%", "orders": "7/21", "revenue": "\u20b940K"}, {"sku": "617571048432", "state": "Maharashtra", "share": "33.3%", "orders": "1/3", "revenue": "\u20b91K"}, {"sku": "617571077678", "state": "Himachal Pradesh", "share": "33.3%", "orders": "1/3", "revenue": "\u20b9497"}]
+      table: [{"sku": "617571048685", "state": "Odisha", "share": "100.0%", "orders": "2/2", "revenue": "\u20b9748"}, {"sku": "617571077876", "state": "Delhi", "share": "50.0%", "orders": "1/2", "revenue": "\u20b92K"}, {"sku": "test", "state": "Rajasthan", "share": "50.0%", "orders": "1/2", "revenue": "\u20b91K"}, {"sku": "617571077708", "state": "Odisha", "share": "50.0%", "orders": "1/2", "revenue": "\u20b9309"}, {"sku": "617571077692", "state": "Gujarat", "share": "40.0%", "orders": "2/5", "revenue": "\u20b9856"}, {"sku": "617571077050", "state": "Uttar Pradesh", "share": "33.3%", "orders": "7/21", "revenue": "\u20b940K"}, {"sku": "617571048432", "state": "West Bengal", "share": "33.3%", "orders": "1/3", "revenue": "\u20b91K"}, {"sku": "617571077678", "state": "Himachal Pradesh", "share": "33.3%", "orders": "1/3", "revenue": "\u20b9497"}]
     }
   },
 
@@ -1310,8 +1497,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹345',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹1.5 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '9,800',
       skus_sub: 'Listed on Amazon Flex (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Amazon Flex). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '7',
       channels_sub: 'Flipkart · Myntra · Meesho + 4 more'
     },
@@ -1370,8 +1562,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹680',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹34.4 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '10.1L',
       skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '7',
       channels_sub: 'Myntra · Flipkart · Ajio + 4 more'
     },
@@ -1430,8 +1627,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹1,741',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹26.0 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '6,066',
       skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '8',
       channels_sub: 'Myntra · Amazon EasyShip · Ajio + 5 more'
     },
@@ -1481,8 +1683,13 @@ const TENANTS = {
       orders_sub: 'Sale order items · 30 days',
       aov: '₹1,424',
       aov_sub: 'Avg selling price per SOI',
+      net_sales_30d: '₹3.1 Cr',
+      net_sub: 'Gross - leakage (returns + cancellations)',
+      leakage_pct: '5.0%',
+      leakage_sub: 'Return % + Cancellation %',
       active_skus: '1.8L',
       skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '14',
       channels_sub: 'Myntra · Nykaa Fashion · Ajio + 11 more'
     },
@@ -1560,8 +1767,17 @@ function switchTenant(key) {
   document.getElementById('kpi-aov').textContent = t.kpi.aov;
   document.getElementById('kpi-aov-sub').textContent = t.kpi.aov_sub;
 
+  document.getElementById('kpi-net').textContent = t.kpi.net_sales_30d;
+  document.getElementById('kpi-net-sub').textContent = t.kpi.net_sub;
+  document.getElementById('kpi-leakage').textContent = t.kpi.leakage_pct;
+  document.getElementById('kpi-leakage-sub').textContent = t.kpi.leakage_sub;
+
   document.getElementById('kpi-skus').textContent = t.kpi.active_skus;
   document.getElementById('kpi-skus-sub').textContent = t.kpi.skus_sub;
+  const skusTip = document.getElementById('skus-tooltip-icon');
+  if (skusTip && t.kpi.skus_tooltip) {
+    skusTip.title = t.kpi.skus_tooltip;
+  }
 
   document.getElementById('kpi-channels').textContent = t.kpi.active_channels;
   document.getElementById('kpi-channels-sub').textContent = t.kpi.channels_sub;
