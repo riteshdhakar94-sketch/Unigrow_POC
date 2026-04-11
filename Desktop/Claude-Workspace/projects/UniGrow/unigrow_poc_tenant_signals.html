@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniGrow — Signal PoC · 15 Tenants</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --uc-primary:   #1F87C2;
+  --uc-dark-bg:   #161616;
+  --uc-body-text: #424242;
+  --uc-secondary: #757575;
+  --uc-success:   #4A934A;
+  --uc-error:     #AD2820;
+  --uc-error-bg:  #FFEBEE;
+  --uc-border:    #E0E0E0;
+  --uc-surface:   #F5F5F5;
+  --uc-amber:     #8B5000;
+  --uc-amber-bg:  #FFF8ED;
+  --uc-amber-bdr: #E8B84B;
+  --uc-action-orange: #E65100;
+  --uc-breach-red: #C62828;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  background: var(--uc-surface);
+  color: var(--uc-body-text);
+  font-size: 14px;
+  min-height: 100vh;
+}
+
+/* ── TOP NAV ─────────────────────────── */
+.topnav {
+  height: 52px; background: #fff;
+  border-bottom: 1px solid var(--uc-border);
+  display: flex; align-items: center;
+  position: sticky; top: 0; z-index: 100;
+}
+.tn-logo { width: 52px; height: 52px; background: var(--uc-dark-bg); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tn-logo-mark { width: 24px; height: 24px; background: var(--uc-primary); border-radius: 5px; display: flex; align-items: center; justify-content: center; }
+.tn-logo-mark svg { width: 13px; height: 13px; fill: #fff; }
+.tn-brand { padding: 0 16px; font-size: 15px; font-weight: 700; color: var(--uc-body-text); letter-spacing: -0.3px; border-right: 1px solid var(--uc-border); height: 100%; display: flex; align-items: center; }
+.tn-brand em { color: var(--uc-primary); font-style: normal; }
+
+/* Tenant selector */
+.tn-tenant {
+  padding: 0 16px; height: 100%;
+  display: flex; align-items: center; gap: 8px;
+  border-right: 1px solid var(--uc-border);
+}
+.tn-tenant-label { font-size: 9px; font-weight: 700; color: var(--uc-secondary); text-transform: uppercase; letter-spacing: .5px; }
+.tn-tenant-select {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px; font-weight: 600;
+  color: var(--uc-body-text);
+  border: 1px solid var(--uc-border);
+  border-radius: 6px;
+  padding: 5px 28px 5px 10px;
+  background: var(--uc-surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23757575'/%3E%3C/svg%3E") no-repeat right 10px center;
+  appearance: none; cursor: pointer;
+  transition: border-color .15s;
+  min-width: 200px;
+}
+.tn-tenant-select:hover { border-color: #bbb; }
+.tn-tenant-select:focus { border-color: var(--uc-primary); outline: none; box-shadow: 0 0 0 3px rgba(31,135,194,.12); }
+
+.tn-spacer { flex: 1; }
+.tn-right { display: flex; align-items: center; gap: 10px; padding: 0 16px; }
+.tn-badge { font-size: 10px; font-weight: 700; background: #E3F4FD; color: var(--uc-primary); border-radius: 4px; padding: 2px 7px; letter-spacing: 0.4px; }
+.tn-poc { font-size: 10px; font-weight: 700; background: #FFF3E0; color: var(--uc-action-orange); border-radius: 4px; padding: 2px 7px; letter-spacing: 0.4px; }
+
+/* ── KPI STRIP ───────────────────────── */
+.kpi-strip {
+  background: #fff;
+  border-bottom: 1px solid var(--uc-border);
+  padding: 0 24px;
+  display: flex; align-items: stretch;
+  min-height: 82px;
+}
+.kpi-tile {
+  flex: 1; padding: 12px 16px;
+  border-right: 1px solid var(--uc-border);
+  display: flex; flex-direction: column;
+  justify-content: center; gap: 0;
+}
+.kpi-tile:last-child { border-right: none; }
+.kpi-tile:first-child { padding-left: 0; }
+.kpi-label {
+  font-size: 10px; font-weight: 700; color: var(--uc-secondary);
+  text-transform: uppercase; letter-spacing: .5px;
+  margin-bottom: 4px;
+}
+.kpi-primary-row { display: flex; align-items: baseline; gap: 6px; margin-bottom: 2px; }
+.kpi-primary { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; line-height: 1; color: var(--uc-body-text); }
+.kpi-primary.red   { color: var(--uc-error); }
+.kpi-primary.amber { color: var(--uc-amber); }
+.kpi-delta { font-size: 10px; font-weight: 700; border-radius: 3px; padding: 1px 5px; white-space: nowrap; }
+.kpi-delta.up-good { background: #EDF7F0; color: var(--uc-success); }
+.kpi-delta.up-bad  { background: #FFEBEE; color: var(--uc-error); }
+.kpi-delta.dn-bad  { background: #FFEBEE; color: var(--uc-error); }
+.kpi-sub { font-size: 10px; color: var(--uc-secondary); }
+
+/* ── SIGNAL STRIP ────────────────────── */
+.signal-strip {
+  background: #fff;
+  border-bottom: 1px solid var(--uc-border);
+  padding: 8px 24px;
+  display: flex; align-items: center; gap: 12px;
+  font-size: 12px; color: var(--uc-secondary);
+}
+.ss-date { font-weight: 500; }
+.ss-sep { width: 1px; height: 14px; background: var(--uc-border); }
+.ss-count { font-weight: 700; color: var(--uc-body-text); }
+.ss-chip {
+  font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 10px;
+}
+.ss-chip.risk { background: #FFEBEE; color: var(--uc-error); }
+.ss-chip.opp  { background: #EDF7F0; color: var(--uc-success); }
+.ss-chip.na   { background: var(--uc-surface); color: var(--uc-secondary); }
+
+/* ── SIGNAL CARDS ────────────────────── */
+.feed { padding: 20px 24px; display: flex; gap: 20px; }
+.feed-col { flex: 1; display: flex; flex-direction: column; gap: 14px; }
+.col-label {
+  display: flex; align-items: center; gap: 10px;
+  padding-bottom: 8px;
+}
+.cl-title { font-size: 12px; font-weight: 700; color: var(--uc-secondary); text-transform: uppercase; letter-spacing: .5px; white-space: nowrap; }
+.cl-line { flex: 1; height: 1px; background: var(--uc-border); }
+.cl-total { font-size: 12px; font-weight: 700; white-space: nowrap; }
+.cl-total.red { color: var(--uc-error); }
+.cl-total.grn { color: var(--uc-success); }
+
+.sig-card {
+  background: #fff;
+  border: 1px solid var(--uc-border);
+  border-radius: 10px;
+  display: flex;
+  overflow: hidden;
+  transition: box-shadow .15s, border-color .15s;
+  cursor: default;
+}
+.sig-card:hover { border-color: #ccc; box-shadow: 0 2px 8px rgba(0,0,0,.06); }
+.sig-accent { width: 4px; flex-shrink: 0; border-radius: 10px 0 0 10px; }
+.sig-accent.red { background: var(--uc-error); }
+.sig-accent.grn { background: var(--uc-success); }
+.sig-accent.amber { background: var(--uc-amber); }
+.sig-accent.grey { background: var(--uc-border); }
+.sig-body { flex: 1; padding: 14px 16px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.sig-info { flex: 1; min-width: 0; }
+.sig-top { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+.sig-type {
+  font-size: 10px; font-weight: 700; padding: 2px 7px;
+  border-radius: 4px; letter-spacing: .3px; text-transform: uppercase;
+}
+.st-red   { background: #FFEBEE; color: var(--uc-error); }
+.st-green { background: #EDF7F0; color: var(--uc-success); }
+.st-amber { background: var(--uc-amber-bg); color: var(--uc-amber); border: 1px solid var(--uc-amber-bdr); }
+.st-grey  { background: var(--uc-surface); color: var(--uc-secondary); }
+.sig-title { font-size: 14px; font-weight: 500; color: var(--uc-body-text); line-height: 1.4; margin-bottom: 8px; }
+.sig-meta { display: flex; flex-wrap: wrap; gap: 5px; }
+.sig-pill {
+  font-size: 10px; font-weight: 500; color: var(--uc-secondary);
+  background: var(--uc-surface); border: 1px solid var(--uc-border);
+  border-radius: 4px; padding: 2px 7px;
+}
+.sig-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+.si-val { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; line-height: 1; }
+.si-val.red { color: var(--uc-error); }
+.si-val.grn { color: var(--uc-success); }
+.si-lbl { font-size: 10px; color: var(--uc-secondary); white-space: nowrap; }
+
+/* Empty state */
+.empty-state {
+  background: #fff;
+  border: 1px dashed var(--uc-border);
+  border-radius: 10px;
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--uc-secondary);
+}
+.empty-state-icon { font-size: 28px; margin-bottom: 8px; opacity: .5; }
+.empty-state-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; color: var(--uc-body-text); }
+.empty-state-sub { font-size: 11px; line-height: 1.5; }
+
+/* Detail table inside signal */
+.sig-detail-table {
+  width: 100%; margin-top: 10px;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.sig-detail-table th {
+  text-align: left; font-weight: 700; color: var(--uc-secondary);
+  text-transform: uppercase; letter-spacing: .4px; font-size: 9px;
+  padding: 6px 8px; border-bottom: 1px solid var(--uc-border);
+  background: var(--uc-surface);
+}
+.sig-detail-table td {
+  padding: 6px 8px; border-bottom: 1px solid #f0f0f0;
+  color: var(--uc-body-text);
+}
+.sig-detail-table tr:last-child td { border-bottom: none; }
+.sig-detail-table .val-red { color: var(--uc-error); font-weight: 600; }
+.sig-detail-table .val-grn { color: var(--uc-success); font-weight: 600; }
+
+/* ── FOOTER ──────────────────────────── */
+.poc-footer {
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 10px;
+  color: var(--uc-secondary);
+  border-top: 1px solid var(--uc-border);
+  background: #fff;
+  margin-top: auto;
+}
+
+/* ── LOADING TRANSITION ──────────────── */
+.fade-out { opacity: 0; transition: opacity .15s; }
+.fade-in  { opacity: 1; transition: opacity .2s; }
+
+/* ── PRIORITY GRID ──────────────────── */
+.signal-grid { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.sg-row { display: flex; gap: 16px; }
+.sg-row.primary { }
+.sg-row.primary .sig-card { flex: 1; }
+.sg-row.secondary .sig-card { flex: 1; }
+.sg-row.tertiary { flex-wrap: wrap; }
+.sg-row.tertiary .sig-card { flex: 1; min-width: 300px; }
+
+/* Collapsed card — tertiary row */
+.sig-card.collapsed .sig-detail-table { display: none; }
+.sig-card.collapsed .sig-meta { display: none; }
+.sig-card.collapsed .sig-body { padding: 10px 14px; }
+.sig-card.collapsed .sig-title { margin-bottom: 0; font-size: 13px; }
+.sig-card.collapsed .sig-info > div:nth-child(2) { display: none; } /* subtitle */
+.sig-card .expand-btn {
+  font-size: 10px; color: var(--uc-primary); cursor: pointer;
+  font-weight: 600; margin-top: 4px; display: none;
+}
+.sig-card.collapsed .expand-btn { display: inline-block; }
+
+/* Risk tier badges */
+.tier-badge { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; text-transform: uppercase; }
+.tier-badge.STOCKOUT { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.CRITICAL { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.WARNING { background: var(--uc-amber-bg); color: var(--uc-amber); }
+.tier-badge.WATCH { background: #E3F4FD; color: var(--uc-primary); }
+.tier-badge.HEALTHY { background: #EDF7F0; color: var(--uc-success); }
+
+/* Signal grid header */
+.sg-header {
+  display: flex; align-items: center; gap: 10px; padding-bottom: 4px;
+}
+.sg-header-title { font-size: 12px; font-weight: 700; color: var(--uc-secondary); text-transform: uppercase; letter-spacing: .5px; }
+.sg-header-line { flex: 1; height: 1px; background: var(--uc-border); }
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<div class="topnav">
+  <div class="tn-logo">
+    <div class="tn-logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L19.35 8 12 11.82 4.65 8 12 4.18zM4 9.42l7 3.5v7.16l-7-3.5V9.42zm9 10.66v-7.16l7-3.5v7.16l-7 3.5z"/></svg>
+    </div>
+  </div>
+  <div class="tn-brand">uni<em>grow</em></div>
+
+  <div class="tn-tenant">
+    <div class="tn-tenant-label">Tenant</div>
+    <select class="tn-tenant-select" id="tenantSelect" onchange="switchTenant(this.value)">
+    </select>
+  </div>
+
+  <div class="tn-spacer"></div>
+  <div class="tn-right">
+    <div class="tn-poc">SIGNAL PoC</div>
+    <div class="tn-badge">BETA</div>
+  </div>
+</div>
+
+<!-- KPI STRIP -->
+<div class="kpi-strip" id="kpiStrip">
+  <div class="kpi-tile">
+    <div class="kpi-label">Revenue (30d)</div>
+    <div class="kpi-primary-row">
+      <div class="kpi-primary" id="kpi-gross"></div>
+      <span class="kpi-delta" id="kpi-gross-delta"></span>
+    </div>
+    <div class="kpi-sub" id="kpi-gross-sub"></div>
+  </div>
+  <div class="kpi-tile">
+    <div class="kpi-label">SOI 30d (DWH)</div>
+    <div class="kpi-primary-row">
+      <div class="kpi-primary" id="kpi-orders"></div>
+      <span class="kpi-delta" id="kpi-orders-delta"></span>
+    </div>
+    <div class="kpi-sub" id="kpi-orders-sub"></div>
+  </div>
+  <div class="kpi-tile">
+    <div class="kpi-label">Active SKUs</div>
+    <div class="kpi-primary-row">
+      <div class="kpi-primary" id="kpi-skus"></div>
+    </div>
+    <div class="kpi-sub" id="kpi-skus-sub"></div>
+  </div>
+  <div class="kpi-tile">
+    <div class="kpi-label">Active Channels</div>
+    <div class="kpi-primary-row">
+      <div class="kpi-primary" id="kpi-channels"></div>
+    </div>
+    <div class="kpi-sub" id="kpi-channels-sub"></div>
+  </div>
+</div>
+
+<!-- SIGNAL STRIP -->
+<div class="signal-strip" id="signalStrip">
+  <span class="ss-date" id="ss-date"></span>
+  <span class="ss-sep"></span>
+  <span class="ss-count" id="ss-count"></span>
+  <span id="ss-chips"></span>
+</div>
+
+<!-- SIGNAL FEED -->
+<div class="signal-grid" id="signalFeed">
+</div>
+
+<!-- FOOTER -->
+<div class="poc-footer">
+  UniGrow Signal PoC · 5 signals · 15 tenants · 11 Apr 2026
+  <br>
+  Raw data: <a href="signal_s5_inventory_doh_raw.csv" style="color:var(--uc-primary)">S5 Inventory (1,569 rows)</a>
+  · <a href="signal_s6_return_rate_raw.csv" style="color:var(--uc-primary)">S6 Returns (782 rows)</a>
+  · <a href="signal_s7_regional_raw.csv" style="color:var(--uc-primary)">S7 Regional (162 rows)</a>
+</div>
+
+<script>
+// ============================================================
+// TENANT DATA — 15 tenants · 5 Signals · Actual DWH data
+// S1: Listing Gap | S2: Channel Expansion | S5: Inventory DOH
+// S6: Return Rate | S7: Regional Concentration
+// Revenue: raw.transaction__daily_v2_raw (soi_selling_price, qty<10)
+// Listings: raw.channel_item_type_metrics (deduplicated)
+// Inventory: raw.low_inventory_vs_last_30d_sales (snapshot 2026-03-17)
+// ============================================================
+
+const TENANTS = {
+  dotandkey: {
+    name: 'Dot & Key',
+    code: 'DOTANDKEY',
+    category: 'Beauty — Skincare',
+    kpi: {
+      gross_sales_30d: '₹28.6 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '13.2L',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹218',
+      active_skus: '2,263',
+      skus_sub: 'Listed on Myntra (top mkt channel)',
+      active_channels: '2',
+      channels_sub: 'Meesho · Myntra'
+    },
+    signal1: { available: false },
+    signal2: {
+      available: true, severity: 60,
+      title: '14 channels list <50% of Myntra catalog',
+      subtitle: 'Expand thin channels to capture ₹0/month',
+      impact_val: '₹0', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["14 thin channels", "Myntra leads: 2,263 SKUs"],
+      table: [{"channel": "BIGBASKET", "listed": "56", "coverage": "2%", "gap": "2,207", "upside": "\u2014"}, {"channel": "Tata CLiQ", "listed": "255", "coverage": "11%", "gap": "2,008", "upside": "\u2014"}, {"channel": "AMAZON_IN", "listed": "36", "coverage": "2%", "gap": "2,227", "upside": "\u2014"}, {"channel": "WOOVLY", "listed": "6", "coverage": "0%", "gap": "2,257", "upside": "\u2014"}, {"channel": "AMAZON_FBA", "listed": "758", "coverage": "33%", "gap": "1,505", "upside": "\u2014"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '1 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '1 SKUs at risk across 1 tiers',
+      impact_val: '1', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 1"],
+      table: [{"sku": "dk_Dummy", "name": "dk_Dummy", "stock": "0", "doh": "0", "daily_rate": "1.4", "tier": "STOCKOUT"}]
+    },
+    signal6: {
+      available: true, severity: 80,
+      title: "4 SKU-channel combos have >10% return rate",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '4', impact_label: 'high-return combos',
+      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
+      pills: ["46 total combos with returns", "Top: 14% on Meesho"],
+      table: [{"sku": "DK_BRRR", "channel": "Meesho", "dispatched": "7", "returned": "1", "pct": "14.3%"}, {"sku": "DK_MDGS", "channel": "Meesho", "dispatched": "8", "returned": "1", "pct": "12.5%"}, {"sku": "DK_NVCRNG", "channel": "Meesho", "dispatched": "17", "returned": "2", "pct": "11.8%"}, {"sku": "DK_CRNG", "channel": "Meesho", "dispatched": "9", "returned": "1", "pct": "11.1%"}]
+    },
+    signal7: { available: false }
+  },
+
+  mamaearth: {
+    name: 'Mamaearth (Honasa)',
+    code: 'MAMAEARTH',
+    category: 'Beauty — Personal Care',
+    kpi: {
+      gross_sales_30d: '₹72.6 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '30.9L',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹235',
+      active_skus: '11,219',
+      skus_sub: 'Listed on Myntra (top mkt channel)',
+      active_channels: '9',
+      channels_sub: 'Meesho · Flipkart · Myntra + 6 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '10,966 Myntra SKUs unlisted on Amazon EasyShip',
+      subtitle: 'Top 3 gap channels — ₹44.1 Cr/mo projected demand',
+      impact_val: '₹44.1 Cr', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["Amazon EasyShip: 2% coverage", "Meesho: 43% coverage", "Amazon IN: 2% coverage", "Myntra leads: 11,219 SKUs"],
+      table: [{"channel": "Amazon EasyShip", "missing": "10,966", "daily_demand": "\u20b958.9L"}, {"channel": "Meesho", "missing": "6,363", "daily_demand": "\u20b952.5L"}, {"channel": "Amazon IN", "missing": "10,952", "daily_demand": "\u20b930.5L"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '9 channels list <50% of Myntra catalog',
+      subtitle: 'Expand thin channels to capture ₹44.1 Cr/month',
+      impact_val: '₹44.1 Cr', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["9 thin channels", "Myntra leads: 11,219 SKUs", "Amazon EasyShip: top expansion priority"],
+      table: [{"channel": "Amazon EasyShip", "listed": "253", "coverage": "2%", "gap": "10,966", "upside": "\u20b917.7 Cr"}, {"channel": "Meesho", "listed": "4,856", "coverage": "43%", "gap": "6,363", "upside": "\u20b915.7 Cr"}, {"channel": "Amazon IN", "listed": "267", "coverage": "2%", "gap": "10,952", "upside": "\u20b99.2 Cr"}, {"channel": "JioMart", "listed": "350", "coverage": "3%", "gap": "10,869", "upside": "\u20b994.9L"}, {"channel": "VELY_MONKEYS", "listed": "50", "coverage": "0%", "gap": "11,169", "upside": "\u20b932.5L"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '12 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '27 SKUs at risk across 4 tiers',
+      impact_val: '27', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 10", "Critical (<7d): 2", "Warning (<14d): 5", "Watch (<30d): 10"],
+      table: [{"sku": "8904417305760", "name": "TDC 2% Hyalacalamine Hydrating Suns", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "8904417301793", "name": "ME Vitamin C Body Lotion 400 ml*2", "stock": "0", "doh": "0", "daily_rate": "0.5", "tier": "STOCKOUT"}, {"sku": "8906087779414", "name": "Radiance+ Mousse Night Gel", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "8904417302288", "name": "Rose Body Lotion 200 ml", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "8904417307344", "name": "BB SSHSCr\u221a\u00aemeHCChocolateDarkBrown15", "stock": "0", "doh": "0", "daily_rate": "0.2", "tier": "STOCKOUT"}, {"sku": "8904417311525", "name": "AQ Glow+ hydrating cleansing balm", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "8906087777113", "name": "AL Hydrate+ Gel moisturizer 100 gm", "stock": "0", "doh": "0", "daily_rate": "0.7", "tier": "STOCKOUT"}, {"sku": "8906087774266", "name": "ME Argan Hair Oil 250 ml", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}]
+    },
+    signal6: {
+      available: true, severity: 80,
+      title: "18 SKU-channel combos have >10% return rate",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '18', impact_label: 'high-return combos',
+      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
+      pills: ["297 total combos with returns", "Top: 33% on Flipkart"],
+      table: [{"sku": "8904417311969", "channel": "Flipkart", "dispatched": "6", "returned": "2", "pct": "33.3%"}, {"sku": "8904417322668", "channel": "Flipkart", "dispatched": "8", "returned": "2", "pct": "25.0%"}, {"sku": "8904417311860", "channel": "Flipkart", "dispatched": "12", "returned": "3", "pct": "25.0%"}, {"sku": "8904417303285", "channel": "Amazon EasyShip", "dispatched": "9", "returned": "2", "pct": "22.2%"}, {"sku": "8904417324464", "channel": "Flipkart", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "8904417319286", "channel": "Meesho", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "8904417319972", "channel": "Amazon EasyShip", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "8904417311518", "channel": "Flipkart", "dispatched": "5", "returned": "1", "pct": "20.0%"}]
+    },
+    signal7: { available: false }
+  },
+
+  pep: {
+    name: 'PEP',
+    code: 'PEP',
+    category: 'Beauty — Personal Care',
+    kpi: {
+      gross_sales_30d: '₹31.3 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '11.4L',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹274',
+      active_skus: '2,696',
+      skus_sub: 'Listed on Myntra (top mkt channel)',
+      active_channels: '8',
+      channels_sub: 'Meesho · HYPD · Myntra + 5 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '2,491 Myntra SKUs unlisted on Meesho',
+      subtitle: 'Top 3 gap channels — ₹15.4 Cr/mo projected demand',
+      impact_val: '₹15.4 Cr', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["Meesho: 8% coverage", "HYPD: 18% coverage", "Amazon IN: 14% coverage", "Myntra leads: 2,696 SKUs"],
+      table: [{"channel": "Meesho", "missing": "2,491", "daily_demand": "\u20b932.7L"}, {"channel": "HYPD", "missing": "2,216", "daily_demand": "\u20b912.1L"}, {"channel": "Amazon IN", "missing": "2,318", "daily_demand": "\u20b92.7L"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '21 channels list <50% of Myntra catalog',
+      subtitle: 'Expand thin channels to capture ₹15.4 Cr/month',
+      impact_val: '₹15.4 Cr', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["21 thin channels", "Myntra leads: 2,696 SKUs", "Meesho: top expansion priority"],
+      table: [{"channel": "Meesho", "listed": "205", "coverage": "8%", "gap": "2,491", "upside": "\u20b99.8 Cr"}, {"channel": "HYPD", "listed": "480", "coverage": "18%", "gap": "2,216", "upside": "\u20b93.6 Cr"}, {"channel": "Amazon IN", "listed": "378", "coverage": "14%", "gap": "2,318", "upside": "\u20b980.8L"}, {"channel": "FirstCry", "listed": "389", "coverage": "14%", "gap": "2,307", "upside": "\u20b939.0L"}, {"channel": "Smytten", "listed": "600", "coverage": "22%", "gap": "2,096", "upside": "\u20b936.4L"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '3 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '3 SKUs at risk across 2 tiers',
+      impact_val: '3', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 1", "Critical (<7d): 2"],
+      table: [{"sku": "ATG_BOX", "name": "Addicted to Good Box", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "MCaf372", "name": "Hydra Rush Body Serum Spray - Tropi", "stock": "12", "doh": "2", "daily_rate": "5.5", "tier": "CRITICAL"}, {"sku": "MCaf235_WB", "name": "Shimmer body scrub_150 gm", "stock": "30", "doh": "3", "daily_rate": "10.8", "tier": "CRITICAL"}]
+    },
+    signal6: {
+      available: true, severity: 50,
+      title: "16 SKU-channel combos have returns — top at 7%",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '16', impact_label: 'combos with returns',
+      type_label: 'High Returns', type_cls: 'st-amber', accent: 'amber',
+      pills: ["16 total combos with returns", "Top: 7% on FirstCry"],
+      table: [{"sku": "HYPMUBX005F010", "channel": "FirstCry", "dispatched": "15", "returned": "1", "pct": "6.7%"}, {"sku": "55MCaf40", "channel": "Myntra", "dispatched": "16", "returned": "1", "pct": "6.2%"}, {"sku": "HYPMUBX045F020", "channel": "FirstCry", "dispatched": "24", "returned": "1", "pct": "4.2%"}, {"sku": "HYPMUBX034F010", "channel": "FirstCry", "dispatched": "25", "returned": "1", "pct": "4.0%"}, {"sku": "MCaf238_Offline", "channel": "Myntra", "dispatched": "26", "returned": "1", "pct": "3.8%"}]
+    },
+    signal7: { available: false }
+  },
+
+  innovist: {
+    name: 'Innovist',
+    code: 'INNOVIST',
+    category: 'Beauty — D2C Skincare',
+    kpi: {
+      gross_sales_30d: '₹23.4 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '6.5L',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹357',
+      active_skus: '358',
+      skus_sub: 'Listed on Cloudtail (Amazon) (top mkt channel)',
+      active_channels: '9',
+      channels_sub: 'Meesho · Myntra · DonoShop + 6 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '357 Cloudtail (Amazon) SKUs unlisted on Flipkart',
+      subtitle: 'Top 3 gap channels — ₹23.8 Cr/mo projected demand',
+      impact_val: '₹23.8 Cr', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["Flipkart: 0% coverage", "Meesho: 39% coverage", "CRED: 18% coverage", "Cloudtail (Amazon) leads: 358 SKUs"],
+      table: [{"channel": "Flipkart", "missing": "357", "daily_demand": "\u20b970.3L"}, {"channel": "Meesho", "missing": "217", "daily_demand": "\u20b95.5L"}, {"channel": "CRED", "missing": "293", "daily_demand": "\u20b91.3L"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '12 channels list <50% of Cloudtail (Amazon) catalog',
+      subtitle: 'Expand thin channels to capture ₹23.8 Cr/month',
+      impact_val: '₹23.8 Cr', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["12 thin channels", "Cloudtail (Amazon) leads: 358 SKUs", "Flipkart: top expansion priority"],
+      table: [{"channel": "Flipkart", "listed": "1", "coverage": "0%", "gap": "357", "upside": "\u20b921.1 Cr"}, {"channel": "Meesho", "listed": "141", "coverage": "39%", "gap": "217", "upside": "\u20b91.7 Cr"}, {"channel": "CRED", "listed": "65", "coverage": "18%", "gap": "293", "upside": "\u20b938.2L"}, {"channel": "DonoShop", "listed": "87", "coverage": "24%", "gap": "271", "upside": "\u20b937.8L"}, {"channel": "Snapdeal", "listed": "83", "coverage": "23%", "gap": "275", "upside": "\u20b920.9L"}]
+    },
+    signal5: { available: false },
+    signal6: { available: false },
+    signal7: { available: false }
+  },
+
+  mosaicwellness: {
+    name: 'Mosaic Wellness',
+    code: 'MOSAICWELL',
+    category: 'Wellness — Man Matters / Be Bodywise',
+    kpi: {
+      gross_sales_30d: '₹58.9 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '15.9L',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹371',
+      active_skus: '38,016',
+      skus_sub: 'Listed on Amazon FBA (top mkt channel)',
+      active_channels: '12',
+      channels_sub: 'Amazon FBA · Meesho · Flipkart FA + 9 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '36,151 Amazon FBA SKUs unlisted on Meesho',
+      subtitle: 'Top 3 gap channels — ₹201.9 Cr/mo projected demand',
+      impact_val: '₹201.9 Cr', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["Meesho: 5% coverage", "PharmEasy: 0% coverage", "Blinkit: 0% coverage", "Amazon FBA leads: 38,016 SKUs"],
+      table: [{"channel": "Meesho", "missing": "36,151", "daily_demand": "\u20b92.0 Cr"}, {"channel": "PharmEasy", "missing": "37,988", "daily_demand": "\u20b91.6 Cr"}, {"channel": "Blinkit", "missing": "37,890", "daily_demand": "\u20b91.1 Cr"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '19 channels list <50% of Amazon FBA catalog',
+      subtitle: 'Expand thin channels to capture ₹201.9 Cr/month',
+      impact_val: '₹201.9 Cr', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["19 thin channels", "Amazon FBA leads: 38,016 SKUs", "Meesho: top expansion priority"],
+      table: [{"channel": "Meesho", "listed": "1,865", "coverage": "5%", "gap": "36,151", "upside": "\u20b961.1 Cr"}, {"channel": "PharmEasy", "listed": "28", "coverage": "0%", "gap": "37,988", "upside": "\u20b946.8 Cr"}, {"channel": "Blinkit", "listed": "126", "coverage": "0%", "gap": "37,890", "upside": "\u20b932.8 Cr"}, {"channel": "Myntra", "listed": "1,089", "coverage": "3%", "gap": "36,927", "upside": "\u20b919.4 Cr"}, {"channel": "HYPD", "listed": "173", "coverage": "0%", "gap": "37,843", "upside": "\u20b912.5 Cr"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '6 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '8 SKUs at risk across 3 tiers',
+      impact_val: '8', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 6", "Warning (<14d): 1", "Watch (<30d): 1"],
+      table: [{"sku": "MWLJNTP.00043.B0_N", "name": "LJ Nutrimix Jar (chocolate) - 300 g", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "MWLJNTP.00617.BO_N", "name": "LJ Nutrimix 7+ Pack of 6 - Chocolat", "stock": "0", "doh": "0", "daily_rate": "60.5", "tier": "STOCKOUT"}, {"sku": "MWLJNTP.00618.BO_N", "name": "LJ Nutrimix 2+ Pack of 6 - Chocolat", "stock": "0", "doh": "0", "daily_rate": "59.2", "tier": "STOCKOUT"}, {"sku": "MWMMBDP.0085.AAAA.B0_R", "name": "MM Beardmax Roll on - 25 ml", "stock": "0", "doh": "0", "daily_rate": "7.0", "tier": "STOCKOUT"}, {"sku": "MWMMHRP.6226.AAAA.B0_N", "name": "MM Nourish Hair gummies (with sugar", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "MWMMNTP.000187.AAAAB0_N", "name": "MM Superblend 25g Strawberry - Pack", "stock": "0", "doh": "0", "daily_rate": "1.2", "tier": "STOCKOUT"}, {"sku": "MWLJNTP.000748.B0_N", "name": "LJ Tomato Sauce Plastic Bottle(600g", "stock": "2383", "doh": "7", "daily_rate": "357.5", "tier": "WARNING"}, {"sku": "MWLJNTS.0001.B0_N", "name": "LJ NutriMix 2+ 30 g Chocolate Mini", "stock": "983", "doh": "28", "daily_rate": "34.6", "tier": "WATCH"}]
+    },
+    signal6: {
+      available: true, severity: 80,
+      title: "7 SKU-channel combos have >10% return rate",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '7', impact_label: 'high-return combos',
+      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
+      pills: ["100 total combos with returns", "Top: 40% on Amazon Flex"],
+      table: [{"sku": "MWMMNTP.0171.AAAA.B0_N", "channel": "Amazon Flex", "dispatched": "5", "returned": "2", "pct": "40.0%"}, {"sku": "MWMMHRP.7121.B0_R", "channel": "Flipkart", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "MWBWSKP.00651.B0_N", "channel": "Flipkart", "dispatched": "6", "returned": "1", "pct": "16.7%"}, {"sku": "MWMMHRP.7121.B0_R", "channel": "Amazon Flex", "dispatched": "40", "returned": "6", "pct": "15.0%"}, {"sku": "MWMMHRP.6298.AAAA.B0_N", "channel": "Flipkart", "dispatched": "8", "returned": "1", "pct": "12.5%"}, {"sku": "MWLJSKP.0007.B0_N", "channel": "Meesho", "dispatched": "9", "returned": "1", "pct": "11.1%"}, {"sku": "MWLJNTP.00482.B0_N", "channel": "Flipkart", "dispatched": "9", "returned": "1", "pct": "11.1%"}]
+    },
+    signal7: { available: false }
+  },
+
+  nuawoman: {
+    name: 'NUA Woman',
+    code: 'NUAWOMAN',
+    category: 'Personal Care — Feminine Wellness',
+    kpi: {
+      gross_sales_30d: '₹1.6 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '1.3L',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹126',
+      active_skus: '478',
+      skus_sub: 'Listed on Meesho (top mkt channel)',
+      active_channels: '11',
+      channels_sub: 'Meesho · Myntra · Smytten + 8 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '421 Meesho SKUs unlisted on Smytten',
+      subtitle: 'Top 3 gap channels — ₹53.3L/mo projected demand',
+      impact_val: '₹53.3L', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["Smytten: 12% coverage", "CRED: 2% coverage", "Myntra: 43% coverage", "Meesho leads: 478 SKUs"],
+      table: [{"channel": "Smytten", "missing": "421", "daily_demand": "\u20b91.0L"}, {"channel": "CRED", "missing": "470", "daily_demand": "\u20b921K"}, {"channel": "Myntra", "missing": "271", "daily_demand": "\u20b921K"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '15 channels list <50% of Meesho catalog',
+      subtitle: 'Expand thin channels to capture ₹53.3L/month',
+      impact_val: '₹53.3L', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["15 thin channels", "Meesho leads: 478 SKUs", "Smytten: top expansion priority"],
+      table: [{"channel": "Smytten", "listed": "57", "coverage": "12%", "gap": "421", "upside": "\u20b930.2L"}, {"channel": "CRED", "listed": "8", "coverage": "2%", "gap": "470", "upside": "\u20b96.4L"}, {"channel": "Myntra", "listed": "207", "coverage": "43%", "gap": "271", "upside": "\u20b96.4L"}, {"channel": "DonoShop", "listed": "18", "coverage": "4%", "gap": "460", "upside": "\u20b93.9L"}, {"channel": "Flipkart", "listed": "236", "coverage": "49%", "gap": "242", "upside": "\u20b92.1L"}]
+    },
+    signal5: {
+      available: true, severity: 80,
+      title: '1 SKUs have <14 days of stock remaining',
+      subtitle: '1 SKUs at risk across 1 tiers',
+      impact_val: '1', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-amber', accent: 'amber',
+      pills: ["Warning (<14d): 1"],
+      table: [{"sku": "NURSING-PAD-10-25", "name": "Nursing Pads", "stock": "536", "doh": "10", "daily_rate": "54.0", "tier": "WARNING"}]
+    },
+    signal6: {
+      available: true, severity: 80,
+      title: "3 SKU-channel combos have >10% return rate",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '3', impact_label: 'high-return combos',
+      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
+      pills: ["6 total combos with returns", "Top: 100% on Flipkart"],
+      table: [{"sku": "medium_flow_dima", "channel": "Flipkart", "dispatched": "5", "returned": "5", "pct": "100.0%"}, {"sku": "light_flow_dima", "channel": "Flipkart", "dispatched": "12", "returned": "4", "pct": "33.3%"}, {"sku": "heavy_flow_dima", "channel": "Flipkart", "dispatched": "9", "returned": "3", "pct": "33.3%"}]
+    },
+    signal7: {
+      available: true, severity: 50,
+      title: "31 top SKUs concentrated in one state (>30% share)",
+      subtitle: 'Regional demand hotspots — potential for targeted expansion',
+      impact_val: '31', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      pills: ["Top: Uttar Pradesh at 100%", "31 SKUs above 30% threshold"],
+      table: [{"sku": "RT-30MF-10-22", "state": "Uttar Pradesh", "share": "100.0%", "orders": "3/3", "revenue": "\u20b9801"}, {"sku": "STD-ASRMT-OVRNGT-PNTY-XL-XXL-0", "state": "J&K", "share": "100.0%", "orders": "2/2", "revenue": "\u20b9698"}, {"sku": "STD-ASSRT-PL40-160MM-OPP-XXL-X", "state": "Delhi", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9599"}, {"sku": "HOW-I-GOT-BOOK-09-24", "state": "Karnataka", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9379"}, {"sku": "NUA-MYWAVE-280mm-2s-01-26", "state": "Maharashtra", "share": "100.0%", "orders": "2/2", "revenue": "\u20b940"}, {"sku": "ONP1-320MM-SAM-09-24-KIT", "state": "Maharashtra", "share": "100.0%", "orders": "1/1", "revenue": "\u20b91"}, {"sku": "STD-ASRMT-POU-12-25-KIT", "state": "Maharashtra", "share": "100.0%", "orders": "1/1", "revenue": "\u20b90"}, {"sku": "DUO-PL-40-160MM-09-25-KIT", "state": "TL", "share": "70.0%", "orders": "35/50", "revenue": "\u20b95"}]
+    }
+  },
+
+  plix: {
+    name: 'Plix',
+    code: 'PLIX',
+    category: 'Wellness — Plant-based Nutrition',
+    kpi: {
+      gross_sales_30d: '₹55.2 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '18.5L',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹298',
+      active_skus: '2,930',
+      skus_sub: 'Listed on Meesho (top mkt channel)',
+      active_channels: '15',
+      channels_sub: 'Meesho · Nykaa · Flipkart + 12 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '2,862 Meesho SKUs unlisted on Blinkit',
+      subtitle: 'Top 3 gap channels — ₹30.2 Cr/mo projected demand',
+      impact_val: '₹30.2 Cr', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["Blinkit: 2% coverage", "Flipkart: 46% coverage", "HYPD: 15% coverage", "Meesho leads: 2,930 SKUs"],
+      table: [{"channel": "Blinkit", "missing": "2,862", "daily_demand": "\u20b922.3L"}, {"channel": "Flipkart", "missing": "1,580", "daily_demand": "\u20b917.1L"}, {"channel": "HYPD", "missing": "2,495", "daily_demand": "\u20b916.8L"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '19 channels list <50% of Meesho catalog',
+      subtitle: 'Expand thin channels to capture ₹30.2 Cr/month',
+      impact_val: '₹30.2 Cr', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["19 thin channels", "Meesho leads: 2,930 SKUs", "Blinkit: top expansion priority"],
+      table: [{"channel": "Blinkit", "listed": "68", "coverage": "2%", "gap": "2,862", "upside": "\u20b96.7 Cr"}, {"channel": "Flipkart", "listed": "1,350", "coverage": "46%", "gap": "1,580", "upside": "\u20b95.1 Cr"}, {"channel": "HYPD", "listed": "435", "coverage": "15%", "gap": "2,495", "upside": "\u20b95.0 Cr"}, {"channel": "Amazon IN", "listed": "575", "coverage": "20%", "gap": "2,355", "upside": "\u20b94.6 Cr"}, {"channel": "Snapdeal", "listed": "381", "coverage": "13%", "gap": "2,549", "upside": "\u20b93.8 Cr"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '19 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '39 SKUs at risk across 5 tiers',
+      impact_val: '39', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 8", "Critical (<7d): 11", "Warning (<14d): 7", "Watch (<30d): 13"],
+      table: [{"sku": "COMBO-FG-ACV-O-LM-2", "name": "Apple Cider Vinegar Effervescent  P", "stock": "0", "doh": "0", "daily_rate": "0.2", "tier": "STOCKOUT"}, {"sku": "N-FG-EFF-Shilajit-Kulfi-Elaich", "name": "Shilajit Kulfi Elaichi 15Tab efferv", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "GC--6", "name": "GC6", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "FG-PGLU-SB1-GRP2-LM1-WM2-P6", "name": "Glowy SKin Flavour - Strawberry1 , ", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "BOXITEM-GIFT-PC-FG-PLM-DTAN-SC", "name": "Peaches & Lemon Scrub + Lotion", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "COMBO-JACNE-FW-20ML-SER-10ML", "name": "COMBO JAMUN ACNE MARKS 20ML FACEWAS", "stock": "16", "doh": "0", "daily_rate": "182.2", "tier": "CRITICAL"}, {"sku": "COMBO-FG-FW-PI-GV-50ML-2", "name": "Combo-Pineapple Juicy Cleanser Face", "stock": "0", "doh": "0", "daily_rate": "0.6", "tier": "STOCKOUT"}, {"sku": "BOXITEM-GIFT-FG-PGLU-WM-1", "name": "Glowy Skin Effervescent | Watermelo", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}]
+    },
+    signal6: {
+      available: true, severity: 80,
+      title: "5 SKU-channel combos have >10% return rate",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '5', impact_label: 'high-return combos',
+      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
+      pills: ["101 total combos with returns", "Top: 22% on Amazon IN"],
+      table: [{"sku": "PC-FG-SHMP-HIBS-BR-100ML-1", "channel": "Amazon IN", "dispatched": "9", "returned": "2", "pct": "22.2%"}, {"sku": "PC-FG-SUNSTIK-WM-INVIZ-1", "channel": "Amazon IN", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "PC-FG-LOTN-NEEM-AD-60ML-1", "channel": "Flipkart", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "PC-FG-SER-NEEM-AD-50ML-1", "channel": "Flipkart", "dispatched": "15", "returned": "2", "pct": "13.3%"}, {"sku": "COMBO-FG-FW-PI-GV-50ML-2", "channel": "Flipkart", "dispatched": "8", "returned": "1", "pct": "12.5%"}]
+    },
+    signal7: { available: false }
+  },
+
+  superyou: {
+    name: 'SuperYou',
+    code: 'SUPERYOU',
+    category: 'Wellness — Supplements',
+    kpi: {
+      gross_sales_30d: '₹3.9 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '50.3K',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹780',
+      active_skus: '400',
+      skus_sub: 'Listed on Amazon FBA (top mkt channel)',
+      active_channels: '7',
+      channels_sub: 'DonoShop · KindLife · Flipkart + 4 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '373 Amazon FBA SKUs unlisted on DonoShop',
+      subtitle: 'Top 3 gap channels — ₹3.0 Cr/mo projected demand',
+      impact_val: '₹3.0 Cr', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["DonoShop: 7% coverage", "KindLife: 10% coverage", "Flipkart: 10% coverage", "Amazon FBA leads: 400 SKUs"],
+      table: [{"channel": "DonoShop", "missing": "373", "daily_demand": "\u20b95.7L"}, {"channel": "KindLife", "missing": "360", "daily_demand": "\u20b92.1L"}, {"channel": "Flipkart", "missing": "361", "daily_demand": "\u20b91.7L"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '6 channels list <50% of Amazon FBA catalog',
+      subtitle: 'Expand thin channels to capture ₹3.0 Cr/month',
+      impact_val: '₹3.0 Cr', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["6 thin channels", "Amazon FBA leads: 400 SKUs", "DonoShop: top expansion priority"],
+      table: [{"channel": "DonoShop", "listed": "27", "coverage": "7%", "gap": "373", "upside": "\u20b91.7 Cr"}, {"channel": "KindLife", "listed": "40", "coverage": "10%", "gap": "360", "upside": "\u20b964.2L"}, {"channel": "Flipkart", "listed": "39", "coverage": "10%", "gap": "361", "upside": "\u20b952.1L"}, {"channel": "HyugaLife", "listed": "25", "coverage": "6%", "gap": "375", "upside": "\u20b99.2L"}, {"channel": "Tata CLiQ", "listed": "25", "coverage": "6%", "gap": "375", "upside": "\u20b95.2L"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '3 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '11 SKUs at risk across 4 tiers',
+      impact_val: '11', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 1", "Critical (<7d): 2", "Warning (<14d): 2", "Watch (<30d): 6"],
+      table: [{"sku": "PRO-YST-ASS-36GM-08", "name": "SUPERYOU Yeast Protein - Assorted 3", "stock": "0", "doh": "0", "daily_rate": "183.0", "tier": "STOCKOUT"}, {"sku": "PRO-YST-CHO-36GM-01", "name": "SUPERYOU Yeast Protein - Chocolate ", "stock": "128", "doh": "1", "daily_rate": "109.6", "tier": "CRITICAL"}, {"sku": "SNK-WBM-ASS-020-10", "name": "SUPERYOU Wafer Bar Minis - Assorted", "stock": "1490", "doh": "5", "daily_rate": "325.3", "tier": "CRITICAL"}, {"sku": "SNK-WBM-HZL-020-10", "name": "SUPERYOU Wafer Bar Minis- Hazelnut ", "stock": "1407", "doh": "9", "daily_rate": "160.2", "tier": "WARNING"}, {"sku": "PRO-YST-CFF-36GM-01", "name": "SUPERYOU Yeast Protein - Cold Coffe", "stock": "500", "doh": "12", "daily_rate": "40.0", "tier": "WARNING"}, {"sku": "SNK-WFB-CFF-040-01", "name": "SUPERYOU Wafer Bar - Coffee 1's", "stock": "18600", "doh": "16", "daily_rate": "1127.6", "tier": "WATCH"}, {"sku": "SNK-WBM-CCR-020-10", "name": "SUPERYOU Wafer Bar Minis - Cookies ", "stock": "7215", "doh": "18", "daily_rate": "409.8", "tier": "WATCH"}, {"sku": "SNK-WFB-ORN-040-01", "name": "SUPERYOU Wafer Bar - Orange 1's", "stock": "11270", "doh": "19", "daily_rate": "590.1", "tier": "WATCH"}]
+    },
+    signal6: {
+      available: true, severity: 80,
+      title: "2 SKU-channel combos have >10% return rate",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '2', impact_label: 'high-return combos',
+      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
+      pills: ["6 total combos with returns", "Top: 20% on Flipkart"],
+      table: [{"sku": "PRO-YST-CHO-36G-05", "channel": "Flipkart", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "PRO-YST-CFF-500-01", "channel": "Flipkart", "dispatched": "7", "returned": "1", "pct": "14.3%"}]
+    },
+    signal7: {
+      available: true, severity: 50,
+      title: "9 top SKUs concentrated in one state (>30% share)",
+      subtitle: 'Regional demand hotspots — potential for targeted expansion',
+      impact_val: '9', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      pills: ["Top: Karnataka at 100%", "9 SKUs above 30% threshold"],
+      table: [{"sku": "SNK-WFB-ASS-080-20-K", "state": "Karnataka", "share": "100.0%", "orders": "9/9", "revenue": "\u20b92K"}, {"sku": "SNK-CHP-CTM-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "10/10", "revenue": "\u20b956"}, {"sku": "SNK-WFB-CHS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "6/6", "revenue": "\u20b942"}, {"sku": "SNK-WFB-STB-040-01", "state": "Karnataka", "share": "100.0%", "orders": "4/4", "revenue": "\u20b942"}, {"sku": "SNK-WFB-ORN-040-01", "state": "Karnataka", "share": "100.0%", "orders": "5/5", "revenue": "\u20b942"}, {"sku": "SNK-CHP-PDN-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "2/2", "revenue": "\u20b928"}, {"sku": "SNK-CHP-SMS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "9/9", "revenue": "\u20b928"}, {"sku": "SNK-CHP-SCO-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "7/7", "revenue": "\u20b928"}]
+    }
+  },
+
+  trayahealth: {
+    name: 'Traya Health',
+    code: 'TRAYA',
+    category: 'Wellness — Hair Health',
+    kpi: {
+      gross_sales_30d: '₹53.0 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '15.4L',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹344',
+      active_skus: '28',
+      skus_sub: 'Listed on Flipkart (top mkt channel)',
+      active_channels: '2',
+      channels_sub: 'Flipkart · Amazon IN'
+    },
+    signal1: { available: false },
+    signal2: { available: false },
+    signal5: { available: false },
+    signal6: {
+      available: true, severity: 50,
+      title: "1 SKU-channel combos have returns — top at 6%",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '1', impact_label: 'combos with returns',
+      type_label: 'High Returns', type_cls: 'st-amber', accent: 'amber',
+      pills: ["1 total combos with returns", "Top: 6% on Flipkart"],
+      table: [{"sku": "8908016247537", "channel": "Flipkart", "dispatched": "73", "returned": "4", "pct": "5.5%"}]
+    },
+    signal7: {
+      available: true, severity: 50,
+      title: "8 top SKUs concentrated in one state (>30% share)",
+      subtitle: 'Regional demand hotspots — potential for targeted expansion',
+      impact_val: '8', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      pills: ["Top: ML at 100%", "8 SKUs above 30% threshold"],
+      table: [{"sku": "8908016247056_2", "state": "ML", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9734"}, {"sku": "8908016247858", "state": "TL", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9535"}, {"sku": "8908016247230", "state": "Uttar Pradesh", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9469"}, {"sku": "8908016247506", "state": "Maharashtra", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9425"}, {"sku": "8908016247841", "state": "Maharashtra", "share": "50.0%", "orders": "2/4", "revenue": "\u20b92K"}, {"sku": "8908016247308", "state": "Tamil Nadu", "share": "50.0%", "orders": "1/2", "revenue": "\u20b92K"}, {"sku": "8908016247865", "state": "Odisha", "share": "33.3%", "orders": "3/9", "revenue": "\u20b95K"}, {"sku": "8908016247421", "state": "Maharashtra", "share": "30.4%", "orders": "1525/5014", "revenue": "\u20b922.1L"}]
+    }
+  },
+
+  adachikan: {
+    name: 'Ada Chikan',
+    code: 'ADACHIKAN',
+    category: 'Fashion — Ethnic Wear',
+    kpi: {
+      gross_sales_30d: '₹2.2 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '12.1K',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹1,788',
+      active_skus: '30,507',
+      skus_sub: 'Listed on Myntra (top mkt channel)',
+      active_channels: '7',
+      channels_sub: 'Myntra · Amazon Flex · Nykaa Fashion + 4 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '16,506 Myntra SKUs unlisted on Nykaa Fashion',
+      subtitle: 'Top 1 gap channels — ₹28.4L/mo projected demand',
+      impact_val: '₹28.4L', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["Nykaa Fashion: 46% coverage", "Myntra leads: 30,507 SKUs"],
+      table: [{"channel": "Nykaa Fashion", "missing": "16,506", "daily_demand": "\u20b995K"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '7 channels list <50% of Myntra catalog',
+      subtitle: 'Expand thin channels to capture ₹28.4L/month',
+      impact_val: '₹28.4L', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["7 thin channels", "Myntra leads: 30,507 SKUs", "Nykaa Fashion: top expansion priority"],
+      table: [{"channel": "Nykaa Fashion", "listed": "14,001", "coverage": "46%", "gap": "16,506", "upside": "\u20b928.4L"}, {"channel": "NYKAA_FASHION_B2B", "listed": "8,980", "coverage": "29%", "gap": "21,527", "upside": "\u2014"}, {"channel": "AMAZON_UK", "listed": "575", "coverage": "2%", "gap": "29,932", "upside": "\u2014"}, {"channel": "AMAZON_US", "listed": "93", "coverage": "0%", "gap": "30,414", "upside": "\u2014"}, {"channel": "MYNTRA_B2B", "listed": "6,541", "coverage": "21%", "gap": "23,966", "upside": "\u2014"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '97 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '108 SKUs at risk across 3 tiers',
+      impact_val: '108', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 97", "Warning (<14d): 5", "Watch (<30d): 6"],
+      table: [{"sku": "S411188", "name": "Blue Viscose Georgette Kurta", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "XL911444", "name": "Fawn Silk Viscose Kurti", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "L911557", "name": "Carrot Pink Georgette Kurti", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "M100290", "name": "pink cotton kurta", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "2XL411475", "name": "White Cotton kurta", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "2XL510184", "name": "Peach Cotton Lucknow Chikan Kurti", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "2XL911328", "name": "Yellow Cotton Kurti", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "2XL911441", "name": "Sea Green Kota Kurti", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}]
+    },
+    signal6: {
+      available: true, severity: 80,
+      title: "3 SKU-channel combos have >10% return rate",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '3', impact_label: 'high-return combos',
+      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
+      pills: ["4 total combos with returns", "Top: 20% on Amazon Flex"],
+      table: [{"sku": "XL149984", "channel": "Amazon Flex", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "L351501", "channel": "Amazon Flex", "dispatched": "6", "returned": "1", "pct": "16.7%"}, {"sku": "XL100368", "channel": "Amazon Flex", "dispatched": "8", "returned": "1", "pct": "12.5%"}]
+    },
+    signal7: {
+      available: true, severity: 50,
+      title: "32 top SKUs concentrated in one state (>30% share)",
+      subtitle: 'Regional demand hotspots — potential for targeted expansion',
+      impact_val: '32', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      pills: ["Top: Bihar at 100%", "32 SKUs above 30% threshold"],
+      table: [{"sku": "01A782276", "state": "Bihar", "share": "100.0%", "orders": "1/1", "revenue": "\u20b959K"}, {"sku": "01A654941", "state": "Maharashtra", "share": "100.0%", "orders": "1/1", "revenue": "\u20b958K"}, {"sku": "01A872711", "state": "Maharashtra", "share": "100.0%", "orders": "2/2", "revenue": "\u20b955K"}, {"sku": "01A582243", "state": "CA", "share": "100.0%", "orders": "1/1", "revenue": "\u20b948K"}, {"sku": "01A865529", "state": "Haryana", "share": "100.0%", "orders": "1/1", "revenue": "\u20b940K"}, {"sku": "01A935330", "state": "Queensland", "share": "100.0%", "orders": "3/3", "revenue": "\u20b939K"}, {"sku": "01A865512", "state": "Haryana", "share": "100.0%", "orders": "2/2", "revenue": "\u20b938K"}, {"sku": "01A888706", "state": "Jharkhand", "share": "100.0%", "orders": "1/1", "revenue": "\u20b933K"}]
+    }
+  },
+
+  adilqadri: {
+    name: 'Adil Qadri',
+    code: 'ADILQADRI',
+    category: 'Fragrance — Attars & Perfumes',
+    kpi: {
+      gross_sales_30d: '₹10.5 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '2.5L',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹414',
+      active_skus: '223',
+      skus_sub: 'Listed on Myntra (top mkt channel)',
+      active_channels: '6',
+      channels_sub: 'Flipkart · Amazon Flex · Meesho + 3 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '126 Myntra SKUs unlisted on Meesho',
+      subtitle: 'Top 3 gap channels — ₹1.2 Cr/mo projected demand',
+      impact_val: '₹1.2 Cr', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["Meesho: 43% coverage", "HYPD: 34% coverage", "DonoShop: 26% coverage", "Myntra leads: 223 SKUs"],
+      table: [{"channel": "Meesho", "missing": "126", "daily_demand": "\u20b92.2L"}, {"channel": "HYPD", "missing": "148", "daily_demand": "\u20b91.3L"}, {"channel": "DonoShop", "missing": "166", "daily_demand": "\u20b945K"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '3 channels list <50% of Myntra catalog',
+      subtitle: 'Expand thin channels to capture ₹1.2 Cr/month',
+      impact_val: '₹1.2 Cr', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["3 thin channels", "Myntra leads: 223 SKUs", "Meesho: top expansion priority"],
+      table: [{"channel": "Meesho", "listed": "97", "coverage": "43%", "gap": "126", "upside": "\u20b966.0L"}, {"channel": "HYPD", "listed": "75", "coverage": "34%", "gap": "148", "upside": "\u20b938.4L"}, {"channel": "DonoShop", "listed": "57", "coverage": "26%", "gap": "166", "upside": "\u20b913.5L"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '8 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '11 SKUs at risk across 3 tiers',
+      impact_val: '11', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 6", "Critical (<7d): 2", "Watch (<30d): 3"],
+      table: [{"sku": "617571077234", "name": "AQ Aqua Perfume Spray 100 ML", "stock": "0", "doh": "0", "daily_rate": "0.9", "tier": "STOCKOUT"}, {"sku": "617571048432", "name": "Oudh Al Hashmi Luxury Attar Perfume", "stock": "0", "doh": "0", "daily_rate": "0.2", "tier": "STOCKOUT"}, {"sku": "617571048685", "name": "Leader Luxury Attar Perfume 12ML", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "617571048753", "name": "Shanaya Oud Luxury Attar Perfume 12", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "617571077500", "name": "The Story Attar 10ML", "stock": "0", "doh": "0", "daily_rate": "6.6", "tier": "STOCKOUT"}, {"sku": "617571077586", "name": "Safwan Perfume Spray 50 ML", "stock": "0", "doh": "0", "daily_rate": "0.5", "tier": "STOCKOUT"}, {"sku": "617571077081", "name": "Essensia Luxury Attar Perfume Gift ", "stock": "35", "doh": "2", "daily_rate": "20.6", "tier": "CRITICAL"}, {"sku": "617571048395", "name": "AQ 365 Perfume Spray 30ML", "stock": "44", "doh": "2", "daily_rate": "20.2", "tier": "CRITICAL"}]
+    },
+    signal6: {
+      available: true, severity: 80,
+      title: "7 SKU-channel combos have >10% return rate",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '7', impact_label: 'high-return combos',
+      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
+      pills: ["66 total combos with returns", "Top: 20% on Amazon Flex"],
+      table: [{"sku": "617571077043", "channel": "Amazon Flex", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "617571048777", "channel": "Meesho", "dispatched": "6", "returned": "1", "pct": "16.7%"}, {"sku": "617571077661", "channel": "Amazon Flex", "dispatched": "14", "returned": "2", "pct": "14.3%"}, {"sku": "617571048623", "channel": "Flipkart", "dispatched": "8", "returned": "1", "pct": "12.5%"}, {"sku": "617571077524", "channel": "Flipkart", "dispatched": "8", "returned": "1", "pct": "12.5%"}, {"sku": "617571077722", "channel": "Amazon Flex", "dispatched": "9", "returned": "1", "pct": "11.1%"}, {"sku": "617571077586", "channel": "Flipkart", "dispatched": "9", "returned": "1", "pct": "11.1%"}]
+    },
+    signal7: {
+      available: true, severity: 50,
+      title: "8 top SKUs concentrated in one state (>30% share)",
+      subtitle: 'Regional demand hotspots — potential for targeted expansion',
+      impact_val: '8', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      pills: ["Top: Odisha at 100%", "8 SKUs above 30% threshold"],
+      table: [{"sku": "617571048685", "state": "Odisha", "share": "100.0%", "orders": "2/2", "revenue": "\u20b9748"}, {"sku": "617571077876", "state": "Rajasthan", "share": "50.0%", "orders": "1/2", "revenue": "\u20b92K"}, {"sku": "test", "state": "West Bengal", "share": "50.0%", "orders": "1/2", "revenue": "\u20b91K"}, {"sku": "617571077708", "state": "Odisha", "share": "50.0%", "orders": "1/2", "revenue": "\u20b9309"}, {"sku": "617571077692", "state": "Rajasthan", "share": "40.0%", "orders": "2/5", "revenue": "\u20b9856"}, {"sku": "617571077050", "state": "Uttar Pradesh", "share": "33.3%", "orders": "7/21", "revenue": "\u20b940K"}, {"sku": "617571048432", "state": "West Bengal", "share": "33.3%", "orders": "1/3", "revenue": "\u20b91K"}, {"sku": "617571077678", "state": "Himachal Pradesh", "share": "33.3%", "orders": "1/3", "revenue": "\u20b9497"}]
+    }
+  },
+
+  ajantashoes: {
+    name: 'Ajanta Shoes',
+    code: 'AJANTASHOES',
+    category: 'Footwear',
+    kpi: {
+      gross_sales_30d: '₹1.6 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '45.6K',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹345',
+      active_skus: '9,800',
+      skus_sub: 'Listed on Amazon Flex (top mkt channel)',
+      active_channels: '7',
+      channels_sub: 'Flipkart · Myntra · Meesho + 4 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '5,458 Amazon Flex SKUs unlisted on Meesho',
+      subtitle: 'Top 3 gap channels — ₹55.9L/mo projected demand',
+      impact_val: '₹55.9L', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["Meesho: 44% coverage", "Snapdeal: 46% coverage", "Cloudtail (Amazon): 45% coverage", "Amazon Flex leads: 9,800 SKUs"],
+      table: [{"channel": "Meesho", "missing": "5,458", "daily_demand": "\u20b987K"}, {"channel": "Snapdeal", "missing": "5,254", "daily_demand": "\u20b938K"}, {"channel": "Cloudtail (Amazon)", "missing": "5,358", "daily_demand": "\u20b932K"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '4 channels list <50% of Amazon Flex catalog',
+      subtitle: 'Expand thin channels to capture ₹55.9L/month',
+      impact_val: '₹55.9L', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["4 thin channels", "Amazon Flex leads: 9,800 SKUs", "Meesho: top expansion priority"],
+      table: [{"channel": "Meesho", "listed": "4,342", "coverage": "44%", "gap": "5,458", "upside": "\u20b926.0L"}, {"channel": "Snapdeal", "listed": "4,546", "coverage": "46%", "gap": "5,254", "upside": "\u20b911.5L"}, {"channel": "Cloudtail (Amazon)", "listed": "4,442", "coverage": "45%", "gap": "5,358", "upside": "\u20b99.6L"}, {"channel": "Amazon IN", "listed": "2,638", "coverage": "27%", "gap": "7,162", "upside": "\u20b98.8L"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '9 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '31 SKUs at risk across 4 tiers',
+      impact_val: '31', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 2", "Critical (<7d): 7", "Warning (<14d): 10", "Watch (<30d): 12"],
+      table: [{"sku": "AG0108007017-12", "name": "AG0108007017", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "AS3211-9", "name": "Impakto Barefoot Rooted Men Black G", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "PG0433007017-9", "name": "51PG04330019", "stock": "3", "doh": "2", "daily_rate": "1.4", "tier": "CRITICAL"}, {"sku": "FK0078007041-8", "name": "51FK00780017", "stock": "3", "doh": "3", "daily_rate": "0.9", "tier": "CRITICAL"}, {"sku": "PG0470007178-8", "name": "PG0470007178", "stock": "2", "doh": "3", "daily_rate": "0.6", "tier": "CRITICAL"}, {"sku": "AS4104007258-7", "name": "AS4104007258", "stock": "2", "doh": "4", "daily_rate": "0.5", "tier": "CRITICAL"}, {"sku": "FK0078007041-6", "name": "51FK00780017", "stock": "3", "doh": "5", "daily_rate": "0.6", "tier": "CRITICAL"}, {"sku": "FK0075007091-6", "name": "51FK00750004", "stock": "12", "doh": "5", "daily_rate": "2.4", "tier": "CRITICAL"}]
+    },
+    signal6: {
+      available: true, severity: 80,
+      title: "13 SKU-channel combos have >10% return rate",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '13', impact_label: 'high-return combos',
+      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
+      pills: ["85 total combos with returns", "Top: 20% on Amazon Flex"],
+      table: [{"sku": "AS3143007017-8", "channel": "Amazon Flex", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "AS3328007185-8", "channel": "Flipkart", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "PG0462007417-7", "channel": "Flipkart", "dispatched": "18", "returned": "3", "pct": "16.7%"}, {"sku": "FT3022007011-6", "channel": "Amazon Flex", "dispatched": "6", "returned": "1", "pct": "16.7%"}, {"sku": "FK0076007101-6", "channel": "Meesho", "dispatched": "7", "returned": "1", "pct": "14.3%"}, {"sku": "AS3211007017-7", "channel": "Flipkart", "dispatched": "7", "returned": "1", "pct": "14.3%"}, {"sku": "PG0430007047-7", "channel": "Flipkart", "dispatched": "7", "returned": "1", "pct": "14.3%"}, {"sku": "PG0462007417-6", "channel": "Meesho", "dispatched": "7", "returned": "1", "pct": "14.3%"}]
+    },
+    signal7: {
+      available: true, severity: 50,
+      title: "2 top SKUs concentrated in one state (>30% share)",
+      subtitle: 'Regional demand hotspots — potential for targeted expansion',
+      impact_val: '2', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      pills: ["Top: Rajasthan at 31%", "2 SKUs above 30% threshold"],
+      table: [{"sku": "AS3381007238-8", "state": "Rajasthan", "share": "31.2%", "orders": "10/32", "revenue": "\u20b959K"}, {"sku": "PG0456007047-7", "state": "West Bengal", "share": "30.2%", "orders": "114/377", "revenue": "\u20b982K"}]
+    }
+  },
+
+  gosrikifashion: {
+    name: 'Go Sriki Fashion',
+    code: 'GOSRIKI',
+    category: 'Fashion — Women’s Wear',
+    kpi: {
+      gross_sales_30d: '₹36.2 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '5.3L',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹680',
+      active_skus: '10.1L',
+      skus_sub: 'Listed on Myntra (top mkt channel)',
+      active_channels: '7',
+      channels_sub: 'Myntra · Flipkart · Ajio + 4 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '9.9L Myntra SKUs unlisted on Nykaa Fashion',
+      subtitle: 'Top 3 gap channels — ₹169.5 Cr/mo projected demand',
+      impact_val: '₹169.5 Cr', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["Nykaa Fashion: 1% coverage", "Tata CLiQ: 0% coverage", "Flipkart: 34% coverage", "Myntra leads: 10.1L SKUs"],
+      table: [{"channel": "Nykaa Fashion", "missing": "9.9L", "daily_demand": "\u20b94.4 Cr"}, {"channel": "Tata CLiQ", "missing": "10.0L", "daily_demand": "\u20b973.1L"}, {"channel": "Flipkart", "missing": "6.6L", "daily_demand": "\u20b933.3L"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '4 channels list <50% of Myntra catalog',
+      subtitle: 'Expand thin channels to capture ₹169.5 Cr/month',
+      impact_val: '₹169.5 Cr', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["4 thin channels", "Myntra leads: 10.1L SKUs", "Nykaa Fashion: top expansion priority"],
+      table: [{"channel": "Nykaa Fashion", "listed": "14,158", "coverage": "1%", "gap": "9.9L", "upside": "\u20b9133.4 Cr"}, {"channel": "Tata CLiQ", "listed": "4,417", "coverage": "0%", "gap": "10.0L", "upside": "\u20b921.9 Cr"}, {"channel": "Flipkart", "listed": "3.4L", "coverage": "34%", "gap": "6.6L", "upside": "\u20b910.0 Cr"}, {"channel": "Meesho", "listed": "2.2L", "coverage": "22%", "gap": "7.8L", "upside": "\u20b94.2 Cr"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '505 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '641 SKUs at risk across 4 tiers',
+      impact_val: '641', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 402", "Critical (<7d): 103", "Warning (<14d): 67", "Watch (<30d): 69"],
+      table: [{"sku": "GAGA_RUST_M", "name": "GAGA RUST", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "GANGORI_BLUE_L", "name": "GANGORI BLUE", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "ANVESHI_BLACK_XXL", "name": "ANVESHI-BLACK", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "AREEMA_PURPLE_L", "name": "AREEMA PURPLE", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "ARISHA_RED_L", "name": "ARISHA RED", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "ART_PURPLE_M", "name": "ART PURPLE", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "ASHIKA_MAROON_5XL", "name": "ASHIKA MAROON", "stock": "0", "doh": "0", "daily_rate": "0.2", "tier": "STOCKOUT"}, {"sku": "ASHVTHAMA_ORANGE_XXL", "name": "ASHVTHAMA ORANGE", "stock": "0", "doh": "0", "daily_rate": "0.2", "tier": "STOCKOUT"}]
+    },
+    signal6: {
+      available: true, severity: 80,
+      title: "15 SKU-channel combos have >10% return rate",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '15', impact_label: 'high-return combos',
+      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
+      pills: ["33 total combos with returns", "Top: 40% on Flipkart"],
+      table: [{"sku": "JARUL_BLUE_S", "channel": "Flipkart", "dispatched": "5", "returned": "2", "pct": "40.0%"}, {"sku": "CHAKORI_MAROON_S", "channel": "Flipkart", "dispatched": "5", "returned": "2", "pct": "40.0%"}, {"sku": "SARANGPUR_MAROON_XL", "channel": "Flipkart", "dispatched": "9", "returned": "2", "pct": "22.2%"}, {"sku": "JANEU_PINK_L", "channel": "Flipkart", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "JIVANTA_CREAM_XXL", "channel": "Flipkart", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "HAMSA_PURPLE_S", "channel": "Meesho", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "RUTH_PINK_XXL", "channel": "Flipkart", "dispatched": "11", "returned": "2", "pct": "18.2%"}, {"sku": "BARNAB_MAROON_XXL", "channel": "Flipkart", "dispatched": "6", "returned": "1", "pct": "16.7%"}]
+    },
+    signal7: {
+      available: true, severity: 50,
+      title: "5 top SKUs concentrated in one state (>30% share)",
+      subtitle: 'Regional demand hotspots — potential for targeted expansion',
+      impact_val: '5', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      pills: ["Top: Gujarat at 45%", "5 SKUs above 30% threshold"],
+      table: [{"sku": "WAFIYA_RED_L", "state": "Gujarat", "share": "44.7%", "orders": "355/794", "revenue": "\u20b95.7L"}, {"sku": "WAFIYA_RED_XL", "state": "Gujarat", "share": "37.3%", "orders": "379/1015", "revenue": "\u20b97.1L"}, {"sku": "DIANTHA_BLACK_M", "state": "Kerala", "share": "35.8%", "orders": "211/589", "revenue": "\u20b95.6L"}, {"sku": "JARUL_BLUE_XL", "state": "Gujarat", "share": "32.4%", "orders": "309/953", "revenue": "\u20b95.8L"}, {"sku": "SDF_BROWN_S", "state": "Gujarat", "share": "31.1%", "orders": "277/892", "revenue": "\u20b95.7L"}]
+    }
+  },
+
+  palmonas: {
+    name: 'Palmonas',
+    code: 'PALMONAS',
+    category: 'Jewellery — Fashion',
+    kpi: {
+      gross_sales_30d: '₹27.4 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '1.6L',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹1,741',
+      active_skus: '6,066',
+      skus_sub: 'Listed on Myntra (top mkt channel)',
+      active_channels: '8',
+      channels_sub: 'Myntra · Amazon EasyShip · Ajio + 5 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '5,917 Myntra SKUs unlisted on CRED',
+      subtitle: 'Top 1 gap channels — ₹2.2 Cr/mo projected demand',
+      impact_val: '₹2.2 Cr', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["CRED: 2% coverage", "Myntra leads: 6,066 SKUs"],
+      table: [{"channel": "CRED", "missing": "5,917", "daily_demand": "\u20b97.2L"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '4 channels list <50% of Myntra catalog',
+      subtitle: 'Expand thin channels to capture ₹2.2 Cr/month',
+      impact_val: '₹2.2 Cr', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["4 thin channels", "Myntra leads: 6,066 SKUs", "CRED: top expansion priority"],
+      table: [{"channel": "CRED", "listed": "149", "coverage": "2%", "gap": "5,917", "upside": "\u20b92.2 Cr"}, {"channel": "ZOOZLE", "listed": "193", "coverage": "3%", "gap": "5,873", "upside": "\u2014"}, {"channel": "DonoShop", "listed": "264", "coverage": "4%", "gap": "5,802", "upside": "\u2014"}, {"channel": "Tata CLiQ", "listed": "429", "coverage": "7%", "gap": "5,637", "upside": "\u2014"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '202 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '243 SKUs at risk across 4 tiers',
+      impact_val: '243', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 188", "Critical (<7d): 14", "Warning (<14d): 14", "Watch (<30d): 27"],
+      table: [{"sku": "PMWSTMN015-G", "name": "Three Petals Of Love 925 Silver Man", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "SSWBR0368", "name": "SSWBR0368", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "BR0040", "name": "BR0040", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "BR0044", "name": "BR0044", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "BR0059", "name": "BR0059", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "SSMNC0593", "name": "Silk Gold Chain for Men", "stock": "0", "doh": "0", "daily_rate": "0.4", "tier": "STOCKOUT"}, {"sku": "BR0160", "name": "BR0160", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "BR0173", "name": "BR0173", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}]
+    },
+    signal6: {
+      available: true, severity: 50,
+      title: "2 SKU-channel combos have returns — top at 7%",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '2', impact_label: 'combos with returns',
+      type_label: 'High Returns', type_cls: 'st-amber', accent: 'amber',
+      pills: ["2 total combos with returns", "Top: 7% on CRED"],
+      table: [{"sku": "ER129", "channel": "CRED", "dispatched": "14", "returned": "1", "pct": "7.1%"}, {"sku": "PMW01BR053", "channel": "CRED", "dispatched": "477", "returned": "4", "pct": "0.8%"}]
+    },
+    signal7: {
+      available: true, severity: 50,
+      title: "3 top SKUs concentrated in one state (>30% share)",
+      subtitle: 'Regional demand hotspots — potential for targeted expansion',
+      impact_val: '3', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      pills: ["Top: Maharashtra at 32%", "3 SKUs above 30% threshold"],
+      table: [{"sku": "RG9YG0100-7", "state": "Maharashtra", "share": "32.3%", "orders": "10/31", "revenue": "\u20b95.9L"}, {"sku": "PMW01BR021", "state": "Maharashtra", "share": "32.0%", "orders": "154/482", "revenue": "\u20b95.2L"}, {"sku": "PMWSTMN006-G", "state": "Maharashtra", "share": "31.1%", "orders": "68/219", "revenue": "\u20b95.5L"}]
+    }
+  },
+
+  showoff: {
+    name: 'Showoff',
+    code: 'SHOWOFF',
+    category: 'Fashion — Western Wear',
+    kpi: {
+      gross_sales_30d: '₹3.3 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Actual from transaction__daily_v2_raw (qty<10)',
+      orders_30d: '22.9K',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'SOI 30d · Avg SP ₹1,424',
+      active_skus: '1.8L',
+      skus_sub: 'Listed on Myntra (top mkt channel)',
+      active_channels: '14',
+      channels_sub: 'Myntra · Nykaa Fashion · Ajio + 11 more'
+    },
+    signal1: {
+      available: true, severity: 70,
+      title: '1.7L Myntra SKUs unlisted on Snapdeal',
+      subtitle: 'Top 3 gap channels — ₹60.7L/mo projected demand',
+      impact_val: '₹60.7L', impact_label: '/month projected gap',
+      type_label: 'Listing Gap', type_cls: 'st-red', accent: 'red',
+      pills: ["Snapdeal: 4% coverage", "Nykaa: 23% coverage", "DonoShop: 22% coverage", "Myntra leads: 1.8L SKUs"],
+      table: [{"channel": "Snapdeal", "missing": "1.7L", "daily_demand": "\u20b91.4L"}, {"channel": "Nykaa", "missing": "1.4L", "daily_demand": "\u20b934K"}, {"channel": "DonoShop", "missing": "1.4L", "daily_demand": "\u20b917K"}]
+    },
+    signal2: {
+      available: true, severity: 60,
+      title: '14 channels list <50% of Myntra catalog',
+      subtitle: 'Expand thin channels to capture ₹60.7L/month',
+      impact_val: '₹60.7L', impact_label: '/month est. upside',
+      type_label: 'Channel Expansion', type_cls: 'st-green', accent: 'grn',
+      pills: ["14 thin channels", "Myntra leads: 1.8L SKUs", "Snapdeal: top expansion priority"],
+      table: [{"channel": "Snapdeal", "listed": "6,937", "coverage": "4%", "gap": "1.7L", "upside": "\u20b942.3L"}, {"channel": "Nykaa", "listed": "41,085", "coverage": "23%", "gap": "1.4L", "upside": "\u20b910.2L"}, {"channel": "DonoShop", "listed": "40,288", "coverage": "22%", "gap": "1.4L", "upside": "\u20b95.0L"}, {"channel": "Cloudtail (Amazon)", "listed": "82,616", "coverage": "46%", "gap": "97,667", "upside": "\u20b92.5L"}, {"channel": "Mirraw", "listed": "19,335", "coverage": "11%", "gap": "1.6L", "upside": "\u20b960K"}]
+    },
+    signal5: {
+      available: true, severity: 100,
+      title: '368 SKUs in stockout/critical — will run out in <7 days',
+      subtitle: '444 SKUs at risk across 4 tiers',
+      impact_val: '444', impact_label: 'SKUs at inventory risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      pills: ["Stockout: 353", "Critical (<7d): 15", "Warning (<14d): 14", "Watch (<30d): 62"],
+      table: [{"sku": "CHN-S900_Beige_32", "name": "SHOWOFFFF Edition Men's Beige Baggy", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "LT-105518_NavyBlue_30", "name": "SHOWOFFFF Women's Stretchable Skinn", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "CHN-3028_Red_L", "name": "SHOWOFFFF Edition Women's Pleated R", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "CHN-3220_Grey_M", "name": "SHOWOFFFF Edition Men's Grey Solid ", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "328_White_28", "name": "SHOWOFFFF Women's Solid White Flare", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "8223_Black", "name": "SHOWOFFFF Women's Solid Black Top", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "AD-114_Lavender_XXL", "name": "SHOWOFFFF Men's Slim Fit Printed La", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}, {"sku": "AD-J-510_Peach_M", "name": "SHOWOFFFF Men's Solid Peach Slim Fi", "stock": "0", "doh": "0", "daily_rate": "0.0", "tier": "STOCKOUT"}]
+    },
+    signal6: {
+      available: true, severity: 80,
+      title: "4 SKU-channel combos have >10% return rate",
+      subtitle: 'Returns signal product-listing mismatch or quality issues',
+      impact_val: '4', impact_label: 'high-return combos',
+      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
+      pills: ["4 total combos with returns", "Top: 20% on Myntra"],
+      table: [{"sku": "EX-Metty_Cream_S", "channel": "Myntra", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "CHN-6869-3_Black", "channel": "Myntra", "dispatched": "5", "returned": "1", "pct": "20.0%"}, {"sku": "CHN-1266_BlackCream", "channel": "Myntra", "dispatched": "7", "returned": "1", "pct": "14.3%"}, {"sku": "CHN-2033_Yellow", "channel": "Myntra", "dispatched": "9", "returned": "1", "pct": "11.1%"}]
+    },
+    signal7: {
+      available: true, severity: 50,
+      title: "43 top SKUs concentrated in one state (>30% share)",
+      subtitle: 'Regional demand hotspots — potential for targeted expansion',
+      impact_val: '43', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      pills: ["Top: Karnataka at 84%", "43 SKUs above 30% threshold"],
+      table: [{"sku": "BI-Metty_Grey_XL", "state": "Karnataka", "share": "84.2%", "orders": "16/19", "revenue": "\u20b933K"}, {"sku": "BI-Metty_Burgundy_L", "state": "Karnataka", "share": "82.4%", "orders": "14/17", "revenue": "\u20b930K"}, {"sku": "BI-Metty_Grey_M", "state": "Karnataka", "share": "76.2%", "orders": "16/21", "revenue": "\u20b937K"}, {"sku": "CHN-E-26_White", "state": "Karnataka", "share": "63.0%", "orders": "29/46", "revenue": "\u20b962K"}, {"sku": "BI-Metty_Olive_M", "state": "Karnataka", "share": "62.5%", "orders": "10/16", "revenue": "\u20b931K"}, {"sku": "BI-Metty_Olive_XL", "state": "Karnataka", "share": "58.8%", "orders": "10/17", "revenue": "\u20b934K"}, {"sku": "LBR-5500-1_Beige_L", "state": "Karnataka", "share": "57.1%", "orders": "4/7", "revenue": "\u20b935K"}, {"sku": "CHN-1420_Pink", "state": "Karnataka", "share": "53.8%", "orders": "7/13", "revenue": "\u20b932K"}]
+    }
+  },
+
+};
+
+
+
+// ============================================================
+// RENDER FUNCTIONS — Priority Grid with 5 Signals
+// ============================================================
+
+const SIGNAL_KEYS = ['signal1', 'signal2', 'signal5', 'signal6', 'signal7'];
+
+function populateDropdown() {
+  const sel = document.getElementById('tenantSelect');
+  Object.keys(TENANTS).forEach(key => {
+    const t = TENANTS[key];
+    const opt = document.createElement('option');
+    opt.value = key;
+    opt.textContent = `${t.name}  (${t.code})`;
+    sel.appendChild(opt);
+  });
+}
+
+function switchTenant(key) {
+  const t = TENANTS[key];
+  if (!t) return;
+
+  // KPIs
+  document.getElementById('kpi-gross').textContent = t.kpi.gross_sales_30d;
+  const gd = document.getElementById('kpi-gross-delta');
+  gd.textContent = t.kpi.gross_wow.val;
+  gd.className = 'kpi-delta ' + t.kpi.gross_wow.cls;
+  document.getElementById('kpi-gross-sub').textContent = t.kpi.gross_sub;
+
+  document.getElementById('kpi-orders').textContent = t.kpi.orders_30d;
+  const od = document.getElementById('kpi-orders-delta');
+  od.textContent = t.kpi.orders_wow.val;
+  od.className = 'kpi-delta ' + t.kpi.orders_wow.cls;
+  document.getElementById('kpi-orders-sub').textContent = t.kpi.orders_sub;
+
+  document.getElementById('kpi-skus').textContent = t.kpi.active_skus;
+  document.getElementById('kpi-skus-sub').textContent = t.kpi.skus_sub;
+
+  document.getElementById('kpi-channels').textContent = t.kpi.active_channels;
+  document.getElementById('kpi-channels-sub').textContent = t.kpi.channels_sub;
+
+  // Collect available signals sorted by severity
+  const signals = [];
+  SIGNAL_KEYS.forEach(sk => {
+    if (t[sk] && t[sk].available) {
+      signals.push({ key: sk, data: t[sk], severity: t[sk].severity || 0 });
+    }
+  });
+  signals.sort((a, b) => b.severity - a.severity);
+
+  // Signal strip
+  const count = signals.length;
+  document.getElementById('ss-date').textContent = 'Fri, 11 Apr 2026';
+  document.getElementById('ss-count').textContent = count + ' signal' + (count !== 1 ? 's' : '');
+
+  let chipsHtml = '';
+  const riskSigs = signals.filter(s => s.data.accent === 'red');
+  const oppSigs = signals.filter(s => s.data.accent !== 'red');
+  if (riskSigs.length > 0) {
+    chipsHtml += '<span class="ss-chip risk">' + riskSigs.length + ' risk signal' + (riskSigs.length > 1 ? 's' : '') + '</span> ';
+  }
+  if (oppSigs.length > 0) {
+    chipsHtml += '<span class="ss-chip opp">' + oppSigs.length + ' opportunity/insight</span>';
+  }
+  if (count === 0) {
+    chipsHtml = '<span class="ss-chip na">No signals detected</span>';
+  }
+  document.getElementById('ss-chips').innerHTML = chipsHtml;
+
+  // Render priority grid
+  renderSignals(t, signals);
+}
+
+function renderSignals(t, signals) {
+  const feed = document.getElementById('signalFeed');
+  feed.className = 'signal-grid fade-out';
+
+  setTimeout(() => {
+    let html = '';
+
+    if (signals.length === 0) {
+      html += renderEmptyState('No signals detected', 'All metrics look healthy for this tenant.');
+      feed.innerHTML = html;
+      feed.className = 'signal-grid fade-in';
+      return;
+    }
+
+    // Row 1: Primary (top signal, full width with table)
+    if (signals.length >= 1) {
+      html += '<div class="sg-row primary">';
+      html += renderSignalCard(signals[0].data, signals[0].key, false);
+      html += '</div>';
+    }
+
+    // Row 2: Secondary (next 2 signals, 2-column, with table)
+    if (signals.length >= 2) {
+      html += '<div class="sg-row secondary">';
+      const end = Math.min(signals.length, 3);
+      for (let i = 1; i < end; i++) {
+        html += renderSignalCard(signals[i].data, signals[i].key, false);
+      }
+      html += '</div>';
+    }
+
+    // Row 3: Tertiary (remaining signals, collapsed)
+    if (signals.length > 3) {
+      html += '<div class="sg-row tertiary">';
+      for (let i = 3; i < signals.length; i++) {
+        html += renderSignalCard(signals[i].data, signals[i].key, true);
+      }
+      html += '</div>';
+    }
+
+    feed.innerHTML = html;
+    feed.className = 'signal-grid fade-in';
+  }, 150);
+}
+
+function renderSignalCard(sig, type, collapsed) {
+  let html = '';
+  const cls = collapsed ? ' collapsed' : '';
+  const cardId = 'card-' + type + '-' + Math.random().toString(36).slice(2,6);
+  html += '<div class="sig-card' + cls + '" id="' + cardId + '">';
+  html += '  <div class="sig-accent ' + sig.accent + '"></div>';
+  html += '  <div class="sig-body">';
+  html += '    <div class="sig-info">';
+  html += '      <div class="sig-top">';
+  html += '        <span class="sig-type ' + sig.type_cls + '">' + sig.type_label + '</span>';
+  html += '      </div>';
+  html += '      <div class="sig-title">' + sig.title + '</div>';
+  html += '      <div style="font-size:12px;color:var(--uc-secondary);margin-bottom:8px;">' + sig.subtitle + '</div>';
+  html += '      <div class="sig-meta">';
+  sig.pills.forEach(p => {
+    html += '<span class="sig-pill">' + p + '</span>';
+  });
+  html += '      </div>';
+
+  // Expand button for collapsed cards
+  if (collapsed) {
+    html += '<span class="expand-btn" onclick="toggleCard(\'' + cardId + '\')">Show details</span>';
+  }
+
+  // Detail table
+  html += renderDetailTable(sig, type);
+
+  html += '    </div>';
+  html += '    <div class="sig-right">';
+  html += '      <div class="si-val ' + (sig.accent === 'red' ? 'red' : sig.accent === 'grn' ? 'grn' : '') + '">' + sig.impact_val + '</div>';
+  html += '      <div class="si-lbl">' + sig.impact_label + '</div>';
+  html += '    </div>';
+  html += '  </div>';
+  html += '</div>';
+  return html;
+}
+
+function renderDetailTable(sig, type) {
+  if (!sig.table || sig.table.length === 0) return '';
+  let html = '<table class="sig-detail-table">';
+
+  if (type === 'signal1') {
+    html += '<tr><th>Channel</th><th>Missing SKUs</th><th>Est. Daily Demand</th></tr>';
+    sig.table.forEach(r => {
+      html += '<tr><td>' + r.channel + '</td><td class="val-red">' + r.missing + '</td><td>' + r.daily_demand + '</td></tr>';
+    });
+  } else if (type === 'signal2') {
+    html += '<tr><th>Channel</th><th>Listed</th><th>Coverage</th><th>Gap</th><th>Est. Upside</th></tr>';
+    sig.table.forEach(r => {
+      html += '<tr><td>' + r.channel + '</td><td>' + r.listed + '</td><td class="val-red">' + r.coverage + '</td><td class="val-red">' + r.gap + '</td><td class="val-grn">' + r.upside + '</td></tr>';
+    });
+  } else if (type === 'signal5') {
+    html += '<tr><th>SKU</th><th>Name</th><th>Stock</th><th>DOH</th><th>Daily Rate</th><th>Risk</th></tr>';
+    sig.table.forEach(r => {
+      html += '<tr><td style="font-family:monospace;font-size:10px;">' + r.sku + '</td><td>' + r.name + '</td><td>' + r.stock + '</td><td class="' + (parseInt(r.doh) < 7 ? 'val-red' : '') + '">' + r.doh + 'd</td><td>' + r.daily_rate + '/d</td><td><span class="tier-badge ' + r.tier + '">' + r.tier + '</span></td></tr>';
+    });
+  } else if (type === 'signal6') {
+    html += '<tr><th>SKU</th><th>Channel</th><th>Dispatched</th><th>Returned</th><th>Return %</th></tr>';
+    sig.table.forEach(r => {
+      html += '<tr><td style="font-family:monospace;font-size:10px;">' + r.sku + '</td><td>' + r.channel + '</td><td>' + r.dispatched + '</td><td class="val-red">' + r.returned + '</td><td class="val-red">' + r.pct + '</td></tr>';
+    });
+  } else if (type === 'signal7') {
+    html += '<tr><th>SKU</th><th>Top State</th><th>State Share</th><th>Orders</th><th>Revenue 30d</th></tr>';
+    sig.table.forEach(r => {
+      html += '<tr><td style="font-family:monospace;font-size:10px;">' + r.sku + '</td><td>' + r.state + '</td><td class="val-red">' + r.share + '</td><td>' + r.orders + '</td><td>' + r.revenue + '</td></tr>';
+    });
+  }
+
+  html += '</table>';
+  return html;
+}
+
+function toggleCard(cardId) {
+  const card = document.getElementById(cardId);
+  if (card) {
+    card.classList.toggle('collapsed');
+    const btn = card.querySelector('.expand-btn');
+    if (btn) {
+      btn.textContent = card.classList.contains('collapsed') ? 'Show details' : 'Hide details';
+    }
+  }
+}
+
+function renderEmptyState(title, sub) {
+  return '<div class="empty-state">' +
+    '<div class="empty-state-icon">&#9745;</div>' +
+    '<div class="empty-state-title">' + title + '</div>' +
+    '<div class="empty-state-sub">' + sub + '</div>' +
+    '</div>';
+}
+
+// Init
+populateDropdown();
+switchTenant('dotandkey');
+
+</script>
+</body>
+</html>

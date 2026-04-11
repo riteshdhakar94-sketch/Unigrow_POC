@@ -1,0 +1,47 @@
+# OS files
+.DS_Store
+.Trash/
+.CFUserTextEncoding
+
+# System directories
+.agents/
+.anydesk/
+.bash_profile
+.claude.json
+.claude.json.backup
+.config/
+.cursor/
+.gemini/
+.idlerc/
+.local/
+.netrc
+.npm/
+.openjfx/
+.soapuios/
+.ssh/
+.viminfo
+.vscode/
+.zprofile
+.zprofile.pysave
+.zsh_history
+.zsh_sessions/
+.zshrc
+Applications/
+Documents/
+Downloads/
+Library/
+Movies/
+Music/
+Pictures/
+Public/
+
+# Project files to ignore
+*.tgz
+*.csv
+~$*.docx
+test.txt
+
+# Keep only project files tracked
+!projects/
+!outputs/
+!context/
