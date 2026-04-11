@@ -469,6 +469,183 @@ body {
 .sig-tooltip-icon:hover + .sig-tooltip,
 .sig-tooltip:hover { display: block; }
 .sig-tooltip strong { font-weight: 600; color: var(--uc-primary); }
+
+/* ── PRIORITY GRID ──────────────────── */
+.signal-grid { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.sg-row { display: flex; gap: 16px; }
+.sg-row.primary { }
+.sg-row.primary .sig-card { flex: 1; }
+.sg-row.secondary .sig-card { flex: 1; }
+.sg-row.tertiary { flex-wrap: wrap; }
+.sg-row.tertiary .sig-card { flex: 1; min-width: 300px; }
+
+/* Collapsed card — tertiary row */
+.sig-card.collapsed .sig-detail-table { display: none; }
+.sig-card.collapsed .sig-meta { display: none; }
+.sig-card.collapsed .sig-body { padding: 10px 14px; }
+.sig-card.collapsed .sig-title { margin-bottom: 0; font-size: 13px; }
+.sig-card.collapsed .sig-info > div:nth-child(2) { display: none; } /* subtitle */
+.sig-card .expand-btn {
+  font-size: 10px; color: var(--uc-primary); cursor: pointer;
+  font-weight: 600; margin-top: 4px; display: none;
+}
+.sig-card.collapsed .expand-btn { display: inline-block; }
+
+/* Risk tier badges */
+.tier-badge { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; text-transform: uppercase; }
+.tier-badge.STOCKOUT { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.CRITICAL { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.WARNING { background: var(--uc-amber-bg); color: var(--uc-amber); }
+.tier-badge.WATCH { background: #E3F4FD; color: var(--uc-primary); }
+.tier-badge.HEALTHY { background: #EDF7F0; color: var(--uc-success); }
+
+/* Signal grid header */
+.sg-header {
+  display: flex; align-items: center; gap: 10px; padding-bottom: 4px;
+}
+.sg-header-title { font-size: 12px; font-weight: 700; color: var(--uc-secondary); text-transform: uppercase; letter-spacing: .5px; }
+.sg-header-line { flex: 1; height: 1px; background: var(--uc-border); }
+
+/* ── SIGNAL TOOLTIP ────────────────── */
+.sig-title-wrap { position: relative; display: inline-block; }
+.sig-title-wrap .sig-tooltip-icon {
+  display: inline-block; width: 14px; height: 14px; line-height: 14px;
+  text-align: center; font-size: 10px; font-weight: 700;
+  background: var(--uc-surface); color: var(--uc-secondary);
+  border: 1px solid var(--uc-border); border-radius: 50%;
+  cursor: help; margin-left: 5px; vertical-align: middle;
+  position: relative; top: -1px;
+}
+.sig-tooltip {
+  display: none; position: absolute; left: 0; top: calc(100% + 6px);
+  z-index: 200; width: 380px; max-width: 90vw;
+  background: #fff; border: 1px solid var(--uc-border);
+  border-radius: 8px; padding: 12px 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  font-size: 11px; font-weight: 400; line-height: 1.5;
+  color: var(--uc-body-text);
+}
+.sig-tooltip-icon:hover + .sig-tooltip,
+.sig-tooltip:hover { display: block; }
+.sig-tooltip strong { font-weight: 600; color: var(--uc-primary); }
+
+/* ── PRIORITY GRID ──────────────────── */
+.signal-grid { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.sg-row { display: flex; gap: 16px; }
+.sg-row.primary { }
+.sg-row.primary .sig-card { flex: 1; }
+.sg-row.secondary .sig-card { flex: 1; }
+.sg-row.tertiary { flex-wrap: wrap; }
+.sg-row.tertiary .sig-card { flex: 1; min-width: 300px; }
+
+/* Collapsed card — tertiary row */
+.sig-card.collapsed .sig-detail-table { display: none; }
+.sig-card.collapsed .sig-meta { display: none; }
+.sig-card.collapsed .sig-body { padding: 10px 14px; }
+.sig-card.collapsed .sig-title { margin-bottom: 0; font-size: 13px; }
+.sig-card.collapsed .sig-info > div:nth-child(2) { display: none; } /* subtitle */
+.sig-card .expand-btn {
+  font-size: 10px; color: var(--uc-primary); cursor: pointer;
+  font-weight: 600; margin-top: 4px; display: none;
+}
+.sig-card.collapsed .expand-btn { display: inline-block; }
+
+/* Risk tier badges */
+.tier-badge { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; text-transform: uppercase; }
+.tier-badge.STOCKOUT { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.CRITICAL { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.WARNING { background: var(--uc-amber-bg); color: var(--uc-amber); }
+.tier-badge.WATCH { background: #E3F4FD; color: var(--uc-primary); }
+.tier-badge.HEALTHY { background: #EDF7F0; color: var(--uc-success); }
+
+/* Signal grid header */
+.sg-header {
+  display: flex; align-items: center; gap: 10px; padding-bottom: 4px;
+}
+.sg-header-title { font-size: 12px; font-weight: 700; color: var(--uc-secondary); text-transform: uppercase; letter-spacing: .5px; }
+.sg-header-line { flex: 1; height: 1px; background: var(--uc-border); }
+
+/* ── SIGNAL TOOLTIP ────────────────── */
+.sig-title-wrap { position: relative; display: inline-block; }
+.sig-title-wrap .sig-tooltip-icon {
+  display: inline-block; width: 14px; height: 14px; line-height: 14px;
+  text-align: center; font-size: 10px; font-weight: 700;
+  background: var(--uc-surface); color: var(--uc-secondary);
+  border: 1px solid var(--uc-border); border-radius: 50%;
+  cursor: help; margin-left: 5px; vertical-align: middle;
+  position: relative; top: -1px;
+}
+.sig-tooltip {
+  display: none; position: absolute; left: 0; top: calc(100% + 6px);
+  z-index: 200; width: 380px; max-width: 90vw;
+  background: #fff; border: 1px solid var(--uc-border);
+  border-radius: 8px; padding: 12px 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  font-size: 11px; font-weight: 400; line-height: 1.5;
+  color: var(--uc-body-text);
+}
+.sig-tooltip-icon:hover + .sig-tooltip,
+.sig-tooltip:hover { display: block; }
+.sig-tooltip strong { font-weight: 600; color: var(--uc-primary); }
+
+/* ── PRIORITY GRID ──────────────────── */
+.signal-grid { padding: 20px 24px; display: flex; flex-direction: column; gap: 16px; }
+.sg-row { display: flex; gap: 16px; }
+.sg-row.primary { }
+.sg-row.primary .sig-card { flex: 1; }
+.sg-row.secondary .sig-card { flex: 1; }
+.sg-row.tertiary { flex-wrap: wrap; }
+.sg-row.tertiary .sig-card { flex: 1; min-width: 300px; }
+
+/* Collapsed card — tertiary row */
+.sig-card.collapsed .sig-detail-table { display: none; }
+.sig-card.collapsed .sig-meta { display: none; }
+.sig-card.collapsed .sig-body { padding: 10px 14px; }
+.sig-card.collapsed .sig-title { margin-bottom: 0; font-size: 13px; }
+.sig-card.collapsed .sig-info > div:nth-child(2) { display: none; } /* subtitle */
+.sig-card .expand-btn {
+  font-size: 10px; color: var(--uc-primary); cursor: pointer;
+  font-weight: 600; margin-top: 4px; display: none;
+}
+.sig-card.collapsed .expand-btn { display: inline-block; }
+
+/* Risk tier badges */
+.tier-badge { font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 3px; text-transform: uppercase; }
+.tier-badge.STOCKOUT { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.CRITICAL { background: #FFEBEE; color: var(--uc-error); }
+.tier-badge.WARNING { background: var(--uc-amber-bg); color: var(--uc-amber); }
+.tier-badge.WATCH { background: #E3F4FD; color: var(--uc-primary); }
+.tier-badge.HEALTHY { background: #EDF7F0; color: var(--uc-success); }
+
+/* Signal grid header */
+.sg-header {
+  display: flex; align-items: center; gap: 10px; padding-bottom: 4px;
+}
+.sg-header-title { font-size: 12px; font-weight: 700; color: var(--uc-secondary); text-transform: uppercase; letter-spacing: .5px; }
+.sg-header-line { flex: 1; height: 1px; background: var(--uc-border); }
+
+/* ── SIGNAL TOOLTIP ────────────────── */
+.sig-title-wrap { position: relative; display: inline-block; }
+.sig-title-wrap .sig-tooltip-icon {
+  display: inline-block; width: 14px; height: 14px; line-height: 14px;
+  text-align: center; font-size: 10px; font-weight: 700;
+  background: var(--uc-surface); color: var(--uc-secondary);
+  border: 1px solid var(--uc-border); border-radius: 50%;
+  cursor: help; margin-left: 5px; vertical-align: middle;
+  position: relative; top: -1px;
+}
+.sig-tooltip {
+  display: none; position: absolute; left: 0; top: calc(100% + 6px);
+  z-index: 200; width: 380px; max-width: 90vw;
+  background: #fff; border: 1px solid var(--uc-border);
+  border-radius: 8px; padding: 12px 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  font-size: 11px; font-weight: 400; line-height: 1.5;
+  color: var(--uc-body-text);
+}
+.sig-tooltip-icon:hover + .sig-tooltip,
+.sig-tooltip:hover { display: block; }
+.sig-tooltip strong { font-weight: 600; color: var(--uc-primary); }
 </style>
 </head>
 <body>
@@ -598,13 +775,13 @@ const TENANTS = {
     },
     signal5: {
       available: true, severity: 100,
-      title: '1 bestsellers in stockout/critical — will run out in <7 days',
-      subtitle: '1 bestseller SKUs at risk | ₹1832 revenue exposure',
-      impact_val: '₹1832', impact_label: 'revenue at risk',
+      title: '1 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '1 bestseller SKUs at risk | ₹3927 revenue exposure',
+      impact_val: '₹3927', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Stockout: 1"],
-      table: [{"sku": "dk_Dummy", "name": "dk_Dummy", "stock": "0", "doh": "0", "daily_rate": "1.4", "tier": "STOCKOUT"}]
+      table: [{"sku": "dk_Dummy", "name": "dk_Dummy", "stock": "0", "doh": "0", "rev30d": "\u20b9211,929", "tier": "STOCKOUT"}]
     },
     signal6: {
       available: true, severity: 80,
@@ -649,13 +826,13 @@ const TENANTS = {
     },
     signal5: {
       available: true, severity: 100,
-      title: '1 bestsellers in stockout/critical — will run out in <7 days',
-      subtitle: '5 bestseller SKUs at risk | ₹65383 revenue exposure',
-      impact_val: '₹65383', impact_label: 'revenue at risk',
+      title: '1 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '5 bestseller SKUs at risk | ₹1.4L revenue exposure',
+      impact_val: '₹1.4L', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Critical (<7d): 1", "Watch (<30d): 4"],
-      table: [{"sku": "8904417322408", "name": "ME Beetroot Hydraful Face Wash 50 m", "stock": "678", "doh": "6", "daily_rate": "118.2", "tier": "CRITICAL"}, {"sku": "8904417316438", "name": "ME Rosemary Anti-Hairfall Shampoo 1", "stock": "245", "doh": "15", "daily_rate": "16.5", "tier": "WATCH"}, {"sku": "8906087778202", "name": "AQ Glow+ Face Serum 30 ml", "stock": "743", "doh": "21", "daily_rate": "34.7", "tier": "WATCH"}, {"sku": "8904417312393", "name": "BB 7 In 1 R & R Shampoo 300 ml", "stock": "538", "doh": "21", "daily_rate": "25.7", "tier": "WATCH"}, {"sku": "8904417313253", "name": "AQ Refresh+ Body Mist- Sweet summer", "stock": "1349", "doh": "22", "daily_rate": "61.6", "tier": "WATCH"}]
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Critical (<15d): 1", "Warning (<30d): 4"],
+      table: [{"sku": "8904417322408", "name": "ME Beetroot Hydraful Face Wash 50 m", "stock": "678", "doh": "6", "rev30d": "\u20b92,378,277", "tier": "CRITICAL"}, {"sku": "8904417316438", "name": "ME Rosemary Anti-Hairfall Shampoo 1", "stock": "245", "doh": "15", "rev30d": "\u20b9842,265", "tier": "WARNING"}, {"sku": "8904417312393", "name": "BB 7 In 1 R & R Shampoo 300 ml", "stock": "538", "doh": "21", "rev30d": "\u20b93,500,195", "tier": "WARNING"}, {"sku": "8906087778202", "name": "AQ Glow+ Face Serum 30 ml", "stock": "743", "doh": "21", "rev30d": "\u20b94,944,347", "tier": "WARNING"}, {"sku": "8904417313253", "name": "AQ Refresh+ Body Mist- Sweet summer", "stock": "1349", "doh": "22", "rev30d": "\u20b95,379,702", "tier": "WARNING"}]
     },
     signal6: {
       available: true, severity: 80,
@@ -700,13 +877,13 @@ const TENANTS = {
     },
     signal5: {
       available: true, severity: 100,
-      title: '1 bestsellers in stockout/critical — will run out in <7 days',
-      subtitle: '1 bestseller SKUs at risk | ₹23212 revenue exposure',
-      impact_val: '₹23212', impact_label: 'revenue at risk',
+      title: '1 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '1 bestseller SKUs at risk | ₹49742 revenue exposure',
+      impact_val: '₹49742', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Critical (<7d): 1"],
-      table: [{"sku": "MCaf235_WB", "name": "Shimmer body scrub_150 gm", "stock": "30", "doh": "3", "daily_rate": "10.8", "tier": "CRITICAL"}]
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Critical (<15d): 1"],
+      table: [{"sku": "MCaf235_WB", "name": "Shimmer body scrub_150 gm", "stock": "30", "doh": "3", "rev30d": "\u20b9131,505", "tier": "CRITICAL"}]
     },
     signal6: { available: false },
     signal7: { available: false }
@@ -779,9 +956,9 @@ const TENANTS = {
       subtitle: '1 bestseller SKUs at risk | ₹0 revenue exposure',
       impact_val: '₹0', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Warning (<14d): 1"],
-      table: [{"sku": "MWLJNTP.000748.B0_N", "name": "LJ Tomato Sauce Plastic Bottle(600g", "stock": "2383", "doh": "7", "daily_rate": "357.5", "tier": "WARNING"}]
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Warning (<30d): 1"],
+      table: [{"sku": "MWLJNTS.0001.B0_N", "name": "LJ NutriMix 2+ 30 g Chocolate Mini", "stock": "983", "doh": "28", "rev30d": "\u20b91,098,418", "tier": "WARNING"}]
     },
     signal6: {
       available: true, severity: 80,
@@ -825,14 +1002,14 @@ const TENANTS = {
       table: [{"channel": "Smytten", "listed": "57", "coverage": "12%", "gap": "421", "upside": "\u20b930.2L"}, {"channel": "CRED", "listed": "8", "coverage": "2%", "gap": "470", "upside": "\u20b96.4L"}, {"channel": "Myntra", "listed": "207", "coverage": "43%", "gap": "271", "upside": "\u20b96.4L"}, {"channel": "DonoShop", "listed": "18", "coverage": "4%", "gap": "460", "upside": "\u20b93.9L"}, {"channel": "Flipkart", "listed": "236", "coverage": "49%", "gap": "242", "upside": "\u20b92.1L"}, {"channel": "JioMart", "listed": "158", "coverage": "33%", "gap": "320", "upside": "\u20b91.8L"}]
     },
     signal5: {
-      available: true, severity: 80,
-      title: '1 bestsellers with <14 days of stock remaining',
-      subtitle: '1 bestseller SKUs at risk | ₹0 revenue exposure',
-      impact_val: '₹0', impact_label: 'revenue at risk',
-      type_label: 'Inventory Health', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Warning (<14d): 1"],
-      table: [{"sku": "NURSING-PAD-10-25", "name": "Nursing Pads", "stock": "536", "doh": "10", "daily_rate": "54.0", "tier": "WARNING"}]
+      available: true, severity: 100,
+      title: '1 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '1 bestseller SKUs at risk | ₹1.2L revenue exposure',
+      impact_val: '₹1.2L', impact_label: 'revenue at risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Critical (<15d): 1"],
+      table: [{"sku": "NURSING-PAD-10-25", "name": "Nursing Pads", "stock": "536", "doh": "10", "rev30d": "\u20b9108,354", "tier": "CRITICAL"}]
     },
     signal6: {
       available: true, severity: 80,
@@ -886,13 +1063,13 @@ const TENANTS = {
     },
     signal5: {
       available: true, severity: 100,
-      title: '2 bestsellers in stockout/critical — will run out in <7 days',
-      subtitle: '7 bestseller SKUs at risk | ₹4.2L revenue exposure',
-      impact_val: '₹4.2L', impact_label: 'revenue at risk',
+      title: '6 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '8 bestseller SKUs at risk | ₹20.1L revenue exposure',
+      impact_val: '₹20.1L', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Critical (<7d): 2", "Warning (<14d): 3", "Watch (<30d): 2"],
-      table: [{"sku": "COMBO-JACNE-FW-20ML-SER-10ML", "name": "COMBO JAMUN ACNE MARKS 20ML FACEWAS", "stock": "16", "doh": "0", "daily_rate": "182.2", "tier": "CRITICAL"}, {"sku": "COMBO-FG-ACV-2AP-2WM-4", "name": "Apple Cider Vinegar Effervescent 15", "stock": "45", "doh": "2", "daily_rate": "27.9", "tier": "CRITICAL"}, {"sku": "PC-FG-FW-PO-YOUTH-RNW-100ML-1", "name": "Plix Pomegranate Youth Renewal Face", "stock": "347", "doh": "7", "daily_rate": "50.6", "tier": "WARNING"}, {"sku": "PC-COMBO-PI-FW-50ML-SER-10ML-2", "name": "Combo Pineapple Facewash 50ml & Ser", "stock": "216", "doh": "8", "daily_rate": "28.5", "tier": "WARNING"}, {"sku": "PPC-COMBO-FG-GV-FW-TONR-GGS-VC", "name": "Ppc Fg Guava Glow Juicy Cleanser Fa", "stock": "360", "doh": "13", "daily_rate": "26.8", "tier": "WARNING"}, {"sku": "PC-FG-WTR-RSMY-HG-SPRAY-100ML-", "name": "Rosemary Advanced Hair Growth Spray", "stock": "1437", "doh": "14", "daily_rate": "104.2", "tier": "WATCH"}, {"sku": "COMBO-JM-FW-20ML-MRKS-SER-10ML", "name": "COMBO-Jamun 20ml facewash + Jamun a", "stock": "1521", "doh": "22", "daily_rate": "70.7", "tier": "WATCH"}]
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Critical (<15d): 6", "Warning (<30d): 1", "Watch (<60d): 1"],
+      table: [{"sku": "COMBO-JACNE-FW-20ML-SER-10ML", "name": "COMBO JAMUN ACNE MARKS 20ML FACEWAS", "stock": "16", "doh": "0", "rev30d": "\u20b99,461,167", "tier": "CRITICAL"}, {"sku": "PC-FG-FW-PO-YOUTH-RNW-100ML-1", "name": "Plix Pomegranate Youth Renewal Face", "stock": "347", "doh": "7", "rev30d": "\u20b912,481,934", "tier": "CRITICAL"}, {"sku": "PC-COMBO-PI-FW-50ML-SER-10ML-2", "name": "Combo Pineapple Facewash 50ml & Ser", "stock": "216", "doh": "8", "rev30d": "\u20b93,035,256", "tier": "CRITICAL"}, {"sku": "PPC-FW-GV-VCB5-GGS1-MOI-VCALA-", "name": "Ppc Fg Guava Glow Juicy Cleanser Fa", "stock": "215", "doh": "10", "rev30d": "\u20b919,479,271", "tier": "CRITICAL"}, {"sku": "PPC-COMBO-FG-GV-FW-TONR-GGS-VC", "name": "Ppc Fg Guava Glow Juicy Cleanser Fa", "stock": "360", "doh": "13", "rev30d": "\u20b921,254,274", "tier": "CRITICAL"}, {"sku": "PC-FG-WTR-RSMY-HG-SPRAY-100ML-", "name": "Rosemary Advanced Hair Growth Spray", "stock": "1437", "doh": "14", "rev30d": "\u20b912,536,261", "tier": "CRITICAL"}, {"sku": "PPC-COMBO-FG-PDSM1-DPSERUM1-DP", "name": "Ppc Combo Pineapple Depigmentation ", "stock": "374", "doh": "17", "rev30d": "\u20b919,982,551", "tier": "WARNING"}, {"sku": "PC-FG-SER-GV-10VC10ML-1", "name": "Plix Guava Glow Dewy Serum 10% ( 10", "stock": "10990", "doh": "30", "rev30d": "\u20b914,645,297", "tier": "WATCH"}]
     },
     signal6: {
       available: true, severity: 80,
@@ -936,14 +1113,14 @@ const TENANTS = {
       table: [{"channel": "DonoShop", "listed": "27", "coverage": "7%", "gap": "373", "upside": "\u20b91.7 Cr"}, {"channel": "KindLife", "listed": "40", "coverage": "10%", "gap": "360", "upside": "\u20b964.2L"}, {"channel": "Flipkart", "listed": "39", "coverage": "10%", "gap": "361", "upside": "\u20b952.1L"}, {"channel": "HyugaLife", "listed": "25", "coverage": "6%", "gap": "375", "upside": "\u20b99.2L"}, {"channel": "Tata CLiQ", "listed": "25", "coverage": "6%", "gap": "375", "upside": "\u20b95.2L"}, {"channel": "Blinkit", "listed": "99", "coverage": "25%", "gap": "301", "upside": "\u2014"}]
     },
     signal5: {
-      available: true, severity: 60,
-      title: '2 bestsellers on watch — <30 days of stock',
-      subtitle: '2 bestseller SKUs at risk | ₹0 revenue exposure',
-      impact_val: '₹0', impact_label: 'revenue at risk',
-      type_label: 'Inventory Health', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Watch (<30d): 2"],
-      table: [{"sku": "SNK-WFB-CFF-040-01", "name": "SUPERYOU Wafer Bar - Coffee 1's", "stock": "18600", "doh": "16", "daily_rate": "1127.6", "tier": "WATCH"}, {"sku": "SNK-WFB-ORN-040-01", "name": "SUPERYOU Wafer Bar - Orange 1's", "stock": "11270", "doh": "19", "daily_rate": "590.1", "tier": "WATCH"}]
+      available: true, severity: 100,
+      title: '1 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '2 bestseller SKUs at risk | ₹17.9L revenue exposure',
+      impact_val: '₹17.9L', impact_label: 'revenue at risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Stockout: 1", "Warning (<30d): 1"],
+      table: [{"sku": "PRO-YST-ASS-36GM-08", "name": "SUPERYOU Yeast Protein - Assorted 3", "stock": "0", "doh": "0", "rev30d": "\u20b93,478,515", "tier": "STOCKOUT"}, {"sku": "SNK-WFB-ASS-040-05", "name": "SUPERYOU Wafer Bar - Assorted 5's", "stock": "8423", "doh": "20", "rev30d": "\u20b92,927,459", "tier": "WARNING"}]
     },
     signal6: {
       available: true, severity: 50,
@@ -963,7 +1140,7 @@ const TENANTS = {
       type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
       pills: ["Top: Karnataka at 100%", "9 SKUs above 30% threshold"],
-      table: [{"sku": "SNK-WFB-ASS-080-20-K", "state": "Karnataka", "share": "100.0%", "orders": "9/9", "revenue": "\u20b92K"}, {"sku": "SNK-CHP-CTM-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "10/10", "revenue": "\u20b956"}, {"sku": "SNK-WFB-ORN-040-01", "state": "Karnataka", "share": "100.0%", "orders": "5/5", "revenue": "\u20b942"}, {"sku": "SNK-WFB-STB-040-01", "state": "Karnataka", "share": "100.0%", "orders": "4/4", "revenue": "\u20b942"}, {"sku": "SNK-WFB-CHS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "6/6", "revenue": "\u20b942"}, {"sku": "SNK-CHP-SMS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "9/9", "revenue": "\u20b928"}, {"sku": "SNK-CHP-SCO-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "7/7", "revenue": "\u20b928"}, {"sku": "SNK-CHP-PDN-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "2/2", "revenue": "\u20b928"}]
+      table: [{"sku": "SNK-WFB-ASS-080-20-K", "state": "Karnataka", "share": "100.0%", "orders": "9/9", "revenue": "\u20b92K"}, {"sku": "SNK-CHP-CTM-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "10/10", "revenue": "\u20b956"}, {"sku": "SNK-WFB-STB-040-01", "state": "Karnataka", "share": "100.0%", "orders": "4/4", "revenue": "\u20b942"}, {"sku": "SNK-WFB-ORN-040-01", "state": "Karnataka", "share": "100.0%", "orders": "5/5", "revenue": "\u20b942"}, {"sku": "SNK-WFB-CHS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "6/6", "revenue": "\u20b942"}, {"sku": "SNK-CHP-SMS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "9/9", "revenue": "\u20b928"}, {"sku": "SNK-CHP-SCO-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "7/7", "revenue": "\u20b928"}, {"sku": "SNK-CHP-PDN-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "2/2", "revenue": "\u20b928"}]
     }
   },
 
@@ -1039,13 +1216,13 @@ const TENANTS = {
     },
     signal5: {
       available: true, severity: 100,
-      title: '13 bestsellers in stockout/critical — will run out in <7 days',
-      subtitle: '21 bestseller SKUs at risk | ₹14770 revenue exposure',
-      impact_val: '₹14770', impact_label: 'revenue at risk',
+      title: '21 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '21 bestseller SKUs at risk | ₹27124 revenue exposure',
+      impact_val: '₹27124', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Stockout: 13", "Warning (<14d): 5", "Watch (<30d): 3"],
-      table: [{"sku": "L351501", "name": "White Cotton  Top", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "S911414", "name": "Pink Cotton Kurti", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "A211213", "name": "Yellow Georgette Suit Piece", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "A211294", "name": "Cream Georgette Lucknowi Chikankari", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "M312251", "name": "Rust Cotton Kurti", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "XS332395", "name": "White Cotton Kurta", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "S100556", "name": "Black/mauve cotton kurti", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}, {"sku": "A511224", "name": "Pink Chiffon Dupatta", "stock": "0", "doh": "0", "daily_rate": "0.1", "tier": "STOCKOUT"}]
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Stockout: 17", "Critical (<15d): 4"],
+      table: [{"sku": "L351501", "name": "White Cotton  Top", "stock": "0", "doh": "0", "rev30d": "\u20b9110,456", "tier": "STOCKOUT"}, {"sku": "M100376", "name": "White Cotton Kurta", "stock": "0", "doh": "0", "rev30d": "\u20b9146,781", "tier": "STOCKOUT"}, {"sku": "XL411475", "name": "White Cotton kurta", "stock": "0", "doh": "0", "rev30d": "\u20b9135,565", "tier": "STOCKOUT"}, {"sku": "M100386", "name": "black cotton kurti", "stock": "0", "doh": "0", "rev30d": "\u20b964,288", "tier": "STOCKOUT"}, {"sku": "M351501", "name": "White Cotton  Top", "stock": "0", "doh": "0", "rev30d": "\u20b962,728", "tier": "STOCKOUT"}, {"sku": "2XL411475", "name": "White Cotton kurta", "stock": "0", "doh": "0", "rev30d": "\u20b977,529", "tier": "STOCKOUT"}, {"sku": "3XL332395", "name": "White Cotton Kurta", "stock": "0", "doh": "0", "rev30d": "\u20b957,977", "tier": "STOCKOUT"}, {"sku": "XS332395", "name": "White Cotton Kurta", "stock": "0", "doh": "0", "rev30d": "\u20b965,081", "tier": "STOCKOUT"}]
     },
     signal6: { available: false },
     signal7: {
@@ -1090,13 +1267,13 @@ const TENANTS = {
     },
     signal5: {
       available: true, severity: 100,
-      title: '2 bestsellers in stockout/critical — will run out in <7 days',
-      subtitle: '2 bestseller SKUs at risk | ₹2.5L revenue exposure',
-      impact_val: '₹2.5L', impact_label: 'revenue at risk',
+      title: '2 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '2 bestseller SKUs at risk | ₹5.3L revenue exposure',
+      impact_val: '₹5.3L', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Critical (<7d): 2"],
-      table: [{"sku": "617571077081", "name": "Essensia Luxury Attar Perfume Gift ", "stock": "35", "doh": "2", "daily_rate": "20.6", "tier": "CRITICAL"}, {"sku": "617571048395", "name": "AQ 365 Perfume Spray 30ML", "stock": "44", "doh": "2", "daily_rate": "20.2", "tier": "CRITICAL"}]
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Critical (<15d): 2"],
+      table: [{"sku": "617571048395", "name": "AQ 365 Perfume Spray 30ML", "stock": "44", "doh": "2", "rev30d": "\u20b96,678,082", "tier": "CRITICAL"}, {"sku": "617571077081", "name": "Essensia Luxury Attar Perfume Gift ", "stock": "35", "doh": "2", "rev30d": "\u20b918,360,190", "tier": "CRITICAL"}]
     },
     signal6: {
       available: true, severity: 80,
@@ -1116,7 +1293,7 @@ const TENANTS = {
       type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
       pills: ["Top: Odisha at 100%", "8 SKUs above 30% threshold"],
-      table: [{"sku": "617571048685", "state": "Odisha", "share": "100.0%", "orders": "2/2", "revenue": "\u20b9748"}, {"sku": "617571077876", "state": "Rajasthan", "share": "50.0%", "orders": "1/2", "revenue": "\u20b92K"}, {"sku": "test", "state": "West Bengal", "share": "50.0%", "orders": "1/2", "revenue": "\u20b91K"}, {"sku": "617571077708", "state": "Odisha", "share": "50.0%", "orders": "1/2", "revenue": "\u20b9309"}, {"sku": "617571077692", "state": "Gujarat", "share": "40.0%", "orders": "2/5", "revenue": "\u20b9856"}, {"sku": "617571077050", "state": "Uttar Pradesh", "share": "33.3%", "orders": "7/21", "revenue": "\u20b940K"}, {"sku": "617571048432", "state": "Gujarat", "share": "33.3%", "orders": "1/3", "revenue": "\u20b91K"}, {"sku": "617571077678", "state": "Uttar Pradesh", "share": "33.3%", "orders": "1/3", "revenue": "\u20b9497"}]
+      table: [{"sku": "617571048685", "state": "Odisha", "share": "100.0%", "orders": "2/2", "revenue": "\u20b9748"}, {"sku": "617571077876", "state": "Delhi", "share": "50.0%", "orders": "1/2", "revenue": "\u20b92K"}, {"sku": "test", "state": "Rajasthan", "share": "50.0%", "orders": "1/2", "revenue": "\u20b91K"}, {"sku": "617571077708", "state": "Odisha", "share": "50.0%", "orders": "1/2", "revenue": "\u20b9309"}, {"sku": "617571077692", "state": "Gujarat", "share": "40.0%", "orders": "2/5", "revenue": "\u20b9856"}, {"sku": "617571077050", "state": "Uttar Pradesh", "share": "33.3%", "orders": "7/21", "revenue": "\u20b940K"}, {"sku": "617571048432", "state": "Maharashtra", "share": "33.3%", "orders": "1/3", "revenue": "\u20b91K"}, {"sku": "617571077678", "state": "Himachal Pradesh", "share": "33.3%", "orders": "1/3", "revenue": "\u20b9497"}]
     }
   },
 
@@ -1150,13 +1327,13 @@ const TENANTS = {
     },
     signal5: {
       available: true, severity: 100,
-      title: '3 bestsellers in stockout/critical — will run out in <7 days',
-      subtitle: '6 bestseller SKUs at risk | ₹7196 revenue exposure',
-      impact_val: '₹7196', impact_label: 'revenue at risk',
+      title: '3 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '6 bestseller SKUs at risk | ₹13102 revenue exposure',
+      impact_val: '₹13102', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Critical (<7d): 3", "Watch (<30d): 3"],
-      table: [{"sku": "PG0433007017-9", "name": "51PG04330019", "stock": "3", "doh": "2", "daily_rate": "1.4", "tier": "CRITICAL"}, {"sku": "FK0075007091-6", "name": "51FK00750004", "stock": "12", "doh": "5", "daily_rate": "2.4", "tier": "CRITICAL"}, {"sku": "FK0076007101-8", "name": "51FK00760012", "stock": "5", "doh": "5", "daily_rate": "1.1", "tier": "CRITICAL"}, {"sku": "FK0075007091-10", "name": "51FK00750004", "stock": "27", "doh": "15", "daily_rate": "1.8", "tier": "WATCH"}, {"sku": "PG0410007017-8", "name": "51PG04100011", "stock": "16", "doh": "16", "daily_rate": "1.0", "tier": "WATCH"}, {"sku": "PG0433007017-7", "name": "51PG04330019", "stock": "26", "doh": "24", "daily_rate": "1.1", "tier": "WATCH"}]
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Critical (<15d): 3", "Warning (<30d): 3"],
+      table: [{"sku": "FK0078007041-8", "name": "51FK00780017", "stock": "3", "doh": "3", "rev30d": "\u20b9199,631", "tier": "CRITICAL"}, {"sku": "FK0075007091-6", "name": "51FK00750004", "stock": "12", "doh": "5", "rev30d": "\u20b9183,845", "tier": "CRITICAL"}, {"sku": "FK0076007101-8", "name": "51FK00760012", "stock": "5", "doh": "5", "rev30d": "\u20b9145,208", "tier": "CRITICAL"}, {"sku": "FK0075007091-10", "name": "51FK00750004", "stock": "27", "doh": "15", "rev30d": "\u20b9175,353", "tier": "WARNING"}, {"sku": "PG0410007017-8", "name": "51PG04100011", "stock": "16", "doh": "16", "rev30d": "\u20b9134,530", "tier": "WARNING"}, {"sku": "PG0433007017-7", "name": "51PG04330019", "stock": "26", "doh": "24", "rev30d": "\u20b9162,083", "tier": "WARNING"}]
     },
     signal6: {
       available: true, severity: 80,
@@ -1210,13 +1387,13 @@ const TENANTS = {
     },
     signal5: {
       available: true, severity: 100,
-      title: '100 bestsellers in stockout/critical — will run out in <7 days',
-      subtitle: '128 bestseller SKUs at risk | ₹5.6L revenue exposure',
-      impact_val: '₹5.6L', impact_label: 'revenue at risk',
+      title: '119 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '128 bestseller SKUs at risk | ₹13.3L revenue exposure',
+      impact_val: '₹13.3L', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Stockout: 30", "Critical (<7d): 70", "Warning (<14d): 19", "Watch (<30d): 9"],
-      table: [{"sku": "POONA_BLACK_XL", "name": "POONA BLACK", "stock": "0", "doh": "0", "daily_rate": "2.2", "tier": "STOCKOUT"}, {"sku": "PYARO_BLACK_M", "name": "PYARO BLACK", "stock": "1", "doh": "0", "daily_rate": "2.2", "tier": "CRITICAL"}, {"sku": "VCM_PINK_M", "name": "VCM PINK", "stock": "0", "doh": "0", "daily_rate": "2.0", "tier": "STOCKOUT"}, {"sku": "DENIZ_BLUE_L", "name": "DENIZ BLUE", "stock": "0", "doh": "0", "daily_rate": "1.7", "tier": "STOCKOUT"}, {"sku": "VELLAKE_BLACK_L", "name": "VELLAKE BLACK", "stock": "0", "doh": "0", "daily_rate": "1.5", "tier": "STOCKOUT"}, {"sku": "DRUHI_MUSTARD_L", "name": "DRUHI MUSTARD", "stock": "0", "doh": "0", "daily_rate": "1.5", "tier": "STOCKOUT"}, {"sku": "MASUMI_BLUE_XXL", "name": "MASUMI BLUE", "stock": "0", "doh": "0", "daily_rate": "1.3", "tier": "STOCKOUT"}, {"sku": "DRUHI_MUSTARD_XXL", "name": "DRUHI MUSTARD", "stock": "0", "doh": "0", "daily_rate": "1.0", "tier": "STOCKOUT"}]
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Stockout: 32", "Critical (<15d): 87", "Warning (<30d): 9"],
+      table: [{"sku": "PYARO_BLACK_M", "name": "PYARO BLACK", "stock": "1", "doh": "0", "rev30d": "\u20b9904,960", "tier": "CRITICAL"}, {"sku": "DRUHI_MUSTARD_XXL", "name": "DRUHI MUSTARD", "stock": "0", "doh": "0", "rev30d": "\u20b9688,602", "tier": "STOCKOUT"}, {"sku": "VCM_PINK_M", "name": "VCM PINK", "stock": "0", "doh": "0", "rev30d": "\u20b9412,923", "tier": "STOCKOUT"}, {"sku": "DRUHI_MUSTARD_L", "name": "DRUHI MUSTARD", "stock": "0", "doh": "0", "rev30d": "\u20b9695,420", "tier": "STOCKOUT"}, {"sku": "GHAMA_PINK_XXL", "name": "GHAMA PINK", "stock": "0", "doh": "0", "rev30d": "\u20b9612,157", "tier": "STOCKOUT"}, {"sku": "POONA_BLACK_XL", "name": "POONA BLACK", "stock": "0", "doh": "0", "rev30d": "\u20b9518,763", "tier": "STOCKOUT"}, {"sku": "VELLAKE_BLACK_L", "name": "VELLAKE BLACK", "stock": "0", "doh": "0", "rev30d": "\u20b9752,836", "tier": "STOCKOUT"}, {"sku": "GANGORI_BROWN_M", "name": "GANGORI BROWN", "stock": "0", "doh": "0", "rev30d": "\u20b9593,692", "tier": "STOCKOUT"}]
     },
     signal6: {
       available: true, severity: 80,
@@ -1270,13 +1447,13 @@ const TENANTS = {
     },
     signal5: {
       available: true, severity: 100,
-      title: '26 bestsellers in stockout/critical — will run out in <7 days',
-      subtitle: '48 bestseller SKUs at risk | ₹1.1L revenue exposure',
-      impact_val: '₹1.1L', impact_label: 'revenue at risk',
+      title: '34 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '48 bestseller SKUs at risk | ₹2.8L revenue exposure',
+      impact_val: '₹2.8L', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Stockout: 18", "Critical (<7d): 8", "Warning (<14d): 7", "Watch (<30d): 15"],
-      table: [{"sku": "SSWBR0459", "name": "SSWBR0459", "stock": "0", "doh": "0", "daily_rate": "1.1", "tier": "STOCKOUT"}, {"sku": "NK0125", "name": "NK0125", "stock": "0", "doh": "0", "daily_rate": "0.7", "tier": "STOCKOUT"}, {"sku": "SSWER0915", "name": "SSWER0915", "stock": "0", "doh": "0", "daily_rate": "0.6", "tier": "STOCKOUT"}, {"sku": "SSMNC0603", "name": "SSMNC0603", "stock": "0", "doh": "0", "daily_rate": "0.5", "tier": "STOCKOUT"}, {"sku": "SSMNC0593", "name": "Silk Gold Chain for Men", "stock": "0", "doh": "0", "daily_rate": "0.4", "tier": "STOCKOUT"}, {"sku": "SSWRG0851-10", "name": "SSWRG0851-10", "stock": "0", "doh": "0", "daily_rate": "0.4", "tier": "STOCKOUT"}, {"sku": "CHAIN-003-M", "name": "CHAIN-003-M", "stock": "0", "doh": "0", "daily_rate": "0.3", "tier": "STOCKOUT"}, {"sku": "SSWRG0849-8", "name": "SSWRG0849-8", "stock": "0", "doh": "0", "daily_rate": "0.3", "tier": "STOCKOUT"}]
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Stockout: 20", "Critical (<15d): 14", "Warning (<30d): 14"],
+      table: [{"sku": "SSWBR0459", "name": "SSWBR0459", "stock": "0", "doh": "0", "rev30d": "\u20b9658,367", "tier": "STOCKOUT"}, {"sku": "SSMNC0593", "name": "Silk Gold Chain for Men", "stock": "0", "doh": "0", "rev30d": "\u20b92,164,398", "tier": "STOCKOUT"}, {"sku": "SSWNC0421", "name": "SSWNC0421", "stock": "0", "doh": "0", "rev30d": "\u20b9682,746", "tier": "STOCKOUT"}, {"sku": "SSWER0915", "name": "SSWER0915", "stock": "0", "doh": "0", "rev30d": "\u20b9587,100", "tier": "STOCKOUT"}, {"sku": "PM-RING-093-7", "name": "PM-RING-093-7", "stock": "0", "doh": "0", "rev30d": "\u20b9687,714", "tier": "STOCKOUT"}, {"sku": "CHAIN-003-M", "name": "CHAIN-003-M", "stock": "0", "doh": "0", "rev30d": "\u20b91,127,668", "tier": "STOCKOUT"}, {"sku": "NK0125", "name": "NK0125", "stock": "0", "doh": "0", "rev30d": "\u20b9223,025", "tier": "STOCKOUT"}, {"sku": "SSMNC0603", "name": "SSMNC0603", "stock": "0", "doh": "0", "rev30d": "\u20b9451,356", "tier": "STOCKOUT"}]
     },
     signal6: { available: false },
     signal7: {
@@ -1321,13 +1498,13 @@ const TENANTS = {
     },
     signal5: {
       available: true, severity: 100,
-      title: '55 bestsellers in stockout/critical — will run out in <7 days',
-      subtitle: '88 bestseller SKUs at risk | ₹1.1L revenue exposure',
-      impact_val: '₹1.1L', impact_label: 'revenue at risk',
+      title: '72 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '88 bestseller SKUs at risk | ₹2.7L revenue exposure',
+      impact_val: '₹2.7L', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
-      tooltip: 'Top 20% SKUs by sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<7 days), WARNING (<14 days), WATCH (<30 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 7-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Stockout: 40", "Critical (<7d): 15", "Warning (<14d): 14", "Watch (<30d): 19"],
-      table: [{"sku": "CHN-M26_Cream", "name": "SHOWOFFFF Women's Cream Crochet But", "stock": "0", "doh": "0", "daily_rate": "0.5", "tier": "STOCKOUT"}, {"sku": "CHN-1113_Cream", "name": "SHOWOFFFF Women's Cream Crochet Top", "stock": "0", "doh": "0", "daily_rate": "0.4", "tier": "STOCKOUT"}, {"sku": "CHN-M16_Cream", "name": "SHOWOFFFF Women's Cream Crochet Lon", "stock": "0", "doh": "0", "daily_rate": "0.4", "tier": "STOCKOUT"}, {"sku": "CHN-5361_Pink", "name": "SHOWOFFFF Edition Women's Floral Em", "stock": "0", "doh": "0", "daily_rate": "0.3", "tier": "STOCKOUT"}, {"sku": "CHN-8066-5_Cream", "name": "SHOWOFFFF Women's Embroidered Cream", "stock": "0", "doh": "0", "daily_rate": "0.3", "tier": "STOCKOUT"}, {"sku": "CHN-3006_Cream", "name": "SHOWOFFFF Edition Women's Textured ", "stock": "0", "doh": "0", "daily_rate": "0.3", "tier": "STOCKOUT"}, {"sku": "CHN-719_Blue", "name": "SHOWOFFFF Women's Floral Embroidere", "stock": "0", "doh": "0", "daily_rate": "0.2", "tier": "STOCKOUT"}, {"sku": "CHN-1266-1_Brown", "name": "SHOWOFFFF Women's Brown Chevron Cro", "stock": "0", "doh": "0", "daily_rate": "0.2", "tier": "STOCKOUT"}]
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Stockout: 47", "Critical (<15d): 25", "Warning (<30d): 16"],
+      table: [{"sku": "CHN-8066-5_Cream", "name": "SHOWOFFFF Women's Embroidered Cream", "stock": "0", "doh": "0", "rev30d": "\u20b971,681", "tier": "STOCKOUT"}, {"sku": "CHN-M16_Cream", "name": "SHOWOFFFF Women's Cream Crochet Lon", "stock": "0", "doh": "0", "rev30d": "\u20b982,913", "tier": "STOCKOUT"}, {"sku": "CHN-1113_Cream", "name": "SHOWOFFFF Women's Cream Crochet Top", "stock": "0", "doh": "0", "rev30d": "\u20b968,520", "tier": "STOCKOUT"}, {"sku": "CHN-5361_Pink", "name": "SHOWOFFFF Edition Women's Floral Em", "stock": "0", "doh": "0", "rev30d": "\u20b9103,670", "tier": "STOCKOUT"}, {"sku": "CHN-M26_Cream", "name": "SHOWOFFFF Women's Cream Crochet But", "stock": "0", "doh": "0", "rev30d": "\u20b948,823", "tier": "STOCKOUT"}, {"sku": "CHN-3006_Cream", "name": "SHOWOFFFF Edition Women's Textured ", "stock": "0", "doh": "0", "rev30d": "\u20b9107,146", "tier": "STOCKOUT"}, {"sku": "CHN-8331_Brown", "name": "SHOWOFFFF Edition Women's Knitted B", "stock": "0", "doh": "0", "rev30d": "\u20b949,052", "tier": "STOCKOUT"}, {"sku": "CHN-099_OffWhite", "name": "SHOWOFFFF Women's Solid Pleated Off", "stock": "0", "doh": "0", "rev30d": "\u20b975,002", "tier": "STOCKOUT"}]
     },
     signal6: { available: false },
     signal7: {
@@ -1517,9 +1694,9 @@ function renderDetailTable(sig, type) {
       html += '<tr><td>' + r.channel + '</td><td>' + r.listed + '</td><td class="val-red">' + r.coverage + '</td><td class="val-red">' + r.gap + '</td><td class="val-grn">' + r.upside + '</td></tr>';
     });
   } else if (type === 'signal5') {
-    html += '<tr><th>SKU</th><th>Name</th><th>Stock</th><th>DOH</th><th>Daily Rate</th><th>Risk</th></tr>';
+    html += '<tr><th>SKU</th><th>Name</th><th>Stock</th><th>DOH</th><th>Rev 30d</th><th>Risk</th></tr>';
     sig.table.forEach(r => {
-      html += '<tr><td style="font-family:monospace;font-size:10px;">' + r.sku + '</td><td>' + r.name + '</td><td>' + r.stock + '</td><td class="' + (parseInt(r.doh) < 7 ? 'val-red' : '') + '">' + r.doh + 'd</td><td>' + r.daily_rate + '/d</td><td><span class="tier-badge ' + r.tier + '">' + r.tier + '</span></td></tr>';
+      html += '<tr><td style="font-family:monospace;font-size:10px;">' + r.sku + '</td><td>' + r.name + '</td><td>' + r.stock + '</td><td class="' + (parseInt(r.doh) < 15 ? 'val-red' : '') + '">' + r.doh + 'd</td><td>' + r.rev30d + '</td><td><span class="tier-badge ' + r.tier + '">' + r.tier + '</span></td></tr>';
     });
   } else if (type === 'signal6') {
     html += '<tr><th>SKU</th><th>Channel</th><th>Dispatched</th><th>Returned</th><th>Return %</th></tr>';
