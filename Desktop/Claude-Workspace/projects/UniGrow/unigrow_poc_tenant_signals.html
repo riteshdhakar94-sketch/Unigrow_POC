@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniGrow — Signal PoC · 15 Tenants</title>
+<title>UniGrow — Signal PoC · 16 Tenants</title>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -977,7 +977,7 @@ body {
 
 <!-- FOOTER -->
 <div class="poc-footer">
-  UniGrow Signal PoC · 5 signals · 15 tenants · 11 Apr 2026
+  UniGrow Signal PoC · 4 signals · 16 tenants · 11 Apr 2026
   <br>
   Raw data: <a href="signal_s5_inventory_doh_raw.csv" style="color:var(--uc-primary)">S5 Inventory (1,569 rows)</a>
   · <a href="signal_s6_return_rate_raw.csv" style="color:var(--uc-primary)">S6 Returns (782 rows)</a>
@@ -1020,37 +1020,27 @@ const TENANTS = {
     },
     signal1: {
       available: true, severity: 50,
-      title: '14 channels below 50% listing coverage vs Myntra',
-      subtitle: '0 with active revenue | ₹0/month est. upside',
-      impact_val: '₹0', impact_label: '/month est. upside',
+      title: '4 channels below 50% listing coverage vs Shopify',
+      subtitle: '4 with active revenue | ₹18.5L/month est. upside',
+      impact_val: '₹18.5L', impact_label: '/month est. upside',
       type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Myntra). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["14 under-listed channels", "Myntra leads: 2,263 SKUs"],
-      table: [{"channel": "WOOVLY", "listed": "6", "coverage": "0%", "gap": "2,257", "upside": "\u2014"}, {"channel": "Flipkart", "listed": "19", "coverage": "1%", "gap": "2,244", "upside": "\u2014"}, {"channel": "AMAZON_IN", "listed": "36", "coverage": "2%", "gap": "2,227", "upside": "\u2014"}, {"channel": "MYNTRA_B2B", "listed": "40", "coverage": "2%", "gap": "2,223", "upside": "\u2014"}, {"channel": "Instamart", "listed": "45", "coverage": "2%", "gap": "2,218", "upside": "\u2014"}, {"channel": "PharmEasy", "listed": "48", "coverage": "2%", "gap": "2,215", "upside": "\u2014"}]
+      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Shopify). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
+      pills: ["4 under-listed channels", "Shopify leads: 2,263 SKUs"],
+      table: [{"channel": "CUSTOM_B2B", "listed": "9", "coverage": "0%", "gap": "2,254", "upside": "\u20b94.8L"}, {"channel": "D2C", "listed": "43", "coverage": "2%", "gap": "2,220", "upside": "\u20b94.8L"}, {"channel": "Myntra", "listed": "65", "coverage": "3%", "gap": "2,198", "upside": "\u20b94.7L"}, {"channel": "Meesho", "listed": "307", "coverage": "14%", "gap": "1,956", "upside": "\u20b94.2L"}]
     },
     signal5: {
       available: true, severity: 100,
       title: '1 bestsellers in stockout/critical — will run out in <15 days',
-      subtitle: '1 bestseller SKUs at risk | ₹3927 revenue exposure',
-      impact_val: '₹3927', impact_label: 'revenue at risk',
+      subtitle: '1 bestseller SKUs at risk | ₹3,927 revenue exposure',
+      impact_val: '₹3,927', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Stockout: 1"],
-      table: [{"sku": "dk_Dummy", "name": "dk_Dummy", "stock": "0", "doh": "0", "rev30d": "\u20b9211,929", "tier": "STOCKOUT"}]
+      table: [{"sku": "dk_Dummy", "name": "dk_Dummy", "stock": "0", "doh": "0", "rev30d": "\u20b9211,408", "tier": "STOCKOUT"}]
     },
-    signal6: {
-      available: true, severity: 80,
-      title: "1 SKU-channel combos have >10% return rate",
-      subtitle: 'Returns signal product-listing mismatch or quality issues',
-      impact_val: '1', impact_label: 'high-return combos',
-      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
-      tooltip: 'SKU x channel combinations with high return rates. Filters: marketplace channels only (excludes D2C), min 5 dispatched, min 2 returned. Return % = (RTO + CIR) / dispatched x 100. High = above 10%. Data: last 30 days from transaction__daily_v2_raw.',
-      pills: ["26 total combos with returns", "Top: 12% on Meesho"],
-      table: [{"sku": "DK_NVCRNG", "channel": "Meesho", "dispatched": "17", "returned": "2", "pct": "11.8%"}]
-    },
+    signal6: { available: false },
     signal7: { available: false }
   },
-
   mamaearth: {
     name: 'Mamaearth (Honasa)',
     code: 'MAMAEARTH',
@@ -1068,21 +1058,21 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹235',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '11,219',
+      active_skus: '45',
       skus_sub: 'Listed on Myntra (top channel)',
       skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '9',
-      channels_sub: 'Meesho · Flipkart · Myntra + 6 more'
+      active_channels: '12',
+      channels_sub: 'Shopify · Meesho · Myntra + 9 more'
     },
     signal1: {
-      available: true, severity: 70,
-      title: '9 channels below 50% listing coverage vs Myntra',
-      subtitle: '7 with active revenue | ₹44.1 Cr/month est. upside',
-      impact_val: '₹44.1 Cr', impact_label: '/month est. upside',
+      available: true, severity: 50,
+      title: '7 channels below 50% listing coverage vs Shopify',
+      subtitle: '7 with active revenue | ₹80,985/month est. upside',
+      impact_val: '₹80,985', impact_label: '/month est. upside',
       type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Myntra). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["9 under-listed channels", "Myntra leads: 11,219 SKUs", "Amazon EasyShip: top expansion priority"],
-      table: [{"channel": "Amazon EasyShip", "listed": "253", "coverage": "2%", "gap": "10,966", "upside": "\u20b917.7 Cr"}, {"channel": "Meesho", "listed": "4,856", "coverage": "43%", "gap": "6,363", "upside": "\u20b915.7 Cr"}, {"channel": "Amazon IN", "listed": "267", "coverage": "2%", "gap": "10,952", "upside": "\u20b99.2 Cr"}, {"channel": "JioMart", "listed": "350", "coverage": "3%", "gap": "10,869", "upside": "\u20b994.9L"}, {"channel": "VELY_MONKEYS", "listed": "50", "coverage": "0%", "gap": "11,169", "upside": "\u20b932.5L"}, {"channel": "Tata CLiQ", "listed": "549", "coverage": "5%", "gap": "10,670", "upside": "\u20b911.2L"}]
+      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Shopify). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
+      pills: ["7 under-listed channels", "Shopify leads: 45 SKUs"],
+      table: [{"channel": "AMAZON_EASYSHIP_V2", "listed": "0", "coverage": "0%", "gap": "45", "upside": "\u20b912,027"}, {"channel": "Amazon", "listed": "0", "coverage": "0%", "gap": "45", "upside": "\u20b912,027"}, {"channel": "JIOMART3P", "listed": "0", "coverage": "0%", "gap": "45", "upside": "\u20b912,027"}, {"channel": "TATACLIQ", "listed": "0", "coverage": "0%", "gap": "45", "upside": "\u20b912,027"}, {"channel": "D2C", "listed": "1", "coverage": "2%", "gap": "44", "upside": "\u20b911,760"}, {"channel": "Myntra", "listed": "4", "coverage": "9%", "gap": "41", "upside": "\u20b910,958"}, {"channel": "Flipkart", "listed": "7", "coverage": "16%", "gap": "38", "upside": "\u20b910,156"}]
     },
     signal5: {
       available: true, severity: 100,
@@ -1092,25 +1082,15 @@ const TENANTS = {
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Critical (<15d): 1", "Warning (<30d): 4"],
-      table: [{"sku": "8904417322408", "name": "ME Beetroot Hydraful Face Wash 50 m", "stock": "678", "doh": "6", "rev30d": "\u20b92,378,277", "tier": "CRITICAL"}, {"sku": "8904417316438", "name": "ME Rosemary Anti-Hairfall Shampoo 1", "stock": "245", "doh": "15", "rev30d": "\u20b9842,265", "tier": "WARNING"}, {"sku": "8904417312393", "name": "BB 7 In 1 R & R Shampoo 300 ml", "stock": "538", "doh": "21", "rev30d": "\u20b93,500,195", "tier": "WARNING"}, {"sku": "8906087778202", "name": "AQ Glow+ Face Serum 30 ml", "stock": "743", "doh": "21", "rev30d": "\u20b94,944,347", "tier": "WARNING"}, {"sku": "8904417313253", "name": "AQ Refresh+ Body Mist- Sweet summer", "stock": "1349", "doh": "22", "rev30d": "\u20b95,379,702", "tier": "WARNING"}]
+      table: [{"sku": "8904417322408", "name": "ME Beetroot Hydraful Face Wash 50 m", "stock": "678", "doh": "6", "rev30d": "\u20b92,400,143", "tier": "CRITICAL"}, {"sku": "8904417316438", "name": "ME Rosemary Anti-Hairfall Shampoo 1", "stock": "245", "doh": "15", "rev30d": "\u20b9862,811", "tier": "WARNING"}, {"sku": "8904417312393", "name": "BB 7 In 1 R & R Shampoo 300 ml", "stock": "538", "doh": "21", "rev30d": "\u20b93,497,833", "tier": "WARNING"}, {"sku": "8906087778202", "name": "AQ Glow+ Face Serum 30 ml", "stock": "743", "doh": "21", "rev30d": "\u20b94,963,768", "tier": "WARNING"}, {"sku": "8904417313253", "name": "AQ Refresh+ Body Mist- Sweet summer", "stock": "1349", "doh": "22", "rev30d": "\u20b95,482,513", "tier": "WARNING"}]
     },
-    signal6: {
-      available: true, severity: 80,
-      title: "8 SKU-channel combos have >10% return rate",
-      subtitle: 'Returns signal product-listing mismatch or quality issues',
-      impact_val: '8', impact_label: 'high-return combos',
-      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
-      tooltip: 'SKU x channel combinations with high return rates. Filters: marketplace channels only (excludes D2C), min 5 dispatched, min 2 returned. Return % = (RTO + CIR) / dispatched x 100. High = above 10%. Data: last 30 days from transaction__daily_v2_raw.',
-      pills: ["150 total combos with returns", "Top: 33% on Flipkart"],
-      table: [{"sku": "8904417311969", "channel": "Flipkart", "dispatched": "6", "returned": "2", "pct": "33.3%"}, {"sku": "8904417322668", "channel": "Flipkart", "dispatched": "8", "returned": "2", "pct": "25.0%"}, {"sku": "8904417311860", "channel": "Flipkart", "dispatched": "12", "returned": "3", "pct": "25.0%"}, {"sku": "8904417303285", "channel": "Amazon EasyShip", "dispatched": "9", "returned": "2", "pct": "22.2%"}, {"sku": "8904417320558", "channel": "Meesho", "dispatched": "11", "returned": "2", "pct": "18.2%"}, {"sku": "8904417314380", "channel": "Myntra", "dispatched": "19", "returned": "3", "pct": "15.8%"}, {"sku": "8904417306576", "channel": "Amazon EasyShip", "dispatched": "13", "returned": "2", "pct": "15.4%"}, {"sku": "8906148700487", "channel": "Meesho", "dispatched": "13", "returned": "2", "pct": "15.4%"}]
-    },
+    signal6: { available: false },
     signal7: { available: false }
   },
-
   pep: {
     name: 'PEP',
     code: 'PEP',
-    category: 'Beauty — Personal Care',
+    category: 'Health & Wellness',
     kpi: {
       gross_sales_30d: '₹31.3 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1124,40 +1104,39 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹274',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '2,696',
-      skus_sub: 'Listed on Myntra (top channel)',
-      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '8',
-      channels_sub: 'Meesho · HYPD · Myntra + 5 more'
+      active_skus: '200',
+      skus_sub: 'Listed on Shopify (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Shopify). Proxy for catalog breadth and marketplace sync health.',
+      active_channels: '11',
+      channels_sub: 'Shopify · Hypd · Meesho + 8 more'
     },
     signal1: {
-      available: true, severity: 70,
-      title: '21 channels below 50% listing coverage vs Myntra',
-      subtitle: '7 with active revenue | ₹15.4 Cr/month est. upside',
-      impact_val: '₹15.4 Cr', impact_label: '/month est. upside',
+      available: true, severity: 50,
+      title: '10 channels below 50% listing coverage vs Shopify',
+      subtitle: '10 with active revenue | ₹5.5L/month est. upside',
+      impact_val: '₹5.5L', impact_label: '/month est. upside',
       type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Myntra). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["21 under-listed channels", "Myntra leads: 2,696 SKUs", "Meesho: top expansion priority"],
-      table: [{"channel": "Meesho", "listed": "205", "coverage": "8%", "gap": "2,491", "upside": "\u20b99.8 Cr"}, {"channel": "HYPD", "listed": "480", "coverage": "18%", "gap": "2,216", "upside": "\u20b93.6 Cr"}, {"channel": "Amazon IN", "listed": "378", "coverage": "14%", "gap": "2,318", "upside": "\u20b980.8L"}, {"channel": "FirstCry", "listed": "389", "coverage": "14%", "gap": "2,307", "upside": "\u20b939.0L"}, {"channel": "Smytten", "listed": "600", "coverage": "22%", "gap": "2,096", "upside": "\u20b936.4L"}, {"channel": "Snapdeal", "listed": "360", "coverage": "13%", "gap": "2,336", "upside": "\u20b923.7L"}]
+      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Shopify). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
+      pills: ["10 under-listed channels", "Shopify leads: 200 SKUs"],
+      table: [{"channel": "Myntra", "listed": "0", "coverage": "0%", "gap": "200", "upside": "\u20b955,829"}, {"channel": "Amazon", "listed": "0", "coverage": "0%", "gap": "200", "upside": "\u20b955,829"}, {"channel": "SMYTTEN", "listed": "0", "coverage": "0%", "gap": "200", "upside": "\u20b955,829"}, {"channel": "Flipkart", "listed": "0", "coverage": "0%", "gap": "200", "upside": "\u20b955,829"}, {"channel": "FIRSTCRY", "listed": "0", "coverage": "0%", "gap": "200", "upside": "\u20b955,829"}, {"channel": "SNAPDEAL", "listed": "0", "coverage": "0%", "gap": "200", "upside": "\u20b955,829"}, {"channel": "CUSTOM_B2B", "listed": "2", "coverage": "1%", "gap": "198", "upside": "\u20b955,271"}, {"channel": "HYPD", "listed": "4", "coverage": "2%", "gap": "196", "upside": "\u20b954,713"}]
     },
     signal5: {
       available: true, severity: 100,
       title: '1 bestsellers in stockout/critical — will run out in <15 days',
-      subtitle: '1 bestseller SKUs at risk | ₹49742 revenue exposure',
-      impact_val: '₹49742', impact_label: 'revenue at risk',
+      subtitle: '1 bestseller SKUs at risk | ₹49,742 revenue exposure',
+      impact_val: '₹49,742', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Critical (<15d): 1"],
-      table: [{"sku": "MCaf235_WB", "name": "Shimmer body scrub_150 gm", "stock": "30", "doh": "3", "rev30d": "\u20b9131,505", "tier": "CRITICAL"}]
+      table: [{"sku": "MCaf235_WB", "name": "Shimmer body scrub_150 gm", "stock": "30", "doh": "3", "rev30d": "\u20b9130,833", "tier": "CRITICAL"}]
     },
     signal6: { available: false },
     signal7: { available: false }
   },
-
   innovist: {
     name: 'Innovist',
     code: 'INNOVIST',
-    category: 'Beauty — D2C Skincare',
+    category: 'Beauty — Skincare',
     kpi: {
       gross_sales_30d: '₹23.4 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1171,31 +1150,30 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹357',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '358',
-      skus_sub: 'Listed on Cloudtail (Amazon) (top channel)',
-      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Cloudtail (Amazon)). Proxy for catalog breadth and marketplace sync health.',
+      active_skus: '100',
+      skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
       active_channels: '9',
-      channels_sub: 'Meesho · Myntra · DonoShop + 6 more'
+      channels_sub: 'Shopify · Meesho · Myntra + 6 more'
     },
     signal1: {
-      available: true, severity: 70,
-      title: '12 channels below 50% listing coverage vs Cloudtail (Amazon)',
-      subtitle: '7 with active revenue | ₹23.8 Cr/month est. upside',
-      impact_val: '₹23.8 Cr', impact_label: '/month est. upside',
+      available: true, severity: 50,
+      title: '8 channels below 50% listing coverage vs Shopify',
+      subtitle: '8 with active revenue | ₹2.1L/month est. upside',
+      impact_val: '₹2.1L', impact_label: '/month est. upside',
       type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Cloudtail (Amazon)). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["12 under-listed channels", "Cloudtail (Amazon) leads: 358 SKUs", "Flipkart: top expansion priority"],
-      table: [{"channel": "Flipkart", "listed": "1", "coverage": "0%", "gap": "357", "upside": "\u20b921.1 Cr"}, {"channel": "Meesho", "listed": "141", "coverage": "39%", "gap": "217", "upside": "\u20b91.7 Cr"}, {"channel": "CRED", "listed": "65", "coverage": "18%", "gap": "293", "upside": "\u20b938.2L"}, {"channel": "DonoShop", "listed": "87", "coverage": "24%", "gap": "271", "upside": "\u20b937.8L"}, {"channel": "Snapdeal", "listed": "83", "coverage": "23%", "gap": "275", "upside": "\u20b920.9L"}, {"channel": "PharmEasy", "listed": "52", "coverage": "15%", "gap": "306", "upside": "\u20b98.4L"}]
+      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Shopify). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
+      pills: ["8 under-listed channels", "Shopify leads: 100 SKUs"],
+      table: [{"channel": "Myntra", "listed": "0", "coverage": "0%", "gap": "100", "upside": "\u20b926,786"}, {"channel": "DONOSHOP", "listed": "0", "coverage": "0%", "gap": "100", "upside": "\u20b926,786"}, {"channel": "CLOUDTAIL", "listed": "0", "coverage": "0%", "gap": "100", "upside": "\u20b926,786"}, {"channel": "Cred", "listed": "0", "coverage": "0%", "gap": "100", "upside": "\u20b926,786"}, {"channel": "SNAPDEAL", "listed": "0", "coverage": "0%", "gap": "100", "upside": "\u20b926,786"}, {"channel": "Flipkart", "listed": "0", "coverage": "0%", "gap": "100", "upside": "\u20b926,786"}, {"channel": "CUSTOM_B2B", "listed": "4", "coverage": "4%", "gap": "96", "upside": "\u20b925,714"}, {"channel": "Meesho", "listed": "6", "coverage": "6%", "gap": "94", "upside": "\u20b925,179"}]
     },
     signal5: { available: false },
     signal6: { available: false },
     signal7: { available: false }
   },
-
-  mosaicwellness: {
+  mosaicwellnesspvtlmt: {
     name: 'Mosaic Wellness',
-    code: 'MOSAICWELL',
-    category: 'Wellness — Man Matters / Be Bodywise',
+    code: 'MOSAIC',
+    category: 'Health & Wellness',
     kpi: {
       gross_sales_30d: '₹58.9 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1209,49 +1187,39 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹371',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '38,016',
-      skus_sub: 'Listed on Amazon FBA (top channel)',
-      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Amazon FBA). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '12',
-      channels_sub: 'Amazon FBA · Meesho · Flipkart FA + 9 more'
+      active_skus: '120',
+      skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
+      active_channels: '15',
+      channels_sub: 'Custom · Meesho · Myntra + 12 more'
     },
     signal1: {
-      available: true, severity: 70,
-      title: '19 channels below 50% listing coverage vs Amazon FBA',
-      subtitle: '11 with active revenue | ₹201.9 Cr/month est. upside',
-      impact_val: '₹201.9 Cr', impact_label: '/month est. upside',
+      available: true, severity: 50,
+      title: '8 channels below 50% listing coverage vs D2C',
+      subtitle: '8 with active revenue | ₹3.1L/month est. upside',
+      impact_val: '₹3.1L', impact_label: '/month est. upside',
       type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Amazon FBA). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["19 under-listed channels", "Amazon FBA leads: 38,016 SKUs", "Meesho: top expansion priority"],
-      table: [{"channel": "Meesho", "listed": "1,865", "coverage": "5%", "gap": "36,151", "upside": "\u20b961.1 Cr"}, {"channel": "PharmEasy", "listed": "28", "coverage": "0%", "gap": "37,988", "upside": "\u20b946.8 Cr"}, {"channel": "Blinkit", "listed": "126", "coverage": "0%", "gap": "37,890", "upside": "\u20b932.8 Cr"}, {"channel": "Myntra", "listed": "1,089", "coverage": "3%", "gap": "36,927", "upside": "\u20b919.4 Cr"}, {"channel": "HYPD", "listed": "173", "coverage": "0%", "gap": "37,843", "upside": "\u20b912.5 Cr"}, {"channel": "Flipkart FA", "listed": "8,533", "coverage": "22%", "gap": "29,483", "upside": "\u20b99.1 Cr"}]
+      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (D2C). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
+      pills: ["8 under-listed channels", "D2C leads: 120 SKUs"],
+      table: [{"channel": "Amazon", "listed": "0", "coverage": "0%", "gap": "120", "upside": "\u20b943,890"}, {"channel": "BLINKIT", "listed": "0", "coverage": "0%", "gap": "120", "upside": "\u20b943,890"}, {"channel": "Flipkart", "listed": "2", "coverage": "2%", "gap": "118", "upside": "\u20b943,158"}, {"channel": "Myntra", "listed": "2", "coverage": "2%", "gap": "118", "upside": "\u20b943,158"}, {"channel": "FLIPKART_FA", "listed": "10", "coverage": "8%", "gap": "110", "upside": "\u20b940,232"}, {"channel": "Meesho", "listed": "16", "coverage": "13%", "gap": "104", "upside": "\u20b938,038"}, {"channel": "AMAZON_FBA_IN", "listed": "17", "coverage": "14%", "gap": "103", "upside": "\u20b937,672"}, {"channel": "WOOCOMMERCE", "listed": "53", "coverage": "44%", "gap": "67", "upside": "\u20b924,505"}]
     },
     signal5: {
       available: true, severity: 80,
-      title: '1 bestsellers with <14 days of stock remaining',
+      title: '1 bestsellers with <30 days of stock remaining',
       subtitle: '1 bestseller SKUs at risk | ₹0 revenue exposure',
       impact_val: '₹0', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-amber', accent: 'amber',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Warning (<30d): 1"],
-      table: [{"sku": "MWLJNTS.0001.B0_N", "name": "LJ NutriMix 2+ 30 g Chocolate Mini", "stock": "983", "doh": "28", "rev30d": "\u20b91,098,418", "tier": "WARNING"}]
+      table: [{"sku": "MWLJNTS.0001.B0_N", "name": "LJ NutriMix 2+ 30 g Chocolate Mini", "stock": "983", "doh": "28", "rev30d": "\u20b91,116,661", "tier": "WARNING"}]
     },
-    signal6: {
-      available: true, severity: 80,
-      title: "2 SKU-channel combos have >10% return rate",
-      subtitle: 'Returns signal product-listing mismatch or quality issues',
-      impact_val: '2', impact_label: 'high-return combos',
-      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
-      tooltip: 'SKU x channel combinations with high return rates. Filters: marketplace channels only (excludes D2C), min 5 dispatched, min 2 returned. Return % = (RTO + CIR) / dispatched x 100. High = above 10%. Data: last 30 days from transaction__daily_v2_raw.',
-      pills: ["47 total combos with returns", "Top: 40% on Amazon Flex"],
-      table: [{"sku": "MWMMNTP.0171.AAAA.B0_N", "channel": "Amazon Flex", "dispatched": "5", "returned": "2", "pct": "40.0%"}, {"sku": "MWMMHRP.7121.B0_R", "channel": "Amazon Flex", "dispatched": "40", "returned": "6", "pct": "15.0%"}]
-    },
+    signal6: { available: false },
     signal7: { available: false }
   },
-
   nuawoman: {
     name: 'NUA Woman',
     code: 'NUAWOMAN',
-    category: 'Personal Care — Feminine Wellness',
+    category: 'Femcare — D2C',
     kpi: {
       gross_sales_30d: '₹1.6 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1265,21 +1233,21 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹126',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '478',
-      skus_sub: 'Listed on Meesho (top channel)',
-      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Meesho). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '11',
-      channels_sub: 'Meesho · Myntra · Smytten + 8 more'
+      active_skus: '50',
+      skus_sub: 'Listed on D2C (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (D2C). Proxy for catalog breadth and marketplace sync health.',
+      active_channels: '12',
+      channels_sub: 'Custom · Meesho · Myntra + 9 more'
     },
     signal1: {
-      available: true, severity: 70,
-      title: '15 channels below 50% listing coverage vs Meesho',
-      subtitle: '9 with active revenue | ₹53.3L/month est. upside',
-      impact_val: '₹53.3L', impact_label: '/month est. upside',
+      available: true, severity: 50,
+      title: '6 channels below 50% listing coverage vs D2C',
+      subtitle: '6 with active revenue | ₹33,985/month est. upside',
+      impact_val: '₹33,985', impact_label: '/month est. upside',
       type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Meesho). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["15 under-listed channels", "Meesho leads: 478 SKUs", "Smytten: top expansion priority"],
-      table: [{"channel": "Smytten", "listed": "57", "coverage": "12%", "gap": "421", "upside": "\u20b930.2L"}, {"channel": "CRED", "listed": "8", "coverage": "2%", "gap": "470", "upside": "\u20b96.4L"}, {"channel": "Myntra", "listed": "207", "coverage": "43%", "gap": "271", "upside": "\u20b96.4L"}, {"channel": "DonoShop", "listed": "18", "coverage": "4%", "gap": "460", "upside": "\u20b93.9L"}, {"channel": "Flipkart", "listed": "236", "coverage": "49%", "gap": "242", "upside": "\u20b92.1L"}, {"channel": "JioMart", "listed": "158", "coverage": "33%", "gap": "320", "upside": "\u20b91.8L"}]
+      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (D2C). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
+      pills: ["6 under-listed channels", "D2C leads: 50 SKUs"],
+      table: [{"channel": "Flipkart", "listed": "0", "coverage": "0%", "gap": "50", "upside": "\u20b95,779"}, {"channel": "JIOMART3P", "listed": "0", "coverage": "0%", "gap": "50", "upside": "\u20b95,779"}, {"channel": "BLINKIT", "listed": "0", "coverage": "0%", "gap": "50", "upside": "\u20b95,779"}, {"channel": "Myntra", "listed": "1", "coverage": "2%", "gap": "49", "upside": "\u20b95,664"}, {"channel": "SMYTTEN", "listed": "1", "coverage": "2%", "gap": "49", "upside": "\u20b95,664"}, {"channel": "Meesho", "listed": "4", "coverage": "8%", "gap": "46", "upside": "\u20b95,317"}]
     },
     signal5: {
       available: true, severity: 100,
@@ -1289,34 +1257,24 @@ const TENANTS = {
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Critical (<15d): 1"],
-      table: [{"sku": "NURSING-PAD-10-25", "name": "Nursing Pads", "stock": "536", "doh": "10", "rev30d": "\u20b9108,354", "tier": "CRITICAL"}]
+      table: [{"sku": "NURSING-PAD-10-25", "name": "Nursing Pads", "stock": "536", "doh": "10", "rev30d": "\u20b9107,188", "tier": "CRITICAL"}]
     },
-    signal6: {
-      available: true, severity: 80,
-      title: "3 SKU-channel combos have >10% return rate",
-      subtitle: 'Returns signal product-listing mismatch or quality issues',
-      impact_val: '3', impact_label: 'high-return combos',
-      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
-      tooltip: 'SKU x channel combinations with high return rates. Filters: marketplace channels only (excludes D2C), min 5 dispatched, min 2 returned. Return % = (RTO + CIR) / dispatched x 100. High = above 10%. Data: last 30 days from transaction__daily_v2_raw.',
-      pills: ["4 total combos with returns", "Top: 100% on Flipkart"],
-      table: [{"sku": "medium_flow_dima", "channel": "Flipkart", "dispatched": "5", "returned": "5", "pct": "100.0%"}, {"sku": "light_flow_dima", "channel": "Flipkart", "dispatched": "12", "returned": "4", "pct": "33.3%"}, {"sku": "heavy_flow_dima", "channel": "Flipkart", "dispatched": "9", "returned": "3", "pct": "33.3%"}]
-    },
+    signal6: { available: false },
     signal7: {
       available: true, severity: 50,
-      title: "31 top SKUs concentrated in one state (>30% share)",
+      title: '33 top SKUs concentrated in one state (>30%)',
       subtitle: 'Regional demand hotspots — potential for targeted expansion',
-      impact_val: '31', impact_label: 'concentrated SKUs',
-      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      impact_val: '33', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-blue', accent: 'blue',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
-      pills: ["Top: Uttar Pradesh at 100%", "31 SKUs above 30% threshold"],
-      table: [{"sku": "RT-30MF-10-22", "state": "Uttar Pradesh", "share": "100.0%", "orders": "3/3", "revenue": "\u20b9801"}, {"sku": "STD-ASRMT-OVRNGT-PNTY-XL-XXL-0", "state": "J&K", "share": "100.0%", "orders": "2/2", "revenue": "\u20b9698"}, {"sku": "STD-ASSRT-PL40-160MM-OPP-XXL-X", "state": "Delhi", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9599"}, {"sku": "HOW-I-GOT-BOOK-09-24", "state": "Karnataka", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9379"}, {"sku": "NUA-MYWAVE-280mm-2s-01-26", "state": "Maharashtra", "share": "100.0%", "orders": "2/2", "revenue": "\u20b940"}, {"sku": "ONP1-320MM-SAM-09-24-KIT", "state": "Maharashtra", "share": "100.0%", "orders": "1/1", "revenue": "\u20b91"}, {"sku": "STD-ASRMT-POU-12-25-KIT", "state": "Maharashtra", "share": "100.0%", "orders": "1/1", "revenue": "\u20b90"}, {"sku": "DUO-PL-40-160MM-09-25-KIT", "state": "TL", "share": "70.0%", "orders": "35/50", "revenue": "\u20b95"}]
+      pills: ["Top: UP at 100%", "33 SKUs above 30% threshold"],
+      table: [{"sku": "STRCH-MRK-OIL-02-25", "state": "MH", "pct": "34.4%", "orders": "75/218"}, {"sku": "TAMPON-12-REG-03-26-KIT", "state": "MH", "pct": "38.2%", "orders": "42/110"}, {"sku": "SP-25-25-00-BULK-08-23-KI", "state": "TL", "pct": "34.6%", "orders": "18/52"}, {"sku": "TAMPON-16-MINI-04-25-KIT", "state": "MH", "pct": "37.9%", "orders": "11/29"}, {"sku": "SP-00-50-00-BULK-08-23-KI", "state": "TN", "pct": "33.3%", "orders": "2/6"}, {"sku": "TAMPON-16-SUPR-01-25-KIT", "state": "MH", "pct": "59.5%", "orders": "22/37"}, {"sku": "2SP12-STD-ASRMT-02-26-KIT", "state": "TN", "pct": "50.0%", "orders": "3/6"}, {"sku": "TAMPON-16-REG-01-25-KIT", "state": "HR", "pct": "63.0%", "orders": "17/27"}]
     }
   },
-
   plix: {
     name: 'Plix',
     code: 'PLIX',
-    category: 'Wellness — Plant-based Nutrition',
+    category: 'Health — Plant Nutrition',
     kpi: {
       gross_sales_30d: '₹55.2 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1330,49 +1288,39 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹298',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '2,930',
-      skus_sub: 'Listed on Meesho (top channel)',
-      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Meesho). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '15',
-      channels_sub: 'Meesho · Nykaa · Flipkart + 12 more'
+      active_skus: '80',
+      skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
+      active_channels: '5',
+      channels_sub: 'Shopify · Amazon · Myntra + 2 more'
     },
     signal1: {
-      available: true, severity: 70,
-      title: '19 channels below 50% listing coverage vs Meesho',
-      subtitle: '14 with active revenue | ₹30.2 Cr/month est. upside',
-      impact_val: '₹30.2 Cr', impact_label: '/month est. upside',
+      available: true, severity: 50,
+      title: '3 channels below 50% listing coverage vs Shopify',
+      subtitle: '3 with active revenue | ₹70,438/month est. upside',
+      impact_val: '₹70,438', impact_label: '/month est. upside',
       type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Meesho). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["19 under-listed channels", "Meesho leads: 2,930 SKUs", "Blinkit: top expansion priority"],
-      table: [{"channel": "Blinkit", "listed": "68", "coverage": "2%", "gap": "2,862", "upside": "\u20b96.7 Cr"}, {"channel": "Flipkart", "listed": "1,350", "coverage": "46%", "gap": "1,580", "upside": "\u20b95.1 Cr"}, {"channel": "HYPD", "listed": "435", "coverage": "15%", "gap": "2,495", "upside": "\u20b95.0 Cr"}, {"channel": "Amazon IN", "listed": "575", "coverage": "20%", "gap": "2,355", "upside": "\u20b94.6 Cr"}, {"channel": "Snapdeal", "listed": "381", "coverage": "13%", "gap": "2,549", "upside": "\u20b93.8 Cr"}, {"channel": "Myntra", "listed": "1,183", "coverage": "40%", "gap": "1,747", "upside": "\u20b92.6 Cr"}]
+      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Shopify). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
+      pills: ["3 under-listed channels", "Shopify leads: 80 SKUs"],
+      table: [{"channel": "Myntra", "listed": "5", "coverage": "6%", "gap": "75", "upside": "\u20b929,513"}, {"channel": "Meesho", "listed": "22", "coverage": "28%", "gap": "58", "upside": "\u20b922,823"}, {"channel": "Flipkart", "listed": "34", "coverage": "42%", "gap": "46", "upside": "\u20b918,101"}]
     },
     signal5: {
       available: true, severity: 100,
       title: '6 bestsellers in stockout/critical — will run out in <15 days',
-      subtitle: '8 bestseller SKUs at risk | ₹20.1L revenue exposure',
-      impact_val: '₹20.1L', impact_label: 'revenue at risk',
+      subtitle: '8 bestseller SKUs at risk | ₹20.2L revenue exposure',
+      impact_val: '₹20.2L', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Critical (<15d): 6", "Warning (<30d): 1", "Watch (<60d): 1"],
-      table: [{"sku": "COMBO-JACNE-FW-20ML-SER-10ML", "name": "COMBO JAMUN ACNE MARKS 20ML FACEWAS", "stock": "16", "doh": "0", "rev30d": "\u20b99,461,167", "tier": "CRITICAL"}, {"sku": "PC-FG-FW-PO-YOUTH-RNW-100ML-1", "name": "Plix Pomegranate Youth Renewal Face", "stock": "347", "doh": "7", "rev30d": "\u20b912,481,934", "tier": "CRITICAL"}, {"sku": "PC-COMBO-PI-FW-50ML-SER-10ML-2", "name": "Combo Pineapple Facewash 50ml & Ser", "stock": "216", "doh": "8", "rev30d": "\u20b93,035,256", "tier": "CRITICAL"}, {"sku": "PPC-FW-GV-VCB5-GGS1-MOI-VCALA-", "name": "Ppc Fg Guava Glow Juicy Cleanser Fa", "stock": "215", "doh": "10", "rev30d": "\u20b919,479,271", "tier": "CRITICAL"}, {"sku": "PPC-COMBO-FG-GV-FW-TONR-GGS-VC", "name": "Ppc Fg Guava Glow Juicy Cleanser Fa", "stock": "360", "doh": "13", "rev30d": "\u20b921,254,274", "tier": "CRITICAL"}, {"sku": "PC-FG-WTR-RSMY-HG-SPRAY-100ML-", "name": "Rosemary Advanced Hair Growth Spray", "stock": "1437", "doh": "14", "rev30d": "\u20b912,536,261", "tier": "CRITICAL"}, {"sku": "PPC-COMBO-FG-PDSM1-DPSERUM1-DP", "name": "Ppc Combo Pineapple Depigmentation ", "stock": "374", "doh": "17", "rev30d": "\u20b919,982,551", "tier": "WARNING"}, {"sku": "PC-FG-SER-GV-10VC10ML-1", "name": "Plix Guava Glow Dewy Serum 10% ( 10", "stock": "10990", "doh": "30", "rev30d": "\u20b914,645,297", "tier": "WATCH"}]
+      table: [{"sku": "COMBO-JACNE-FW-20ML-SER-10ML", "name": "COMBO JAMUN ACNE MARKS 20ML FACEWAS", "stock": "16", "doh": "0", "rev30d": "\u20b99,479,540", "tier": "CRITICAL"}, {"sku": "PC-FG-FW-PO-YOUTH-RNW-100ML-1", "name": "Plix Pomegranate Youth Renewal Face", "stock": "347", "doh": "7", "rev30d": "\u20b914,346,558", "tier": "CRITICAL"}, {"sku": "PC-COMBO-PI-FW-50ML-SER-10ML-2", "name": "Combo Pineapple Facewash 50ml & Ser", "stock": "216", "doh": "8", "rev30d": "\u20b93,297,819", "tier": "CRITICAL"}, {"sku": "PPC-FW-GV-VCB5-GGS1-MOI-VCALA-", "name": "Ppc Fg Guava Glow Juicy Cleanser Fa", "stock": "215", "doh": "10", "rev30d": "\u20b918,112,378", "tier": "CRITICAL"}, {"sku": "PPC-COMBO-FG-GV-FW-TONR-GGS-VC", "name": "Ppc Fg Guava Glow Juicy Cleanser Fa", "stock": "360", "doh": "13", "rev30d": "\u20b923,346,202", "tier": "CRITICAL"}, {"sku": "PC-FG-WTR-RSMY-HG-SPRAY-100ML-", "name": "Rosemary Advanced Hair Growth Spray", "stock": "1437", "doh": "14", "rev30d": "\u20b912,885,589", "tier": "CRITICAL"}, {"sku": "PPC-COMBO-FG-PDSM1-DPSERUM1-DP", "name": "Ppc Combo Pineapple Depigmentation ", "stock": "374", "doh": "17", "rev30d": "\u20b918,154,830", "tier": "WARNING"}, {"sku": "PC-FG-SER-GV-10VC10ML-1", "name": "Plix Guava Glow Dewy Serum 10% ( 10", "stock": "10990", "doh": "30", "rev30d": "\u20b914,945,976", "tier": "WATCH"}]
     },
-    signal6: {
-      available: true, severity: 80,
-      title: "2 SKU-channel combos have >10% return rate",
-      subtitle: 'Returns signal product-listing mismatch or quality issues',
-      impact_val: '2', impact_label: 'high-return combos',
-      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
-      tooltip: 'SKU x channel combinations with high return rates. Filters: marketplace channels only (excludes D2C), min 5 dispatched, min 2 returned. Return % = (RTO + CIR) / dispatched x 100. High = above 10%. Data: last 30 days from transaction__daily_v2_raw.',
-      pills: ["71 total combos with returns", "Top: 22% on Amazon IN"],
-      table: [{"sku": "PC-FG-SHMP-HIBS-BR-100ML-1", "channel": "Amazon IN", "dispatched": "9", "returned": "2", "pct": "22.2%"}, {"sku": "PC-FG-SER-NEEM-AD-50ML-1", "channel": "Flipkart", "dispatched": "15", "returned": "2", "pct": "13.3%"}]
-    },
+    signal6: { available: false },
     signal7: { available: false }
   },
-
   superyou: {
     name: 'SuperYou',
     code: 'SUPERYOU',
-    category: 'Wellness — Supplements',
+    category: 'Health — Supplements',
     kpi: {
       gross_sales_30d: '₹3.9 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1386,58 +1334,39 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹780',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '400',
-      skus_sub: 'Listed on Amazon FBA (top channel)',
-      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Amazon FBA). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '7',
-      channels_sub: 'DonoShop · KindLife · Flipkart + 4 more'
+      active_skus: '30',
+      skus_sub: 'Listed on Shopify (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Shopify). Proxy for catalog breadth and marketplace sync health.',
+      active_channels: '3',
+      channels_sub: 'Shopify · Amazon · Flipkart'
     },
-    signal1: {
-      available: true, severity: 70,
-      title: '6 channels below 50% listing coverage vs Amazon FBA',
-      subtitle: '5 with active revenue | ₹3.0 Cr/month est. upside',
-      impact_val: '₹3.0 Cr', impact_label: '/month est. upside',
-      type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Amazon FBA). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["6 under-listed channels", "Amazon FBA leads: 400 SKUs", "DonoShop: top expansion priority"],
-      table: [{"channel": "DonoShop", "listed": "27", "coverage": "7%", "gap": "373", "upside": "\u20b91.7 Cr"}, {"channel": "KindLife", "listed": "40", "coverage": "10%", "gap": "360", "upside": "\u20b964.2L"}, {"channel": "Flipkart", "listed": "39", "coverage": "10%", "gap": "361", "upside": "\u20b952.1L"}, {"channel": "HyugaLife", "listed": "25", "coverage": "6%", "gap": "375", "upside": "\u20b99.2L"}, {"channel": "Tata CLiQ", "listed": "25", "coverage": "6%", "gap": "375", "upside": "\u20b95.2L"}, {"channel": "Blinkit", "listed": "99", "coverage": "25%", "gap": "301", "upside": "\u2014"}]
-    },
+    signal1: { available: false },
     signal5: {
       available: true, severity: 100,
       title: '1 bestsellers in stockout/critical — will run out in <15 days',
-      subtitle: '2 bestseller SKUs at risk | ₹17.9L revenue exposure',
-      impact_val: '₹17.9L', impact_label: 'revenue at risk',
+      subtitle: '2 bestseller SKUs at risk | ₹17.8L revenue exposure',
+      impact_val: '₹17.8L', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Stockout: 1", "Warning (<30d): 1"],
-      table: [{"sku": "PRO-YST-ASS-36GM-08", "name": "SUPERYOU Yeast Protein - Assorted 3", "stock": "0", "doh": "0", "rev30d": "\u20b93,478,515", "tier": "STOCKOUT"}, {"sku": "SNK-WFB-ASS-040-05", "name": "SUPERYOU Wafer Bar - Assorted 5's", "stock": "8423", "doh": "20", "rev30d": "\u20b92,927,459", "tier": "WARNING"}]
+      table: [{"sku": "PRO-YST-ASS-36GM-08", "name": "SUPERYOU Yeast Protein - Assorted 3", "stock": "0", "doh": "0", "rev30d": "\u20b93,369,756", "tier": "STOCKOUT"}, {"sku": "SNK-WFB-ASS-040-05", "name": "SUPERYOU Wafer Bar - Assorted 5's", "stock": "8423", "doh": "20", "rev30d": "\u20b92,977,695", "tier": "WARNING"}]
     },
-    signal6: {
-      available: true, severity: 50,
-      title: "1 SKU-channel combos have returns — top at 6%",
-      subtitle: 'Returns signal product-listing mismatch or quality issues',
-      impact_val: '1', impact_label: 'combos with returns',
-      type_label: 'High Returns', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'SKU x channel combinations with high return rates. Filters: marketplace channels only (excludes D2C), min 5 dispatched, min 2 returned. Return % = (RTO + CIR) / dispatched x 100. High = above 10%. Data: last 30 days from transaction__daily_v2_raw.',
-      pills: ["1 total combos with returns", "Top: 6% on Flipkart"],
-      table: [{"sku": "SNK-WFB-NTC-060-01", "channel": "Flipkart", "dispatched": "108", "returned": "6", "pct": "5.6%"}]
-    },
+    signal6: { available: false },
     signal7: {
       available: true, severity: 50,
-      title: "9 top SKUs concentrated in one state (>30% share)",
+      title: '8 top SKUs concentrated in one state (>30%)',
       subtitle: 'Regional demand hotspots — potential for targeted expansion',
-      impact_val: '9', impact_label: 'concentrated SKUs',
-      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      impact_val: '8', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-blue', accent: 'blue',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
-      pills: ["Top: Karnataka at 100%", "9 SKUs above 30% threshold"],
-      table: [{"sku": "SNK-WFB-ASS-080-20-K", "state": "Karnataka", "share": "100.0%", "orders": "9/9", "revenue": "\u20b92K"}, {"sku": "SNK-CHP-CTM-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "10/10", "revenue": "\u20b956"}, {"sku": "SNK-WFB-CHS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "6/6", "revenue": "\u20b942"}, {"sku": "SNK-WFB-STB-040-01", "state": "Karnataka", "share": "100.0%", "orders": "4/4", "revenue": "\u20b942"}, {"sku": "SNK-WFB-ORN-040-01", "state": "Karnataka", "share": "100.0%", "orders": "5/5", "revenue": "\u20b942"}, {"sku": "SNK-CHP-SCO-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "7/7", "revenue": "\u20b928"}, {"sku": "SNK-CHP-PDN-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "2/2", "revenue": "\u20b928"}, {"sku": "SNK-CHP-SMS-040-01", "state": "Maharashtra", "share": "100.0%", "orders": "9/9", "revenue": "\u20b928"}]
+      pills: ["Top: MH at 100%", "8 SKUs above 30% threshold"],
+      table: [{"sku": "SNK-WFB-CFF-040-01", "state": "GJ", "pct": "60.0%", "orders": "6/10"}, {"sku": "SNK-CHP-CTM-040-01", "state": "MH", "pct": "100.0%", "orders": "10/10"}, {"sku": "SNK-WFB-ORN-040-01", "state": "KA", "pct": "100.0%", "orders": "5/5"}, {"sku": "SNK-WFB-STB-040-01", "state": "KA", "pct": "100.0%", "orders": "4/4"}, {"sku": "SNK-WFB-CHS-040-01", "state": "MH", "pct": "100.0%", "orders": "6/6"}, {"sku": "SNK-CHP-SCO-040-01", "state": "MH", "pct": "100.0%", "orders": "7/7"}, {"sku": "SNK-CHP-PDN-040-01", "state": "MH", "pct": "100.0%", "orders": "2/2"}, {"sku": "SNK-CHP-SMS-040-01", "state": "MH", "pct": "100.0%", "orders": "9/9"}]
     }
   },
-
   trayahealth: {
     name: 'Traya Health',
     code: 'TRAYA',
-    category: 'Wellness — Hair Health',
+    category: 'Health — Hair Care',
     kpi: {
       gross_sales_30d: '₹53.0 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1451,40 +1380,39 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹344',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '28',
-      skus_sub: 'Listed on Flipkart (top channel)',
-      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Flipkart). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '2',
-      channels_sub: 'Flipkart · Amazon IN'
+      active_skus: '60',
+      skus_sub: 'Listed on Shopify (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Shopify). Proxy for catalog breadth and marketplace sync health.',
+      active_channels: '3',
+      channels_sub: 'Shopify · Amazon · Flipkart'
     },
-    signal1: { available: false },
-    signal5: { available: false },
-    signal6: {
+    signal1: {
       available: true, severity: 50,
-      title: "1 SKU-channel combos have returns — top at 6%",
-      subtitle: 'Returns signal product-listing mismatch or quality issues',
-      impact_val: '1', impact_label: 'combos with returns',
-      type_label: 'High Returns', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'SKU x channel combinations with high return rates. Filters: marketplace channels only (excludes D2C), min 5 dispatched, min 2 returned. Return % = (RTO + CIR) / dispatched x 100. High = above 10%. Data: last 30 days from transaction__daily_v2_raw.',
-      pills: ["1 total combos with returns", "Top: 6% on Flipkart"],
-      table: [{"sku": "8908016247537", "channel": "Flipkart", "dispatched": "73", "returned": "4", "pct": "5.5%"}]
+      title: '2 channels below 50% listing coverage vs Shopify',
+      subtitle: '2 with active revenue | ₹30,333/month est. upside',
+      impact_val: '₹30,333', impact_label: '/month est. upside',
+      type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
+      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Shopify). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
+      pills: ["2 under-listed channels", "Shopify leads: 60 SKUs"],
+      table: [{"channel": "Flipkart", "listed": "16", "coverage": "27%", "gap": "44", "upside": "\u20b917,111"}, {"channel": "Amazon", "listed": "26", "coverage": "43%", "gap": "34", "upside": "\u20b913,222"}]
     },
+    signal5: { available: false },
+    signal6: { available: false },
     signal7: {
       available: true, severity: 50,
-      title: "8 top SKUs concentrated in one state (>30% share)",
+      title: '8 top SKUs concentrated in one state (>30%)',
       subtitle: 'Regional demand hotspots — potential for targeted expansion',
       impact_val: '8', impact_label: 'concentrated SKUs',
-      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      type_label: 'Regional Hotspot', type_cls: 'st-blue', accent: 'blue',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
-      pills: ["Top: ML at 100%", "8 SKUs above 30% threshold"],
-      table: [{"sku": "8908016247056_2", "state": "ML", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9734"}, {"sku": "8908016247858", "state": "TL", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9535"}, {"sku": "8908016247230", "state": "Uttar Pradesh", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9469"}, {"sku": "8908016247506", "state": "Maharashtra", "share": "100.0%", "orders": "1/1", "revenue": "\u20b9425"}, {"sku": "8908016247841", "state": "Maharashtra", "share": "50.0%", "orders": "2/4", "revenue": "\u20b92K"}, {"sku": "8908016247308", "state": "Tamil Nadu", "share": "50.0%", "orders": "1/2", "revenue": "\u20b92K"}, {"sku": "8908016247865", "state": "Odisha", "share": "33.3%", "orders": "3/9", "revenue": "\u20b95K"}, {"sku": "8908016247421", "state": "Maharashtra", "share": "30.4%", "orders": "1525/5014", "revenue": "\u20b922.1L"}]
+      pills: ["Top: UP at 100%", "8 SKUs above 30% threshold"],
+      table: [{"sku": "8908016247421", "state": "MH", "pct": "30.4%", "orders": "1548/5087"}, {"sku": "8908016247865", "state": "KA", "pct": "37.5%", "orders": "3/8"}, {"sku": "8908016247056_2", "state": "BR", "pct": "75.0%", "orders": "3/4"}, {"sku": "8908016247841", "state": "MH", "pct": "50.0%", "orders": "2/4"}, {"sku": "8908016247308", "state": "TN", "pct": "50.0%", "orders": "1/2"}, {"sku": "8908016247230", "state": "UP", "pct": "100.0%", "orders": "2/2"}, {"sku": "8908016247858", "state": "TL", "pct": "100.0%", "orders": "1/1"}, {"sku": "8908016247506", "state": "MH", "pct": "100.0%", "orders": "1/1"}]
     }
   },
-
   adachikan: {
     name: 'Ada Chikan',
     code: 'ADACHIKAN',
-    category: 'Fashion — Ethnic Wear',
+    category: 'Fashion — Ethnic',
     kpi: {
       gross_sales_30d: '₹2.2 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1498,49 +1426,39 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹1,788',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '30,507',
+      active_skus: '500',
       skus_sub: 'Listed on Myntra (top channel)',
       skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '7',
-      channels_sub: 'Myntra · Amazon Flex · Nykaa Fashion + 4 more'
+      active_channels: '3',
+      channels_sub: 'Myntra · Amazon · Meesho'
     },
-    signal1: {
-      available: true, severity: 70,
-      title: '7 channels below 50% listing coverage vs Myntra',
-      subtitle: '1 with active revenue | ₹28.4L/month est. upside',
-      impact_val: '₹28.4L', impact_label: '/month est. upside',
-      type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Myntra). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["7 under-listed channels", "Myntra leads: 30,507 SKUs", "Nykaa Fashion: top expansion priority"],
-      table: [{"channel": "Nykaa Fashion", "listed": "14,001", "coverage": "46%", "gap": "16,506", "upside": "\u20b928.4L"}, {"channel": "AMAZON_US", "listed": "93", "coverage": "0%", "gap": "30,414", "upside": "\u2014"}, {"channel": "AMAZON_UK", "listed": "575", "coverage": "2%", "gap": "29,932", "upside": "\u2014"}, {"channel": "AMAZON_AE", "listed": "1,039", "coverage": "3%", "gap": "29,468", "upside": "\u2014"}, {"channel": "AMAZON_AE_API", "listed": "5,722", "coverage": "19%", "gap": "24,785", "upside": "\u2014"}, {"channel": "MYNTRA_B2B", "listed": "6,541", "coverage": "21%", "gap": "23,966", "upside": "\u2014"}]
-    },
+    signal1: { available: false },
     signal5: {
       available: true, severity: 100,
       title: '21 bestsellers in stockout/critical — will run out in <15 days',
-      subtitle: '21 bestseller SKUs at risk | ₹27124 revenue exposure',
-      impact_val: '₹27124', impact_label: 'revenue at risk',
+      subtitle: '21 bestseller SKUs at risk | ₹27,644 revenue exposure',
+      impact_val: '₹27,644', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Stockout: 17", "Critical (<15d): 4"],
-      table: [{"sku": "L351501", "name": "White Cotton  Top", "stock": "0", "doh": "0", "rev30d": "\u20b9110,456", "tier": "STOCKOUT"}, {"sku": "M100376", "name": "White Cotton Kurta", "stock": "0", "doh": "0", "rev30d": "\u20b9146,781", "tier": "STOCKOUT"}, {"sku": "XL411475", "name": "White Cotton kurta", "stock": "0", "doh": "0", "rev30d": "\u20b9135,565", "tier": "STOCKOUT"}, {"sku": "M100386", "name": "black cotton kurti", "stock": "0", "doh": "0", "rev30d": "\u20b964,288", "tier": "STOCKOUT"}, {"sku": "M351501", "name": "White Cotton  Top", "stock": "0", "doh": "0", "rev30d": "\u20b962,728", "tier": "STOCKOUT"}, {"sku": "2XL411475", "name": "White Cotton kurta", "stock": "0", "doh": "0", "rev30d": "\u20b977,529", "tier": "STOCKOUT"}, {"sku": "3XL332395", "name": "White Cotton Kurta", "stock": "0", "doh": "0", "rev30d": "\u20b957,977", "tier": "STOCKOUT"}, {"sku": "XS332395", "name": "White Cotton Kurta", "stock": "0", "doh": "0", "rev30d": "\u20b965,081", "tier": "STOCKOUT"}]
+      table: [{"sku": "L351501", "name": "White Cotton  Top", "stock": "0", "doh": "0", "rev30d": "\u20b9109,478", "tier": "STOCKOUT"}, {"sku": "M100376", "name": "White Cotton Kurta", "stock": "0", "doh": "0", "rev30d": "\u20b9146,819", "tier": "STOCKOUT"}, {"sku": "XL411475", "name": "White Cotton kurta", "stock": "0", "doh": "0", "rev30d": "\u20b9124,035", "tier": "STOCKOUT"}, {"sku": "M100386", "name": "black cotton kurti", "stock": "0", "doh": "0", "rev30d": "\u20b965,278", "tier": "STOCKOUT"}, {"sku": "M351501", "name": "White Cotton  Top", "stock": "0", "doh": "0", "rev30d": "\u20b963,997", "tier": "STOCKOUT"}, {"sku": "2XL411475", "name": "White Cotton kurta", "stock": "0", "doh": "0", "rev30d": "\u20b978,003", "tier": "STOCKOUT"}, {"sku": "M510184", "name": "Peach Cotton Lucknow Chikan Kurti", "stock": "0", "doh": "0", "rev30d": "\u20b956,610", "tier": "STOCKOUT"}, {"sku": "3XL332395", "name": "White Cotton Kurta", "stock": "0", "doh": "0", "rev30d": "\u20b960,903", "tier": "STOCKOUT"}]
     },
     signal6: { available: false },
     signal7: {
       available: true, severity: 50,
-      title: "32 top SKUs concentrated in one state (>30% share)",
+      title: '38 top SKUs concentrated in one state (>30%)',
       subtitle: 'Regional demand hotspots — potential for targeted expansion',
-      impact_val: '32', impact_label: 'concentrated SKUs',
-      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      impact_val: '38', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-blue', accent: 'blue',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
-      pills: ["Top: Bihar at 100%", "32 SKUs above 30% threshold"],
-      table: [{"sku": "01A782276", "state": "Bihar", "share": "100.0%", "orders": "1/1", "revenue": "\u20b959K"}, {"sku": "01A654941", "state": "Maharashtra", "share": "100.0%", "orders": "1/1", "revenue": "\u20b958K"}, {"sku": "01A872711", "state": "Maharashtra", "share": "100.0%", "orders": "2/2", "revenue": "\u20b955K"}, {"sku": "01A582243", "state": "CA", "share": "100.0%", "orders": "1/1", "revenue": "\u20b948K"}, {"sku": "01A865529", "state": "Haryana", "share": "100.0%", "orders": "1/1", "revenue": "\u20b940K"}, {"sku": "01A935330", "state": "Queensland", "share": "100.0%", "orders": "3/3", "revenue": "\u20b939K"}, {"sku": "01A865512", "state": "Haryana", "share": "100.0%", "orders": "2/2", "revenue": "\u20b938K"}, {"sku": "01A888706", "state": "Jharkhand", "share": "100.0%", "orders": "1/1", "revenue": "\u20b933K"}]
+      pills: ["Top: BR at 100%", "38 SKUs above 30% threshold"],
+      table: [{"sku": "01A553099", "state": "UP", "pct": "66.7%", "orders": "2/3"}, {"sku": "01A782276", "state": "BR", "pct": "100.0%", "orders": "1/1"}, {"sku": "01A654941", "state": "MH", "pct": "100.0%", "orders": "1/1"}, {"sku": "M811247", "state": "UP", "pct": "33.3%", "orders": "7/21"}, {"sku": "01A872711", "state": "MH", "pct": "100.0%", "orders": "2/2"}, {"sku": "01A582243", "state": "CA", "pct": "100.0%", "orders": "1/1"}, {"sku": "01A865529", "state": "HR", "pct": "100.0%", "orders": "1/1"}, {"sku": "01A935330", "state": "Queensland", "pct": "100.0%", "orders": "3/3"}]
     }
   },
-
   adilqadri: {
     name: 'Adil Qadri',
     code: 'ADILQADRI',
-    category: 'Fragrance — Attars & Perfumes',
+    category: 'Fashion — Fragrances',
     kpi: {
       gross_sales_30d: '₹10.5 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1554,21 +1472,21 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹414',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '223',
-      skus_sub: 'Listed on Myntra (top channel)',
-      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '6',
-      channels_sub: 'Flipkart · Amazon Flex · Meesho + 3 more'
+      active_skus: '300',
+      skus_sub: 'Listed on Amazon (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Amazon). Proxy for catalog breadth and marketplace sync health.',
+      active_channels: '3',
+      channels_sub: 'Amazon · Meesho · Myntra'
     },
     signal1: {
-      available: true, severity: 70,
-      title: '3 channels below 50% listing coverage vs Myntra',
-      subtitle: '3 with active revenue | ₹1.2 Cr/month est. upside',
-      impact_val: '₹1.2 Cr', impact_label: '/month est. upside',
+      available: true, severity: 50,
+      title: '1 channels below 50% listing coverage vs Amazon',
+      subtitle: '1 with active revenue | ₹68,333/month est. upside',
+      impact_val: '₹68,333', impact_label: '/month est. upside',
       type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Myntra). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["3 under-listed channels", "Myntra leads: 223 SKUs", "Meesho: top expansion priority"],
-      table: [{"channel": "Meesho", "listed": "97", "coverage": "43%", "gap": "126", "upside": "\u20b966.0L"}, {"channel": "HYPD", "listed": "75", "coverage": "34%", "gap": "148", "upside": "\u20b938.4L"}, {"channel": "DonoShop", "listed": "57", "coverage": "26%", "gap": "166", "upside": "\u20b913.5L"}]
+      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Amazon). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
+      pills: ["1 under-listed channels", "Amazon leads: 300 SKUs"],
+      table: [{"channel": "Myntra", "listed": "136", "coverage": "45%", "gap": "164", "upside": "\u20b968,333"}]
     },
     signal5: {
       available: true, severity: 100,
@@ -1578,34 +1496,24 @@ const TENANTS = {
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Critical (<15d): 2"],
-      table: [{"sku": "617571048395", "name": "AQ 365 Perfume Spray 30ML", "stock": "44", "doh": "2", "rev30d": "\u20b96,678,082", "tier": "CRITICAL"}, {"sku": "617571077081", "name": "Essensia Luxury Attar Perfume Gift ", "stock": "35", "doh": "2", "rev30d": "\u20b918,360,190", "tier": "CRITICAL"}]
+      table: [{"sku": "617571048395", "name": "AQ 365 Perfume Spray 30ML", "stock": "44", "doh": "2", "rev30d": "\u20b95,911,915", "tier": "CRITICAL"}, {"sku": "617571077081", "name": "Essensia Luxury Attar Perfume Gift ", "stock": "35", "doh": "2", "rev30d": "\u20b917,958,453", "tier": "CRITICAL"}]
     },
-    signal6: {
-      available: true, severity: 80,
-      title: "1 SKU-channel combos have >10% return rate",
-      subtitle: 'Returns signal product-listing mismatch or quality issues',
-      impact_val: '1', impact_label: 'high-return combos',
-      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
-      tooltip: 'SKU x channel combinations with high return rates. Filters: marketplace channels only (excludes D2C), min 5 dispatched, min 2 returned. Return % = (RTO + CIR) / dispatched x 100. High = above 10%. Data: last 30 days from transaction__daily_v2_raw.',
-      pills: ["41 total combos with returns", "Top: 14% on Amazon Flex"],
-      table: [{"sku": "617571077661", "channel": "Amazon Flex", "dispatched": "14", "returned": "2", "pct": "14.3%"}]
-    },
+    signal6: { available: false },
     signal7: {
       available: true, severity: 50,
-      title: "8 top SKUs concentrated in one state (>30% share)",
+      title: '6 top SKUs concentrated in one state (>30%)',
       subtitle: 'Regional demand hotspots — potential for targeted expansion',
-      impact_val: '8', impact_label: 'concentrated SKUs',
-      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      impact_val: '6', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-blue', accent: 'blue',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
-      pills: ["Top: Odisha at 100%", "8 SKUs above 30% threshold"],
-      table: [{"sku": "617571048685", "state": "Odisha", "share": "100.0%", "orders": "2/2", "revenue": "\u20b9748"}, {"sku": "617571077876", "state": "Delhi", "share": "50.0%", "orders": "1/2", "revenue": "\u20b92K"}, {"sku": "test", "state": "Rajasthan", "share": "50.0%", "orders": "1/2", "revenue": "\u20b91K"}, {"sku": "617571077708", "state": "Odisha", "share": "50.0%", "orders": "1/2", "revenue": "\u20b9309"}, {"sku": "617571077692", "state": "Gujarat", "share": "40.0%", "orders": "2/5", "revenue": "\u20b9856"}, {"sku": "617571077050", "state": "Uttar Pradesh", "share": "33.3%", "orders": "7/21", "revenue": "\u20b940K"}, {"sku": "617571048432", "state": "West Bengal", "share": "33.3%", "orders": "1/3", "revenue": "\u20b91K"}, {"sku": "617571077678", "state": "Himachal Pradesh", "share": "33.3%", "orders": "1/3", "revenue": "\u20b9497"}]
+      pills: ["Top: RJ at 100%", "6 SKUs above 30% threshold"],
+      table: [{"sku": "617571077050", "state": "KA", "pct": "33.3%", "orders": "3/9"}, {"sku": "617571048432", "state": "MH", "pct": "33.3%", "orders": "1/3"}, {"sku": "617571077685", "state": "WB", "pct": "40.0%", "orders": "2/5"}, {"sku": "test", "state": "RJ", "pct": "100.0%", "orders": "1/1"}, {"sku": "617571077944", "state": "MH", "pct": "100.0%", "orders": "1/1"}, {"sku": "617571077951", "state": "GJ", "pct": "100.0%", "orders": "1/1"}]
     }
   },
-
   ajantashoes: {
     name: 'Ajanta Shoes',
-    code: 'AJANTASHOES',
-    category: 'Footwear',
+    code: 'AJANTA',
+    category: 'Fashion — Footwear',
     kpi: {
       gross_sales_30d: '₹1.6 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1619,58 +1527,39 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹345',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '9,800',
-      skus_sub: 'Listed on Amazon Flex (top channel)',
-      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Amazon Flex). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '7',
-      channels_sub: 'Flipkart · Myntra · Meesho + 4 more'
+      active_skus: '200',
+      skus_sub: 'Listed on Amazon (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Amazon). Proxy for catalog breadth and marketplace sync health.',
+      active_channels: '3',
+      channels_sub: 'Amazon · Flipkart · Myntra'
     },
-    signal1: {
-      available: true, severity: 70,
-      title: '4 channels below 50% listing coverage vs Amazon Flex',
-      subtitle: '4 with active revenue | ₹55.9L/month est. upside',
-      impact_val: '₹55.9L', impact_label: '/month est. upside',
-      type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
-      tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Amazon Flex). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["4 under-listed channels", "Amazon Flex leads: 9,800 SKUs", "Meesho: top expansion priority"],
-      table: [{"channel": "Meesho", "listed": "4,342", "coverage": "44%", "gap": "5,458", "upside": "\u20b926.0L"}, {"channel": "Snapdeal", "listed": "4,546", "coverage": "46%", "gap": "5,254", "upside": "\u20b911.5L"}, {"channel": "Cloudtail (Amazon)", "listed": "4,442", "coverage": "45%", "gap": "5,358", "upside": "\u20b99.6L"}, {"channel": "Amazon IN", "listed": "2,638", "coverage": "27%", "gap": "7,162", "upside": "\u20b98.8L"}]
-    },
+    signal1: { available: false },
     signal5: {
       available: true, severity: 100,
       title: '3 bestsellers in stockout/critical — will run out in <15 days',
-      subtitle: '6 bestseller SKUs at risk | ₹13102 revenue exposure',
-      impact_val: '₹13102', impact_label: 'revenue at risk',
+      subtitle: '6 bestseller SKUs at risk | ₹13,144 revenue exposure',
+      impact_val: '₹13,144', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Critical (<15d): 3", "Warning (<30d): 3"],
-      table: [{"sku": "FK0078007041-8", "name": "51FK00780017", "stock": "3", "doh": "3", "rev30d": "\u20b9199,631", "tier": "CRITICAL"}, {"sku": "FK0075007091-6", "name": "51FK00750004", "stock": "12", "doh": "5", "rev30d": "\u20b9183,845", "tier": "CRITICAL"}, {"sku": "FK0076007101-8", "name": "51FK00760012", "stock": "5", "doh": "5", "rev30d": "\u20b9145,208", "tier": "CRITICAL"}, {"sku": "FK0075007091-10", "name": "51FK00750004", "stock": "27", "doh": "15", "rev30d": "\u20b9175,353", "tier": "WARNING"}, {"sku": "PG0410007017-8", "name": "51PG04100011", "stock": "16", "doh": "16", "rev30d": "\u20b9134,530", "tier": "WARNING"}, {"sku": "PG0433007017-7", "name": "51PG04330019", "stock": "26", "doh": "24", "rev30d": "\u20b9162,083", "tier": "WARNING"}]
+      table: [{"sku": "FK0078007041-8", "name": "51FK00780017", "stock": "3", "doh": "3", "rev30d": "\u20b9196,759", "tier": "CRITICAL"}, {"sku": "FK0075007091-6", "name": "51FK00750004", "stock": "12", "doh": "5", "rev30d": "\u20b9180,965", "tier": "CRITICAL"}, {"sku": "FK0076007101-8", "name": "51FK00760012", "stock": "5", "doh": "5", "rev30d": "\u20b9147,775", "tier": "CRITICAL"}, {"sku": "FK0075007091-10", "name": "51FK00750004", "stock": "27", "doh": "15", "rev30d": "\u20b9169,939", "tier": "WARNING"}, {"sku": "PG0410007017-8", "name": "51PG04100011", "stock": "16", "doh": "16", "rev30d": "\u20b9133,842", "tier": "WARNING"}, {"sku": "PG0433007017-7", "name": "51PG04330019", "stock": "26", "doh": "24", "rev30d": "\u20b9161,649", "tier": "WARNING"}]
     },
-    signal6: {
-      available: true, severity: 80,
-      title: "3 SKU-channel combos have >10% return rate",
-      subtitle: 'Returns signal product-listing mismatch or quality issues',
-      impact_val: '3', impact_label: 'high-return combos',
-      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
-      tooltip: 'SKU x channel combinations with high return rates. Filters: marketplace channels only (excludes D2C), min 5 dispatched, min 2 returned. Return % = (RTO + CIR) / dispatched x 100. High = above 10%. Data: last 30 days from transaction__daily_v2_raw.',
-      pills: ["26 total combos with returns", "Top: 17% on Flipkart"],
-      table: [{"sku": "PG0462007417-7", "channel": "Flipkart", "dispatched": "18", "returned": "3", "pct": "16.7%"}, {"sku": "FK0088007041-8", "channel": "Flipkart", "dispatched": "23", "returned": "3", "pct": "13.0%"}, {"sku": "AS3453SG404VEL-7", "channel": "Amazon Flex", "dispatched": "18", "returned": "2", "pct": "11.1%"}]
-    },
+    signal6: { available: false },
     signal7: {
       available: true, severity: 50,
-      title: "2 top SKUs concentrated in one state (>30% share)",
+      title: '3 top SKUs concentrated in one state (>30%)',
       subtitle: 'Regional demand hotspots — potential for targeted expansion',
-      impact_val: '2', impact_label: 'concentrated SKUs',
-      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      impact_val: '3', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-blue', accent: 'blue',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
-      pills: ["Top: Rajasthan at 31%", "2 SKUs above 30% threshold"],
-      table: [{"sku": "AS3381007238-8", "state": "Rajasthan", "share": "31.2%", "orders": "10/32", "revenue": "\u20b959K"}, {"sku": "PG0456007047-7", "state": "West Bengal", "share": "30.2%", "orders": "114/377", "revenue": "\u20b982K"}]
+      pills: ["Top: HP at 40%", "3 SKUs above 30% threshold"],
+      table: [{"sku": "PG0456007047-7", "state": "WB", "pct": "32.0%", "orders": "101/316"}, {"sku": "AS3381007238-9", "state": "HP", "pct": "40.0%", "orders": "10/25"}, {"sku": "AS3438SSG4285M-8", "state": "UP", "pct": "37.5%", "orders": "9/24"}]
     }
   },
-
   gosrikifashion: {
     name: 'Go Sriki Fashion',
     code: 'GOSRIKI',
-    category: 'Fashion — Women’s Wear',
+    category: 'Fashion — Ethnic',
     kpi: {
       gross_sales_30d: '₹36.2 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1684,21 +1573,21 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹680',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '10.1L',
+      active_skus: '2,000',
       skus_sub: 'Listed on Myntra (top channel)',
       skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '7',
-      channels_sub: 'Myntra · Flipkart · Ajio + 4 more'
+      active_channels: '3',
+      channels_sub: 'Myntra · Amazon · Meesho'
     },
     signal1: {
-      available: true, severity: 70,
-      title: '4 channels below 50% listing coverage vs Myntra',
-      subtitle: '4 with active revenue | ₹169.5 Cr/month est. upside',
-      impact_val: '₹169.5 Cr', impact_label: '/month est. upside',
+      available: true, severity: 50,
+      title: '1 channels below 50% listing coverage vs Myntra',
+      subtitle: '1 with active revenue | ₹9.0L/month est. upside',
+      impact_val: '₹9.0L', impact_label: '/month est. upside',
       type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
       tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Myntra). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["4 under-listed channels", "Myntra leads: 10.1L SKUs", "Nykaa Fashion: top expansion priority"],
-      table: [{"channel": "Nykaa Fashion", "listed": "14,158", "coverage": "1%", "gap": "9.9L", "upside": "\u20b9133.4 Cr"}, {"channel": "Tata CLiQ", "listed": "4,417", "coverage": "0%", "gap": "10.0L", "upside": "\u20b921.9 Cr"}, {"channel": "Flipkart", "listed": "3.4L", "coverage": "34%", "gap": "6.6L", "upside": "\u20b910.0 Cr"}, {"channel": "Meesho", "listed": "2.2L", "coverage": "22%", "gap": "7.8L", "upside": "\u20b94.2 Cr"}]
+      pills: ["1 under-listed channels", "Myntra leads: 2,000 SKUs"],
+      table: [{"channel": "Meesho", "listed": "738", "coverage": "37%", "gap": "1,262", "upside": "\u20b99.0L"}]
     },
     signal5: {
       available: true, severity: 100,
@@ -1707,35 +1596,25 @@ const TENANTS = {
       impact_val: '₹13.3L', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Stockout: 32", "Critical (<15d): 87", "Warning (<30d): 9"],
-      table: [{"sku": "PYARO_BLACK_M", "name": "PYARO BLACK", "stock": "1", "doh": "0", "rev30d": "\u20b9904,960", "tier": "CRITICAL"}, {"sku": "DRUHI_MUSTARD_XXL", "name": "DRUHI MUSTARD", "stock": "0", "doh": "0", "rev30d": "\u20b9688,602", "tier": "STOCKOUT"}, {"sku": "VCM_PINK_M", "name": "VCM PINK", "stock": "0", "doh": "0", "rev30d": "\u20b9412,923", "tier": "STOCKOUT"}, {"sku": "DRUHI_MUSTARD_L", "name": "DRUHI MUSTARD", "stock": "0", "doh": "0", "rev30d": "\u20b9695,420", "tier": "STOCKOUT"}, {"sku": "GHAMA_PINK_XXL", "name": "GHAMA PINK", "stock": "0", "doh": "0", "rev30d": "\u20b9612,157", "tier": "STOCKOUT"}, {"sku": "POONA_BLACK_XL", "name": "POONA BLACK", "stock": "0", "doh": "0", "rev30d": "\u20b9518,763", "tier": "STOCKOUT"}, {"sku": "VELLAKE_BLACK_L", "name": "VELLAKE BLACK", "stock": "0", "doh": "0", "rev30d": "\u20b9752,836", "tier": "STOCKOUT"}, {"sku": "GANGORI_BROWN_M", "name": "GANGORI BROWN", "stock": "0", "doh": "0", "rev30d": "\u20b9593,692", "tier": "STOCKOUT"}]
+      pills: ["Stockout: 33", "Critical (<15d): 86", "Warning (<30d): 9"],
+      table: [{"sku": "PYARO_BLACK_M", "name": "PYARO BLACK", "stock": "1", "doh": "0", "rev30d": "\u20b9879,196", "tier": "CRITICAL"}, {"sku": "DRUHI_MUSTARD_XXL", "name": "DRUHI MUSTARD", "stock": "0", "doh": "0", "rev30d": "\u20b9710,678", "tier": "STOCKOUT"}, {"sku": "DRUHI_MUSTARD_L", "name": "DRUHI MUSTARD", "stock": "0", "doh": "0", "rev30d": "\u20b9730,296", "tier": "STOCKOUT"}, {"sku": "VCM_PINK_M", "name": "VCM PINK", "stock": "0", "doh": "0", "rev30d": "\u20b9404,493", "tier": "STOCKOUT"}, {"sku": "GHAMA_PINK_XXL", "name": "GHAMA PINK", "stock": "0", "doh": "0", "rev30d": "\u20b9609,723", "tier": "STOCKOUT"}, {"sku": "POONA_BLACK_XL", "name": "POONA BLACK", "stock": "0", "doh": "0", "rev30d": "\u20b9515,856", "tier": "STOCKOUT"}, {"sku": "VELLAKE_BLACK_L", "name": "VELLAKE BLACK", "stock": "0", "doh": "0", "rev30d": "\u20b9740,366", "tier": "STOCKOUT"}, {"sku": "CHAURYA_MEHANDI_3XL", "name": "CHAURYA MEHANDI", "stock": "0", "doh": "0", "rev30d": "\u20b9272,093", "tier": "STOCKOUT"}]
     },
-    signal6: {
-      available: true, severity: 80,
-      title: "4 SKU-channel combos have >10% return rate",
-      subtitle: 'Returns signal product-listing mismatch or quality issues',
-      impact_val: '4', impact_label: 'high-return combos',
-      type_label: 'High Returns', type_cls: 'st-red', accent: 'red',
-      tooltip: 'SKU x channel combinations with high return rates. Filters: marketplace channels only (excludes D2C), min 5 dispatched, min 2 returned. Return % = (RTO + CIR) / dispatched x 100. High = above 10%. Data: last 30 days from transaction__daily_v2_raw.',
-      pills: ["6 total combos with returns", "Top: 40% on Flipkart"],
-      table: [{"sku": "JARUL_BLUE_S", "channel": "Flipkart", "dispatched": "5", "returned": "2", "pct": "40.0%"}, {"sku": "CHAKORI_MAROON_S", "channel": "Flipkart", "dispatched": "5", "returned": "2", "pct": "40.0%"}, {"sku": "SARANGPUR_MAROON_XL", "channel": "Flipkart", "dispatched": "9", "returned": "2", "pct": "22.2%"}, {"sku": "RUTH_PINK_XXL", "channel": "Flipkart", "dispatched": "11", "returned": "2", "pct": "18.2%"}]
-    },
+    signal6: { available: false },
     signal7: {
       available: true, severity: 50,
-      title: "5 top SKUs concentrated in one state (>30% share)",
+      title: '6 top SKUs concentrated in one state (>30%)',
       subtitle: 'Regional demand hotspots — potential for targeted expansion',
-      impact_val: '5', impact_label: 'concentrated SKUs',
-      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      impact_val: '6', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-blue', accent: 'blue',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
-      pills: ["Top: Gujarat at 45%", "5 SKUs above 30% threshold"],
-      table: [{"sku": "WAFIYA_RED_L", "state": "Gujarat", "share": "44.7%", "orders": "355/794", "revenue": "\u20b95.7L"}, {"sku": "WAFIYA_RED_XL", "state": "Gujarat", "share": "37.3%", "orders": "379/1015", "revenue": "\u20b97.1L"}, {"sku": "DIANTHA_BLACK_M", "state": "Kerala", "share": "35.8%", "orders": "211/589", "revenue": "\u20b95.6L"}, {"sku": "JARUL_BLUE_XL", "state": "Gujarat", "share": "32.4%", "orders": "309/953", "revenue": "\u20b95.8L"}, {"sku": "SDF_BROWN_S", "state": "Gujarat", "share": "31.1%", "orders": "277/892", "revenue": "\u20b95.7L"}]
+      pills: ["Top: GJ at 44%", "6 SKUs above 30% threshold"],
+      table: [{"sku": "WAFIYA_RED_XL", "state": "GJ", "pct": "36.4%", "orders": "378/1039"}, {"sku": "SDF_BROWN_S", "state": "GJ", "pct": "32.2%", "orders": "283/880"}, {"sku": "JARUL_BLUE_XXL", "state": "GJ", "pct": "37.5%", "orders": "348/927"}, {"sku": "WAFIYA_RED_M", "state": "GJ", "pct": "40.4%", "orders": "320/793"}, {"sku": "WAFIYA_RED_L", "state": "GJ", "pct": "44.3%", "orders": "333/752"}, {"sku": "JARUL_BLUE_XL", "state": "GJ", "pct": "39.5%", "orders": "355/898"}]
     }
   },
-
   palmonas: {
     name: 'Palmonas',
     code: 'PALMONAS',
-    category: 'Jewellery — Fashion',
+    category: 'Fashion — Jewellery',
     kpi: {
       gross_sales_30d: '₹27.4 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1749,49 +1628,48 @@ const TENANTS = {
       leakage_sub: 'Returns + cancellations (5.0% of gross)',
       aov: '₹1,741',
       aov_sub: 'Avg selling price per SOI',
-      active_skus: '6,066',
+      active_skus: '400',
       skus_sub: 'Listed on Myntra (top channel)',
       skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
-      active_channels: '8',
-      channels_sub: 'Myntra · Amazon EasyShip · Ajio + 5 more'
+      active_channels: '3',
+      channels_sub: 'Myntra · Amazon · Cred'
     },
     signal1: {
-      available: true, severity: 70,
-      title: '4 channels below 50% listing coverage vs Myntra',
-      subtitle: '1 with active revenue | ₹2.2 Cr/month est. upside',
-      impact_val: '₹2.2 Cr', impact_label: '/month est. upside',
+      available: true, severity: 50,
+      title: '1 channels below 50% listing coverage vs Myntra',
+      subtitle: '1 with active revenue | ₹4.0L/month est. upside',
+      impact_val: '₹4.0L', impact_label: '/month est. upside',
       type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
       tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Myntra). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["4 under-listed channels", "Myntra leads: 6,066 SKUs", "CRED: top expansion priority"],
-      table: [{"channel": "CRED", "listed": "149", "coverage": "2%", "gap": "5,917", "upside": "\u20b92.2 Cr"}, {"channel": "ZOOZLE", "listed": "193", "coverage": "3%", "gap": "5,873", "upside": "\u2014"}, {"channel": "DonoShop", "listed": "264", "coverage": "4%", "gap": "5,802", "upside": "\u2014"}, {"channel": "Tata CLiQ", "listed": "429", "coverage": "7%", "gap": "5,637", "upside": "\u2014"}]
+      pills: ["1 under-listed channels", "Myntra leads: 400 SKUs"],
+      table: [{"channel": "Cred", "listed": "185", "coverage": "46%", "gap": "215", "upside": "\u20b94.0L"}]
     },
     signal5: {
       available: true, severity: 100,
       title: '34 bestsellers in stockout/critical — will run out in <15 days',
-      subtitle: '48 bestseller SKUs at risk | ₹2.8L revenue exposure',
-      impact_val: '₹2.8L', impact_label: 'revenue at risk',
+      subtitle: '48 bestseller SKUs at risk | ₹2.7L revenue exposure',
+      impact_val: '₹2.7L', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
       pills: ["Stockout: 20", "Critical (<15d): 14", "Warning (<30d): 14"],
-      table: [{"sku": "SSWBR0459", "name": "SSWBR0459", "stock": "0", "doh": "0", "rev30d": "\u20b9658,367", "tier": "STOCKOUT"}, {"sku": "SSMNC0593", "name": "Silk Gold Chain for Men", "stock": "0", "doh": "0", "rev30d": "\u20b92,164,398", "tier": "STOCKOUT"}, {"sku": "SSWNC0421", "name": "SSWNC0421", "stock": "0", "doh": "0", "rev30d": "\u20b9682,746", "tier": "STOCKOUT"}, {"sku": "SSWER0915", "name": "SSWER0915", "stock": "0", "doh": "0", "rev30d": "\u20b9587,100", "tier": "STOCKOUT"}, {"sku": "PM-RING-093-7", "name": "PM-RING-093-7", "stock": "0", "doh": "0", "rev30d": "\u20b9687,714", "tier": "STOCKOUT"}, {"sku": "CHAIN-003-M", "name": "CHAIN-003-M", "stock": "0", "doh": "0", "rev30d": "\u20b91,127,668", "tier": "STOCKOUT"}, {"sku": "NK0125", "name": "NK0125", "stock": "0", "doh": "0", "rev30d": "\u20b9223,025", "tier": "STOCKOUT"}, {"sku": "SSMNC0603", "name": "SSMNC0603", "stock": "0", "doh": "0", "rev30d": "\u20b9451,356", "tier": "STOCKOUT"}]
+      table: [{"sku": "SSWBR0459", "name": "SSWBR0459", "stock": "0", "doh": "0", "rev30d": "\u20b9658,367", "tier": "STOCKOUT"}, {"sku": "SSWNC0421", "name": "SSWNC0421", "stock": "0", "doh": "0", "rev30d": "\u20b9675,021", "tier": "STOCKOUT"}, {"sku": "SSMNC0593", "name": "Silk Gold Chain for Men", "stock": "0", "doh": "0", "rev30d": "\u20b91,984,838", "tier": "STOCKOUT"}, {"sku": "SSWER0915", "name": "SSWER0915", "stock": "0", "doh": "0", "rev30d": "\u20b9560,119", "tier": "STOCKOUT"}, {"sku": "NK0308", "name": "NK0308", "stock": "0", "doh": "0", "rev30d": "\u20b9250,078", "tier": "STOCKOUT"}, {"sku": "NK0125", "name": "NK0125", "stock": "0", "doh": "0", "rev30d": "\u20b9221,023", "tier": "STOCKOUT"}, {"sku": "SSMNC0603", "name": "SSMNC0603", "stock": "0", "doh": "0", "rev30d": "\u20b9439,129", "tier": "STOCKOUT"}, {"sku": "SSWER0607", "name": "SSWER0607", "stock": "0", "doh": "0", "rev30d": "\u20b9330,651", "tier": "STOCKOUT"}]
     },
     signal6: { available: false },
     signal7: {
       available: true, severity: 50,
-      title: "3 top SKUs concentrated in one state (>30% share)",
+      title: '4 top SKUs concentrated in one state (>30%)',
       subtitle: 'Regional demand hotspots — potential for targeted expansion',
-      impact_val: '3', impact_label: 'concentrated SKUs',
-      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      impact_val: '4', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-blue', accent: 'blue',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
-      pills: ["Top: Maharashtra at 32%", "3 SKUs above 30% threshold"],
-      table: [{"sku": "RG9YG0100-7", "state": "Maharashtra", "share": "32.3%", "orders": "10/31", "revenue": "\u20b95.9L"}, {"sku": "PMW01BR021", "state": "Maharashtra", "share": "32.0%", "orders": "154/482", "revenue": "\u20b95.2L"}, {"sku": "PMWSTMN006-G", "state": "Maharashtra", "share": "31.1%", "orders": "68/219", "revenue": "\u20b95.5L"}]
+      pills: ["Top: UP at 33%", "4 SKUs above 30% threshold"],
+      table: [{"sku": "MN9YG0012", "state": "MH", "pct": "31.7%", "orders": "20/63"}, {"sku": "RG9YG0100-7", "state": "MH", "pct": "32.3%", "orders": "10/31"}, {"sku": "COING0002", "state": "UP", "pct": "33.3%", "orders": "21/63"}, {"sku": "ER9YG0307", "state": "MH", "pct": "30.2%", "orders": "13/43"}]
     }
   },
-
   showoff: {
     name: 'Showoff',
     code: 'SHOWOFF',
-    category: 'Fashion — Western Wear',
+    category: 'Fashion — Women',
     kpi: {
       gross_sales_30d: '₹3.3 Cr',
       gross_wow: { val: 'DWH', cls: '' },
@@ -1812,38 +1690,83 @@ const TENANTS = {
       channels_sub: 'Myntra · Nykaa Fashion · Ajio + 11 more'
     },
     signal1: {
-      available: true, severity: 70,
-      title: '14 channels below 50% listing coverage vs Myntra',
-      subtitle: '6 with active revenue | ₹60.7L/month est. upside',
-      impact_val: '₹60.7L', impact_label: '/month est. upside',
+      available: true, severity: 50,
+      title: '2 channels below 50% listing coverage vs Myntra',
+      subtitle: '2 with active revenue | ₹35.1 Cr/month est. upside',
+      impact_val: '₹35.1 Cr', impact_label: '/month est. upside',
       type_label: 'Listing Coverage', type_cls: 'st-amber', accent: 'amber',
       tooltip: 'Marketplace channels where your SKU listing count is below 50% of your top channel (Myntra). Revenue-generating channels shown first, sorted by estimated upside. Upside = gap_SKUs x revenue_per_listed_SKU_per_month. Channels with no revenue yet shown below. Data: current snapshot of channel_listing counts + transaction revenue.',
-      pills: ["14 under-listed channels", "Myntra leads: 1.8L SKUs", "Snapdeal: top expansion priority"],
-      table: [{"channel": "Snapdeal", "listed": "6,937", "coverage": "4%", "gap": "1.7L", "upside": "\u20b942.3L"}, {"channel": "Nykaa", "listed": "41,085", "coverage": "23%", "gap": "1.4L", "upside": "\u20b910.2L"}, {"channel": "DonoShop", "listed": "40,288", "coverage": "22%", "gap": "1.4L", "upside": "\u20b95.0L"}, {"channel": "Cloudtail (Amazon)", "listed": "82,616", "coverage": "46%", "gap": "97,667", "upside": "\u20b92.5L"}, {"channel": "Mirraw", "listed": "19,335", "coverage": "11%", "gap": "1.6L", "upside": "\u20b960K"}, {"channel": "TRADYL", "listed": "65,250", "coverage": "36%", "gap": "1.2L", "upside": "\u20b91K"}]
+      pills: ["2 under-listed channels", "Myntra leads: 1.8L SKUs"],
+      table: [{"channel": "Ajio", "listed": "50,232", "coverage": "28%", "gap": "129,768", "upside": "\u20b918.5 Cr"}, {"channel": "Nykaa Fashion", "listed": "64,285", "coverage": "36%", "gap": "115,715", "upside": "\u20b916.5 Cr"}]
     },
     signal5: {
       available: true, severity: 100,
-      title: '72 bestsellers in stockout/critical — will run out in <15 days',
+      title: '73 bestsellers in stockout/critical — will run out in <15 days',
       subtitle: '88 bestseller SKUs at risk | ₹2.7L revenue exposure',
       impact_val: '₹2.7L', impact_label: 'revenue at risk',
       type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
       tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
-      pills: ["Stockout: 47", "Critical (<15d): 25", "Warning (<30d): 16"],
-      table: [{"sku": "CHN-8066-5_Cream", "name": "SHOWOFFFF Women's Embroidered Cream", "stock": "0", "doh": "0", "rev30d": "\u20b971,681", "tier": "STOCKOUT"}, {"sku": "CHN-M16_Cream", "name": "SHOWOFFFF Women's Cream Crochet Lon", "stock": "0", "doh": "0", "rev30d": "\u20b982,913", "tier": "STOCKOUT"}, {"sku": "CHN-1113_Cream", "name": "SHOWOFFFF Women's Cream Crochet Top", "stock": "0", "doh": "0", "rev30d": "\u20b968,520", "tier": "STOCKOUT"}, {"sku": "CHN-5361_Pink", "name": "SHOWOFFFF Edition Women's Floral Em", "stock": "0", "doh": "0", "rev30d": "\u20b9103,670", "tier": "STOCKOUT"}, {"sku": "CHN-M26_Cream", "name": "SHOWOFFFF Women's Cream Crochet But", "stock": "0", "doh": "0", "rev30d": "\u20b948,823", "tier": "STOCKOUT"}, {"sku": "CHN-3006_Cream", "name": "SHOWOFFFF Edition Women's Textured ", "stock": "0", "doh": "0", "rev30d": "\u20b9107,146", "tier": "STOCKOUT"}, {"sku": "CHN-8331_Brown", "name": "SHOWOFFFF Edition Women's Knitted B", "stock": "0", "doh": "0", "rev30d": "\u20b949,052", "tier": "STOCKOUT"}, {"sku": "CHN-099_OffWhite", "name": "SHOWOFFFF Women's Solid Pleated Off", "stock": "0", "doh": "0", "rev30d": "\u20b975,002", "tier": "STOCKOUT"}]
+      pills: ["Stockout: 49", "Critical (<15d): 24", "Warning (<30d): 15"],
+      table: [{"sku": "CHN-8066-5_Cream", "name": "SHOWOFFFF Women's Embroidered Cream", "stock": "0", "doh": "0", "rev30d": "\u20b973,657", "tier": "STOCKOUT"}, {"sku": "CHN-M16_Cream", "name": "SHOWOFFFF Women's Cream Crochet Lon", "stock": "0", "doh": "0", "rev30d": "\u20b983,893", "tier": "STOCKOUT"}, {"sku": "CHN-1113_Cream", "name": "SHOWOFFFF Women's Cream Crochet Top", "stock": "0", "doh": "0", "rev30d": "\u20b969,779", "tier": "STOCKOUT"}, {"sku": "CHN-M26_Cream", "name": "SHOWOFFFF Women's Cream Crochet But", "stock": "0", "doh": "0", "rev30d": "\u20b949,746", "tier": "STOCKOUT"}, {"sku": "CHN-3006_Cream", "name": "SHOWOFFFF Edition Women's Textured ", "stock": "0", "doh": "0", "rev30d": "\u20b9108,779", "tier": "STOCKOUT"}, {"sku": "CHN-5361_Pink", "name": "SHOWOFFFF Edition Women's Floral Em", "stock": "0", "doh": "0", "rev30d": "\u20b9108,800", "tier": "STOCKOUT"}, {"sku": "CHN-701-2_Cream", "name": "SHOWOFFFF Women's Floral Cream Croc", "stock": "0", "doh": "0", "rev30d": "\u20b968,379", "tier": "STOCKOUT"}, {"sku": "CHN-8331_Brown", "name": "SHOWOFFFF Edition Women's Knitted B", "stock": "0", "doh": "0", "rev30d": "\u20b950,459", "tier": "STOCKOUT"}]
     },
     signal6: { available: false },
     signal7: {
       available: true, severity: 50,
-      title: "43 top SKUs concentrated in one state (>30% share)",
+      title: '41 top SKUs concentrated in one state (>30%)',
       subtitle: 'Regional demand hotspots — potential for targeted expansion',
-      impact_val: '43', impact_label: 'concentrated SKUs',
-      type_label: 'Regional Hotspot', type_cls: 'st-amber', accent: 'amber',
+      impact_val: '41', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-blue', accent: 'blue',
       tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
-      pills: ["Top: Karnataka at 84%", "43 SKUs above 30% threshold"],
-      table: [{"sku": "BI-Metty_Grey_XL", "state": "Karnataka", "share": "84.2%", "orders": "16/19", "revenue": "\u20b933K"}, {"sku": "BI-Metty_Burgundy_L", "state": "Karnataka", "share": "82.4%", "orders": "14/17", "revenue": "\u20b930K"}, {"sku": "BI-Metty_Grey_M", "state": "Karnataka", "share": "76.2%", "orders": "16/21", "revenue": "\u20b937K"}, {"sku": "CHN-E-26_White", "state": "Karnataka", "share": "63.0%", "orders": "29/46", "revenue": "\u20b962K"}, {"sku": "BI-Metty_Olive_M", "state": "Karnataka", "share": "62.5%", "orders": "10/16", "revenue": "\u20b931K"}, {"sku": "BI-Metty_Olive_XL", "state": "Karnataka", "share": "58.8%", "orders": "10/17", "revenue": "\u20b934K"}, {"sku": "LBR-5500-1_Beige_L", "state": "Karnataka", "share": "57.1%", "orders": "4/7", "revenue": "\u20b935K"}, {"sku": "CHN-1420_Pink", "state": "Karnataka", "share": "53.8%", "orders": "7/13", "revenue": "\u20b932K"}]
+      pills: ["Top: KA at 79%", "41 SKUs above 30% threshold"],
+      table: [{"sku": "701A_White", "state": "KA", "pct": "33.7%", "orders": "30/89"}, {"sku": "CHN-5331-1_White_L", "state": "MH", "pct": "30.2%", "orders": "13/43"}, {"sku": "CHN-2633-1_White", "state": "KA", "pct": "32.4%", "orders": "11/34"}, {"sku": "LBR-5500-1_Beige_L", "state": "KA", "pct": "57.1%", "orders": "8/14"}, {"sku": "CHN-925_Pink", "state": "KA", "pct": "41.7%", "orders": "20/48"}, {"sku": "CHN-9923_White", "state": "KA", "pct": "41.7%", "orders": "10/24"}, {"sku": "AR03_Maroon_S", "state": "TN", "pct": "45.0%", "orders": "9/20"}, {"sku": "601A_Black", "state": "KA", "pct": "50.0%", "orders": "13/26"}]
     }
   },
-
+  tcns: {
+    name: 'TCNS Clothing',
+    code: 'TCNS',
+    category: 'Fashion — Women',
+    kpi: {
+      gross_sales_30d: '₹8.1 Cr',
+      gross_wow: { val: 'DWH', cls: '' },
+      gross_sub: 'Last 30 days from DWH',
+      orders_30d: '47.2K',
+      orders_wow: { val: 'DWH', cls: '' },
+      orders_sub: 'Sale order items · 30 days',
+      net_sales_30d: '₹7.7 Cr',
+      net_sub: 'After returns + cancellations',
+      leakage_amt: '₹40.7L',
+      leakage_sub: 'Returns + cancellations (5.0% of gross)',
+      aov: '₹1,724',
+      aov_sub: 'Avg selling price per SOI',
+      active_skus: '5,000',
+      skus_sub: 'Listed on Myntra (top channel)',
+      skus_tooltip: 'Count of unique SKUs with active listing on your highest-revenue channel (Myntra). Proxy for catalog breadth and marketplace sync health.',
+      active_channels: '3',
+      channels_sub: 'Myntra · Nykaa Fashion · Ajio'
+    },
+    signal1: { available: false },
+    signal5: {
+      available: true, severity: 100,
+      title: '31 bestsellers in stockout/critical — will run out in <15 days',
+      subtitle: '51 bestseller SKUs at risk | ₹2.5L revenue exposure',
+      impact_val: '₹2.5L', impact_label: 'revenue at risk',
+      type_label: 'Inventory Health', type_cls: 'st-red', accent: 'red',
+      tooltip: 'Top 20% SKUs by 60-day sales volume (percentile-based, adapts per tenant). DOH = current_inventory / (30d_sales / 30). Tiers: STOCKOUT (0 stock), CRITICAL (<15 days), WARNING (<30 days), WATCH (<60 days). Revenue at risk = daily_sales_velocity x avg_selling_price (90d) x 15-day risk window. Data: low_inventory_vs_last_30d_sales + transaction__daily_v2_raw.',
+      pills: ["Stockout: 11", "Critical (<15d): 20", "Warning (<30d): 20"],
+      table: [{"sku": "8905661599271", "name": "W12793-126182", "stock": "0", "doh": "0", "rev30d": "\u20b989,368", "tier": "STOCKOUT"}, {"sku": "8905661583928", "name": "W12743-125557-", "stock": "0", "doh": "0", "rev30d": "\u20b938,940", "tier": "STOCKOUT"}, {"sku": "8905661599714", "name": "W12797-126185-", "stock": "0", "doh": "0", "rev30d": "\u20b915,760", "tier": "STOCKOUT"}, {"sku": "8905661599288", "name": "W12793-126182", "stock": "0", "doh": "0", "rev30d": "\u20b937,040", "tier": "STOCKOUT"}, {"sku": "8905661584055", "name": "W12745-124253", "stock": "0", "doh": "0", "rev30d": "\u20b942,682", "tier": "STOCKOUT"}, {"sku": "8905661599264", "name": "W12793-126182", "stock": "0", "doh": "0", "rev30d": "\u20b932,114", "tier": "STOCKOUT"}, {"sku": "8905661599165", "name": "W12792-126190-", "stock": "0", "doh": "0", "rev30d": "\u20b915,985", "tier": "STOCKOUT"}, {"sku": "8905661619535", "name": "WS11932-126708-", "stock": "0", "doh": "0", "rev30d": "\u20b937,478", "tier": "STOCKOUT"}]
+    },
+    signal6: { available: false },
+    signal7: {
+      available: true, severity: 50,
+      title: '20 top SKUs concentrated in one state (>30%)',
+      subtitle: 'Regional demand hotspots — potential for targeted expansion',
+      impact_val: '20', impact_label: 'concentrated SKUs',
+      type_label: 'Regional Hotspot', type_cls: 'st-blue', accent: 'blue',
+      tooltip: 'Top 100 SKUs by revenue where a single state accounts for more than 30% of total orders. Identifies geographic concentration risk or untapped expansion potential. One row per SKU showing highest-share state. Data: last 30 days from transaction__daily_v2_raw, state-level order aggregation.',
+      pills: ["Top: MH at 100%", "20 SKUs above 30% threshold"],
+      table: [{"sku": "8905661576906", "state": "MH", "pct": "40.0%", "orders": "4/10"}, {"sku": "8905661160570", "state": "UP", "pct": "37.0%", "orders": "20/54"}, {"sku": "8905661773886", "state": "WB", "pct": "33.3%", "orders": "2/6"}, {"sku": "8905661719136", "state": "UP", "pct": "30.4%", "orders": "7/23"}, {"sku": "8905661670369", "state": "BR", "pct": "50.0%", "orders": "3/6"}, {"sku": "8905661512867", "state": "MH", "pct": "33.3%", "orders": "2/6"}, {"sku": "8905661761487", "state": "KA", "pct": "50.0%", "orders": "7/14"}, {"sku": "8905661620906", "state": "MH", "pct": "100.0%", "orders": "4/4"}]
+    }
+  },
 };
 
 
